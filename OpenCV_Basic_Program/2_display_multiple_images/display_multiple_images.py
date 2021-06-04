@@ -12,11 +12,11 @@ def main():
     # resize the image to a quarter of its original size
     img_resized = cv2.resize(img, (0, 0), None, .25, .25)
 
-    # convert the image to the gray degree
-    img_gray = cv2.cvtColor(img_resized, cv2.COLOR_BGR2GRAY)
-
     # convert the image to the HSV color model
     img_HSV = cv2.cvtColor(img_resized, cv2.COLOR_BGR2HSV)
+
+    # convert the image to the gray degree
+    img_gray = cv2.cvtColor(img_resized, cv2.COLOR_BGR2GRAY)
 
     # convert the greyed image to the BGR color model
     img_BGR = cv2.cvtColor(img_gray, cv2.COLOR_GRAY2BGR)
