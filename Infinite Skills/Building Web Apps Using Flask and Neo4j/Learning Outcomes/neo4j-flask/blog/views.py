@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 
 app = Flask(__name__)
 
@@ -14,3 +14,32 @@ def index():
 @app.route('/about/<something>')
 def about(something):
     return 'The page is about {0}'.format(something)
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    return "TODO"
+
+
+@app.route("/login")
+def login():
+    return "TODO"
+
+
+@app.route("/add_post")
+def add_post():
+    return "TODO"
+
+
+@app.route("/like_post/<post_id>")
+def like_post(post_id):
+    return "TODO"
+
+
+@app.route("/profile/<username>")
+def profile(username):
+    return "TODO"
+
+
+@app.route("/logout")
+def logout():
+    return "TODO"
