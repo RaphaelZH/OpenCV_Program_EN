@@ -1,28 +1,31 @@
-from flask import Flask, render_template, request, session, redirect, url_for, flash
+from flask import Flask, render_template, request, flash, redirect, url_for, session
+from .models import User
 
 app = Flask(__name__)
 
-@app.route('/', methods=["GET", "POST"])
+@app.route('/')
 def index():
-    data = [{"x": 1}, {"x": 3}, {"x": 5}]
-    message = "This is a GET request."
+    return render_template("index.html")
 
-    if request.method == "POST":
-        message = "This is a POST request."
-    return render_template("index.html", message=message, data=data)
-
-@app.route('/about/<something>')
-def about(something):
-    return 'The page is about {0}'.format(something)
-
-@app.route("/register", methods=["GET", "POST"])
+@app.route("/register", methods=["POST", "GET"])
 def register():
-    return "TODO"
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        user = User(username)
+        if not user.register(password):
+            flash("A user with that username already exists.")
+        else:
+            flash("Successfully registered.")
+            return redirect(url_for("login"))
+
+    return render_template("register.html")
 
 
 @app.route("/login")
 def login():
-    return "TODO"
+    return render_template("login.html")
 
 
 @app.route("/add_post")
