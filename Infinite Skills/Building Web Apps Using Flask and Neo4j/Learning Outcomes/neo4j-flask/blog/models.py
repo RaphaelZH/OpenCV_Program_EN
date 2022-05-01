@@ -29,3 +29,26 @@ class User:
             return False
 
         return bcrypt.verify(password, user["password"])
+
+    def add_post(self, title, tags, text):
+        user = self.find()
+        post = Node(
+            "Post",
+            id=str(uuid.uuid4()),
+            title=title,
+            text=text,
+            timestamp=int(datetime.now().strftime("%s")),
+            data=datetime.now().strftime("%F")
+        )
+
+        rel = Relationship(user, "PUBLISHED", post)
+        graph.create(rel)
+
+        tags = [x.strip() for x in tags.lower().split(",")]
+        tags = set(tags)
+
+        for tag in tags:
+            t = Node("Tag", name=tag)
+            graph.merge(t, "Tag", "name")
+            rel = Relationship(t, "TAGGED", post)
+            graph.create(rel)
