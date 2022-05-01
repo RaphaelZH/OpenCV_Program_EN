@@ -23,8 +23,20 @@ def register():
     return render_template("register.html")
 
 
-@app.route("/login")
+@app.route("/login", methods=["POST", "GET"])
 def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        user = User(username)
+        if not user.verify_password(password):
+            flash("Invalid login.")
+        else:
+            flash("Successfully logged in.")
+            session["username"] = user.username
+            return redirect(url_for("index"))
+
     return render_template("login.html")
 
 

@@ -17,3 +17,15 @@ class User:
     def register(self, password):
         if not self.find():
             user = Node("User", username=self.username, password=bcrypt.encrypt(password))
+            graph.create(user)
+            return True
+
+        return False
+
+    def verify_password(self, password):
+        user = self.find()
+
+        if not user:
+            return False
+
+        return bcrypt.verify(password, user["password"])
