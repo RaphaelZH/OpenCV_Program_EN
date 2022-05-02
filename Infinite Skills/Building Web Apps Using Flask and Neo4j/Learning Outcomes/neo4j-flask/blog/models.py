@@ -80,6 +80,26 @@ class User:
 
         return graph.run(query, username=self.username, n=n).data()
 
+    def commonality_of_user(self, user):
+        query1 = """
+        MATCH (user1:User)-[:PUBLISHED]->(post:Post)<-[:LIKES]-(user2:User)
+        WHERE user1.username = $username1 AND user2.username = $username2
+        RETURN COUNT(post) AS likes
+        """
+
+        likes = graph.run(query1, username1=self.username, username2=user.username).data()[0]["likes"]
+        likes = 0 if not likes else likes
+
+        query2 = """
+        MATCH (user1:User)-[:PUBLISHED]->(:Post)<-[:TAGGED]-(tag:Tag),
+              (user2:User)-[:PUBLISHED]->(:Post)<-[:TAGGED]-(tag)
+        WHERE user1.username = $username1 AND user2.username = $username2
+        RETURN COLLECT(DISTINCT tag.name) AS tags
+        """
+
+        tags = graph.run(query2, username1=self.username, username2=user.username).data()[0]["tags"]
+
+        return {"likes": likes, "tags": tags}
 
 def todays_recent_posts(n):
     query = """
