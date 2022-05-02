@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session
-from .models import User
+from .models import User, todays_recent_posts
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    posts = todays_recent_posts(5)
+    return render_template("index.html", posts=posts)
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
@@ -58,7 +59,16 @@ def add_post():
 
 @app.route("/like_post/<post_id>")
 def like_post(post_id):
-    return "TODO"
+    username = session.get("username")
+
+    if not username:
+        flash("You must be logged in to like a post.")
+        return redirect(url_for("login"))
+
+    user = User(username)
+    user.like_post(post_id)
+    flash("Liked post.")
+    return redirect(request.referrer)
 
 
 @app.route("/profile/<username>")

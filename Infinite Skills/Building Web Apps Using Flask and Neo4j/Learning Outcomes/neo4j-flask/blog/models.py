@@ -38,7 +38,7 @@ class User:
             title=title,
             text=text,
             timestamp=int(datetime.now().strftime("%s")),
-            data=datetime.now().strftime("%F")
+            date=datetime.now().strftime("%F")
         )
 
         rel = Relationship(user, "PUBLISHED", post)
@@ -52,3 +52,20 @@ class User:
             graph.merge(t, "Tag", "name")
             rel = Relationship(t, "TAGGED", post)
             graph.create(rel)
+
+    def like_post(self, post_id):
+        user = self.find()
+        post = graph.nodes.match("Post", id=post_id).first()
+        graph.merge(Relationship(user, "LIKES", post))
+
+
+def todays_recent_posts(n):
+    query = """
+    MATCH (user:User)-[:PUBLISHED]->(post:Post)<-[:TAGGED]-(tag:Tag)
+    WHERE post.date = $today
+    RETURN user.username AS username, post, COLLECT(tag.name) AS tags
+    ORDER BY post.timestamp DESC LIMIT $n
+    """
+
+    today = datetime.now().strftime("%F")
+    return graph.run(query, today=today, n=n).data()
