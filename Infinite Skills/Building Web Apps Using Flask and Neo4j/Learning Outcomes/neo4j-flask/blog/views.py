@@ -78,4 +78,6 @@ def profile(username):
 
 @app.route("/logout")
 def logout():
-    return "TODO"
+    session.pop("username")
+    flash("Logged out.")
+    return redirect(url_for("index"))
