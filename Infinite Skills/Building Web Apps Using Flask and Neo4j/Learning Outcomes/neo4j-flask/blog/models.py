@@ -58,6 +58,16 @@ class User:
         post = graph.nodes.match("Post", id=post_id).first()
         graph.merge(Relationship(user, "LIKES", post))
 
+    def recent_posts(self, n):
+        query = """
+        MATCH (user:User)-[:PUBLISHED]->(post:Post)<-[:TAGGED]-(tag:Tag)
+        WHERE user.username = $username
+        RETURN post, COLLECT(tag.name) AS tags
+        ORDER BY post.timestamp DESC LIMIT $n
+        """
+
+        return graph.run(query, username=self.username, n=n).data()
+
 
 def todays_recent_posts(n):
     query = """
