@@ -32,13 +32,15 @@ class User:
 
     def add_post(self, title, tags, text):
         user = self.find()
+        today = datetime.now()
+
         post = Node(
             "Post",
             id=str(uuid.uuid4()),
             title=title,
             text=text,
-            timestamp=int(datetime.now().strftime("%s")),
-            date=datetime.now().strftime("%F")
+            timestamp=int(today.strftime("%s")),
+            date=today.strftime("%F")
         )
 
         rel = Relationship(user, "PUBLISHED", post)
