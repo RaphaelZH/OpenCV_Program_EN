@@ -20,7 +20,6 @@ pyspark
 scikit-learn                  
 seaborn                       
 setuptools
-tensorflow-macos
-tensorflow-metal                                 
+transformers                                
 wheel
 yapf             
