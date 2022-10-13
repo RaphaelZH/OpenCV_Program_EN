@@ -21,6 +21,7 @@ scikit-learn
 seaborn
 setuptools
 spacy
+tabulate
 termcolor
 transformers
 wheel

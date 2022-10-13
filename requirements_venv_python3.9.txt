@@ -31,6 +31,7 @@ fastjsonschema==2.15.3
 filelock==3.7.1
 flatbuffers==1.12
 fonttools==4.34.4
+future==0.18.2
 gast==0.4.0
 google-auth==2.9.0
 google-auth-oauthlib==0.4.6
@@ -138,6 +139,7 @@ spacy-legacy==3.0.9
 spacy-loggers==1.0.3
 srsly==2.4.4
 stack-data==0.3.0
+tabulate==0.9.0
 tenacity==8.0.1
 tensorboard==2.9.1
 tensorboard-data-server==0.6.1
