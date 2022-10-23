@@ -9,8 +9,8 @@ dependencies:
   - blas=2.115=openblas
   - blas-devel=3.9.0=15_osxarm64_openblas
   - c-ares=1.18.1=h1a28f6b_0
-  - ca-certificates=2022.4.26=hca03da5_0
-  - certifi=2022.6.15=py39hca03da5_0
+  - ca-certificates=2022.07.19=hca03da5_0
+  - certifi=2022.9.24=py39hca03da5_0
   - distlib=0.3.2=pyhd3eb1b0_0
   - filelock=3.6.0=pyhd3eb1b0_0
   - grpcio=1.42.0=py39h95c9599_0
