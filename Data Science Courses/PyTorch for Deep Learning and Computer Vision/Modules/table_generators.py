@@ -90,6 +90,93 @@ def statement_generator(statements):
         cprint('\t'.expandtabs(4) + line, previous_color, attrs=['bold'])
 
 
+def definition_generator(definitions):
+    global adjusted_width, previous_color
+    table = [["Definition"]]
+    for definition in definitions:
+        printable_definition = ""
+        for line in definition.strip().split("\n"):
+            if len(line) > adjusted_width:
+                printable_lines = ""
+                printable_line = line
+                while len(line) > adjusted_width:
+                    while printable_line.rfind(' ') > adjusted_width:
+                        printable_line = printable_line[:printable_line.rfind(' ')]
+                    else:
+                        printable_line = printable_line[:printable_line.rfind(' ')]
+                    printable_lines += printable_line + "\n\t".expandtabs(8)
+                    line = line[len(printable_line) + 1:]
+                    printable_line = line
+                else:
+                    printable_lines += printable_line
+                    printable_definition += printable_lines + "\n"
+            else:
+                printable_definition += line + "\n"
+            table.append([printable_definition])
+        else:
+            table.append([definition])
+    table_list = tabulate(table,
+                          headers='firstrow',
+                          tablefmt='pretty',
+                          colalign=('left', )).split('\n')
+    for line in table_list:
+        cprint('\t'.expandtabs(4) + line, previous_color, attrs=['bold'])
+        
+        
+    """
+    
+        if len(value) > remainder:
+                for nested_string in string_list:
+                    if len(nested_string) > remainder:
+                        printable_string = ""
+                        printable_line = nested_string
+                        while len(nested_string) > remainder:
+                            while printable_line.rfind(' ') > remainder:
+                                printable_line = printable_line[:printable_line
+                                                                .rfind(' ')]
+                            else:
+                                printable_line = printable_line[:printable_line
+                                                                .rfind(' ')]
+                            printable_string += printable_line + "\n"
+                            nested_string = nested_string[len(printable_line) +
+                                                          1:]
+                            printable_line = nested_string
+                        else:
+                            printable_string += printable_line
+                            printable_value += printable_string + "\n"
+                    else:
+                        printable_value += nested_string + "\n"
+                table.append([variable, printable_value.strip("\n")])
+            else:
+                printable_value = ""
+                printable_line = value
+                while len(value) > remainder:
+                    while printable_line.rfind(' ') > remainder:
+                        printable_line = printable_line[:printable_line.
+                                                        rfind(' ')]
+                    else:
+                        printable_line = printable_line[:printable_line.
+                                                        rfind(' ')]
+                    printable_value += printable_line + "\n"
+                    value = value[len(printable_line) + 1:]
+                    printable_line = value
+                else:
+                    printable_value += printable_line
+                    table.append([variable, printable_value])
+        else:
+            table.append([variable, value])
+    table_list = tabulate(table,
+                          headers='firstrow',
+                          tablefmt='pretty',
+                          colalign=("left", "left")).split('\n')
+    for line in table_list:
+        cprint('\t'.expandtabs(4) + line, previous_color, attrs=['bold'])
+    
+    
+    
+    """
+        
+
 def variable_generator(variables, values):
     global adjusted_width, previous_color
     table = [["Variable", "Value"]]
