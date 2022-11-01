@@ -2,13 +2,14 @@ import re
 from tabulate import tabulate
 from termcolor import cprint
 
-from .random_colors import *
+from .random_colors import color_list_generator
 
 
-class Form_Generator():
+class FormGenerator():
     def __init__(self, title, type, *args):
         self.title = title
         self.type = type
+        self.adjusted_width = 59
         self.font_color_printer(self.title)
         if self.type in ["d", "D"]:
             self.definition_generator(args[0])
@@ -17,7 +18,7 @@ class Form_Generator():
                 self.expression_generator(args[0], args[1])
             except IndexError:
                 cprint("Please confirm that a second list has been entered.",
-                       font_colors_list.pop(0), attrs=['blink', 'reverse'])
+                       self.previous_color, attrs=['blink', 'reverse'])
         elif self.type in ["s", "S"]:
             self.statement_generator(args[0])
         elif self.type in ["v", "V"]:
@@ -25,32 +26,30 @@ class Form_Generator():
                 self.variable_generator(args[0], args[1])
             except IndexError:
                 cprint("Please confirm that a second list has been entered.",
-                       font_colors_list.pop(0), attrs=['blink', 'reverse'])
+                       self.previous_color, attrs=['blink', 'reverse'])
         else:
             cprint("Please check that the selection of the form type is correct.",
-                   font_colors_list.pop(0), attrs=['blink', 'reverse'])
+                   self.previous_color, attrs=['blink', 'reverse'])
 
-    def font_color_printer(self, string, *args, **kwargs):
-        global adjusted_width, font_colors_list, previous_color
+    def font_color_printer(self, string):
+        global font_colors_list
         try:
             font_colors_list
         except NameError:
             font_colors_list = color_list_generator()
         if font_colors_list == []:
             font_colors_list = color_list_generator()
-        previous_color = font_colors_list.pop(0)
-        adjusted_width = 59
-        return cprint(string, previous_color, attrs=['underline'], end='\n\n')
+        self.previous_color = font_colors_list.pop(0)
+        cprint(string, self.previous_color, attrs=['underline'], end='\n\n')
 
     def expression_generator(self, expressions, results):
-        global adjusted_width, previous_color
         table = [["Expression", "Result"]]
         max_length = len(max(expressions, key=len))
         if len("Expression") >= max_length:
             length_expression = len("Expression")
         else:
             length_expression = max_length
-        remainder = adjusted_width - length_expression - 3
+        remainder = self.adjusted_width - length_expression - 3
         for expression, result in zip(expressions, results):
             if len(result) > remainder:
                 if re.search(r'\n', str(result)):
@@ -106,19 +105,19 @@ class Form_Generator():
                               tablefmt='pretty',
                               colalign=("left", "left")).split('\n')
         for line in table_list:
-            cprint('\t'.expandtabs(4) + line, previous_color, attrs=['bold'])
+            cprint('\t'.expandtabs(4) + line,
+                   self.previous_color, attrs=['bold'])
 
     def definition_generator(self, definitions):
-        global adjusted_width, previous_color
         table = [["Definition"]]
         for definition in definitions:
             printable_definition = ""
             for line in definition.strip().split("\n"):
-                if len(line) > adjusted_width:
+                if len(line) > self.adjusted_width:
                     printable_lines = ""
                     printable_line = line
-                    while len(line) > adjusted_width:
-                        while printable_line.rfind(' ') > adjusted_width:
+                    while len(line) > self.adjusted_width:
+                        while printable_line.rfind(' ') > self.adjusted_width:
                             printable_line = printable_line[:printable_line.rfind(
                                 ' ')]
                         else:
@@ -139,17 +138,17 @@ class Form_Generator():
                               tablefmt='pretty',
                               colalign=('left', )).split('\n')
         for line in table_list:
-            cprint('\t'.expandtabs(4) + line, previous_color, attrs=['bold'])
+            cprint('\t'.expandtabs(4) + line,
+                   self.previous_color, attrs=['bold'])
 
     def statement_generator(self, statements):
-        global adjusted_width, previous_color
         table = [["Statement"]]
         for statement in statements:
-            if len(statement) > adjusted_width:
+            if len(statement) > self.adjusted_width:
                 printable_statement = ""
                 printable_line = statement
-                while len(statement) > adjusted_width:
-                    while printable_line.rfind(' ') > adjusted_width:
+                while len(statement) > self.adjusted_width:
+                    while printable_line.rfind(' ') > self.adjusted_width:
                         printable_line = printable_line[:printable_line.rfind(
                             ' ')]
                     else:
@@ -168,17 +167,17 @@ class Form_Generator():
                               tablefmt='pretty',
                               colalign=('left', )).split('\n')
         for line in table_list:
-            cprint('\t'.expandtabs(4) + line, previous_color, attrs=['bold'])
+            cprint('\t'.expandtabs(4) + line,
+                   self.previous_color, attrs=['bold'])
 
     def variable_generator(self, variables, values):
-        global adjusted_width, previous_color
         table = [["Variable", "Value"]]
         max_length = len(max(variables, key=len))
         if len("Variable") >= max_length:
             length_variable = len("Variable")
         else:
             length_variable = max_length
-        remainder = adjusted_width - length_variable - 3
+        remainder = self.adjusted_width - length_variable - 3
         for variable, value in zip(variables, values):
             if len(value) > remainder:
                 if re.search(r'\n', str(value)):
@@ -234,4 +233,5 @@ class Form_Generator():
                               tablefmt='pretty',
                               colalign=("left", "left")).split('\n')
         for line in table_list:
-            cprint('\t'.expandtabs(4) + line, previous_color, attrs=['bold'])
+            cprint('\t'.expandtabs(4) + line,
+                   self.previous_color, attrs=['bold'])
