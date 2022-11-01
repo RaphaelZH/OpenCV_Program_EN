@@ -1,2 +1,2 @@
-from .color_generators import *
-from .table_generators import *
+from .custom_colors import *
+from .tabulation import *
