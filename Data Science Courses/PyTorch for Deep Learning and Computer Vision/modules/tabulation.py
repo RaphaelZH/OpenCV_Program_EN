@@ -6,32 +6,11 @@ from .random_colors import color_list_generator
 
 
 class FormGenerator():
-    def __init__(self, title, type, *args):
-        self.title = title
-        self.type = type
+    def __init__(self):
         self.adjusted_width = 59
-        self.font_color_printer(self.title)
-        if self.type in ["d", "D"]:
-            self.definition_generator(args[0])
-        elif self.type in ["e", "E"]:
-            try:
-                self.expression_generator(args[0], args[1])
-            except IndexError:
-                cprint("Please confirm that a second list has been entered.",
-                       self.previous_color, attrs=['blink', 'reverse'])
-        elif self.type in ["s", "S"]:
-            self.statement_generator(args[0])
-        elif self.type in ["v", "V"]:
-            try:
-                self.variable_generator(args[0], args[1])
-            except IndexError:
-                cprint("Please confirm that a second list has been entered.",
-                       self.previous_color, attrs=['blink', 'reverse'])
-        else:
-            cprint("Please check that the selection of the form type is correct.",
-                   self.previous_color, attrs=['blink', 'reverse'])
-
-    def font_color_printer(self, string):
+        
+    def heading_printer(self, heading):
+        self.heading = heading
         global font_colors_list
         try:
             font_colors_list
@@ -40,7 +19,7 @@ class FormGenerator():
         if font_colors_list == []:
             font_colors_list = color_list_generator()
         self.previous_color = font_colors_list.pop(0)
-        cprint(string, self.previous_color, attrs=['underline'], end='\n\n')
+        cprint(self.heading, self.previous_color, attrs=['underline'], end='\n\n')
 
     def expression_generator(self, expressions, results):
         table = [["Expression", "Result"]]
