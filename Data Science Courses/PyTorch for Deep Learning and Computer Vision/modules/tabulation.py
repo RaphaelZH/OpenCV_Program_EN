@@ -2,10 +2,10 @@ import re
 from tabulate import tabulate
 from termcolor import cprint
 
-from .random_colors import color_list_generator
+from .RandomColors import color_list_generator
 
 
-class FormGenerator:
+class Form_Generator:
     def __init__(self):
         self.adjusted_width = 59
 

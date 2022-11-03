@@ -1,2 +1,2 @@
-from .custom_colors import *
-from .tabulation import *
+from .CustomColors import *
+from .Tabulation import *
