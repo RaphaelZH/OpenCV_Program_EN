@@ -21,8 +21,14 @@ class Form_Generator:
         self.previous_color = font_colors_list.pop(0)
         cprint(self.heading, self.previous_color, attrs=["underline"], end="\n\n")
 
+    def tabulator_replacement(self, string, expandtabs):
+        if len(re.findall(r"\t", string)) > 0:
+            string = re.sub(r"\t", " " * expandtabs, string)
+        return string
+
     def string_trimmer(self, string):
         printable_lines = []
+        string = self.tabulator_replacement(string, 8)
         printable_line = string
         if len(string) > self.adjusted_width:
             printable_line = string
@@ -41,24 +47,6 @@ class Form_Generator:
         for statement in statements:
             printable_statement = self.string_trimmer(statement)
             table.append(["\n\t".expandtabs(8).join(printable_statement)])
-            
-        '''
-        for statement in statements:
-            if len(statement) > self.adjusted_width:
-                printable_statement = ""
-                printable_line = statement
-                while len(statement) > self.adjusted_width:
-                    while printable_line.rfind(" ") > self.adjusted_width:
-                        printable_line = printable_line[: printable_line.rfind(" ")]
-                    printable_line = printable_line[: printable_line.rfind(" ")]
-                    printable_statement += printable_line + "\n\t".expandtabs(8)
-                    statement = statement[len(printable_line) + 1 :]
-                    printable_line = statement
-                printable_statement += printable_line
-                table.append([printable_statement])
-            else:
-                table.append([statement])
-        '''
         table_list = tabulate(
             table, headers="firstrow", tablefmt="pretty", colalign=("left",)
         ).split("\n")
@@ -85,6 +73,7 @@ class Form_Generator:
                 else:
                     printable_definition += line + "\n"
             table.append([printable_definition.strip("\n")])
+
         table_list = tabulate(
             table, headers="firstrow", tablefmt="pretty", colalign=("left",)
         ).split("\n")
