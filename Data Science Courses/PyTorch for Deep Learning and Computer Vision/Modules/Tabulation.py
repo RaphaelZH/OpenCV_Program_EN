@@ -80,61 +80,11 @@ class Form_Generator:
         length_expression = max(len("Expression"), max_length)
         remainder = self.adjusted_width - length_expression - 3
         for expression, result in zip(expressions, results):
-            if len(result) > remainder:
-                printable_result = ""
-                if re.search(r"\n", str(result)):
-                    start = 0
-                    string_list = []
-                    for match in re.finditer(r"\n", str(result)):
-                        nested_string = str(result)[start : match.span()[0]]
-                        string_list.append(nested_string)
-                        start = match.span()[1]
-                    string_list.append(str(result)[start:])
-                    for nested_string in string_list:
-                        if (
-                            len(nested_string)
-                            + len(re.findall(r"\t", nested_string)) * 8
-                            > remainder
-                        ):
-                            printable_string = ""
-                            printable_line = nested_string
-                            while (
-                                len(printable_line)
-                                + len(re.findall(r"\t", printable_line)) * 8
-                                > remainder
-                            ):
-                                while (
-                                    printable_line.rfind(" ")
-                                    + len(re.findall(r"\t", printable_line)) * 8
-                                    > remainder
-                                ):
-                                    printable_line = printable_line[
-                                        : printable_line.rfind(" ")
-                                    ]
-                                printable_line = printable_line[
-                                    : printable_line.rfind(" ")
-                                ]
-                                printable_string += printable_line.expandtabs(8) + "\n"
-                                nested_string = nested_string[len(printable_line) + 1 :]
-                                printable_line = nested_string.expandtabs(8)
-                            printable_string += printable_line.expandtabs(8)
-                            printable_result += printable_string.expandtabs(8) + "\n"
-                        else:
-                            printable_result += nested_string + "\n"
-                    table.append([expression, printable_result.strip("\n")])
-                else:
-                    printable_line = result
-                    while len(result) > remainder:
-                        while printable_line.rfind(" ") > remainder:
-                            printable_line = printable_line[: printable_line.rfind(" ")]
-                        printable_line = printable_line[: printable_line.rfind(" ")]
-                        printable_result += printable_line + "\n"
-                        result = result[len(printable_line) + 1 :]
-                        printable_line = result
-                    printable_result += printable_line
-                    table.append([expression, printable_result])
-            else:
-                table.append([expression, result])
+            printable_lines = [
+                "\n\t".expandtabs(8).join(self.string_trimmer(line, 8, remainder))
+                for line in result.strip().split("\n")
+            ]
+            table.append([expression, "\n".join(printable_lines)])
         table_list = tabulate(
             table, headers="firstrow", tablefmt="pretty", colalign=("left", "left")
         ).split("\n")
