@@ -58,18 +58,19 @@ class Form_Generator:
         for line in table_list:
             cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
 
-    def definition_generator(self, definitions):
-        table = [["Definition"]]
-        for definition in definitions:
+    def variable_generator(self, variables, values):
+        table = [["Variable", "Value"]]
+        max_length = len(max(variables, key=len))
+        length_variable = max(len("Variable"), max_length)
+        remainder = self.adjusted_width - length_variable - 3
+        for variable, value in zip(variables, values):
             printable_lines = [
-                "\n\t".expandtabs(8).join(
-                    self.string_trimmer(line, 4, self.adjusted_width)
-                )
-                for line in definition.strip().split("\n")
+                "\n\t".expandtabs(8).join(self.string_trimmer(line, 8, remainder))
+                for line in value.strip().split("\n")
             ]
-            table.append(["\n".join(printable_lines)])
+            table.append([variable, "\n".join(printable_lines)])
         table_list = tabulate(
-            table, headers="firstrow", tablefmt="grid", colalign=("left",)
+            table, headers="firstrow", tablefmt="pretty", colalign=("left", "left")
         ).split("\n")
         for line in table_list:
             cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
@@ -91,19 +92,18 @@ class Form_Generator:
         for line in table_list:
             cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
 
-    def variable_generator(self, variables, values):
-        table = [["Variable", "Value"]]
-        max_length = len(max(variables, key=len))
-        length_variable = max(len("Variable"), max_length)
-        remainder = self.adjusted_width - length_variable - 3
-        for variable, value in zip(variables, values):
+    def definition_generator(self, definitions):
+        table = [["Definition"]]
+        for definition in definitions:
             printable_lines = [
-                "\n\t".expandtabs(8).join(self.string_trimmer(line, 8, remainder))
-                for line in value.strip().split("\n")
+                "\n\t".expandtabs(8).join(
+                    self.string_trimmer(line, 4, self.adjusted_width)
+                )
+                for line in definition.strip().split("\n")
             ]
-            table.append([variable, "\n".join(printable_lines)])
+            table.append(["\n".join(printable_lines)])
         table_list = tabulate(
-            table, headers="firstrow", tablefmt="pretty", colalign=("left", "left")
+            table, headers="firstrow", tablefmt="grid", colalign=("left",)
         ).split("\n")
         for line in table_list:
             cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
