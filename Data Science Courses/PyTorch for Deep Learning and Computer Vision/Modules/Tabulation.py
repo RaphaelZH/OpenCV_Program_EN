@@ -26,14 +26,14 @@ class Form_Generator:
             string = re.sub(r"\t", " " * expandtabs, string)
         return string
 
-    def string_trimmer(self, string, expandtabs):
+    def string_trimmer(self, string, expandtabs, width):
         printable_lines = []
         string = self.tabulator_replacement(string, expandtabs)
         printable_line = string
-        if len(string) > self.adjusted_width:
+        if len(string) > width:
             printable_line = string
-            while len(printable_line) > self.adjusted_width:
-                while printable_line.rfind(" ") > self.adjusted_width:
+            while len(printable_line) > width:
+                while printable_line.rfind(" ") > width:
                     printable_line = printable_line[: printable_line.rfind(" ")]
                 printable_line = printable_line[: printable_line.rfind(" ")]
                 printable_lines.append(printable_line)
@@ -45,7 +45,12 @@ class Form_Generator:
     def statement_generator(self, statements):
         table = [["Statement"]]
         for statement in statements:
-            printable_lines = ["\n\t".expandtabs(8).join(self.string_trimmer(line, 4)) for line in statement.strip().split("\n")]
+            printable_lines = [
+                "\n\t".expandtabs(8).join(
+                    self.string_trimmer(line, 4, self.adjusted_width)
+                )
+                for line in statement.strip().split("\n")
+            ]
             table.append(["\n".join(printable_lines)])
         table_list = tabulate(
             table, headers="firstrow", tablefmt="grid", colalign=("left",)
@@ -56,45 +61,18 @@ class Form_Generator:
     def definition_generator(self, definitions):
         table = [["Definition"]]
         for definition in definitions:
-            printable_definition = ""
-            for line in definition.strip().split("\n"):
-                printable_line = self.string_trimmer(line, 4)
-                printable_definition += "\n\t".expandtabs(8).join(printable_line)
-            table.append([printable_definition.strip("\n")])
+            printable_lines = [
+                "\n\t".expandtabs(8).join(
+                    self.string_trimmer(line, 4, self.adjusted_width)
+                )
+                for line in definition.strip().split("\n")
+            ]
+            table.append(["\n".join(printable_lines)])
         table_list = tabulate(
             table, headers="firstrow", tablefmt="grid", colalign=("left",)
         ).split("\n")
         for line in table_list:
             cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
-
-    """
-    def definition_generator(self, definitions):
-        table = [["Definition"]]
-        for definition in definitions:
-            printable_definition = ""
-            for line in definition.strip().split("\n"):
-                if len(line) > self.adjusted_width:
-                    printable_lines = ""
-                    printable_line = line
-                    while len(line) > self.adjusted_width:
-                        while printable_line.rfind(" ") > self.adjusted_width:
-                            printable_line = printable_line[: printable_line.rfind(" ")]
-                        printable_line = printable_line[: printable_line.rfind(" ")]
-                        printable_lines += printable_line + "\n\t".expandtabs(8)
-                        line = line[len(printable_line) + 1 :]
-                        printable_line = line
-                    printable_lines += printable_line
-                    printable_definition += printable_lines + "\n"
-                else:
-                    printable_definition += line + "\n"
-            table.append([printable_definition.strip("\n")])
-
-        table_list = tabulate(
-            table, headers="firstrow", tablefmt="pretty", colalign=("left",)
-        ).split("\n")
-        for line in table_list:
-            cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
-    """
 
     def expression_generator(self, expressions, results):
         table = [["Expression", "Result"]]
