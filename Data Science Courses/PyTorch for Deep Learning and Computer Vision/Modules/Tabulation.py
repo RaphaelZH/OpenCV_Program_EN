@@ -30,6 +30,7 @@ class Form_Generator:
         printable_lines = []
         string = self.tabulator_replacement(string, expandtabs)
         printable_line = string
+        indent = expandtabs
         if len(string) > width:
             printable_line = string
             while len(printable_line) > width:
@@ -39,14 +40,32 @@ class Form_Generator:
                 printable_lines.append(printable_line)
                 string = string[len(printable_line) + 1 :]
                 printable_line = string
+                width -= indent
+                indent = 0
         printable_lines.append(printable_line)
         return printable_lines
 
+    def definition_generator(self, definitions):
+        table = [["Definition"]]
+        for definition in definitions:
+            printable_lines = [
+                "\n\t".expandtabs(4).join(
+                    self.string_trimmer(line, 4, self.adjusted_width)
+                )
+                for line in definition.strip().split("\n")
+            ]
+            table.append(["\n".join(printable_lines)])
+        table_list = tabulate(
+            table, headers="firstrow", tablefmt="grid", colalign=("left",)
+        ).split("\n")
+        for line in table_list:
+            cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
+    
     def statement_generator(self, statements):
         table = [["Statement"]]
         for statement in statements:
             printable_lines = [
-                "\n\t".expandtabs(8).join(
+                "\n\t".expandtabs(4).join(
                     self.string_trimmer(line, 4, self.adjusted_width)
                 )
                 for line in statement.strip().split("\n")
@@ -88,22 +107,6 @@ class Form_Generator:
             table.append([expression, "\n".join(printable_lines)])
         table_list = tabulate(
             table, headers="firstrow", tablefmt="pretty", colalign=("left", "left")
-        ).split("\n")
-        for line in table_list:
-            cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
-
-    def definition_generator(self, definitions):
-        table = [["Definition"]]
-        for definition in definitions:
-            printable_lines = [
-                "\n\t".expandtabs(8).join(
-                    self.string_trimmer(line, 4, self.adjusted_width)
-                )
-                for line in definition.strip().split("\n")
-            ]
-            table.append(["\n".join(printable_lines)])
-        table_list = tabulate(
-            table, headers="firstrow", tablefmt="grid", colalign=("left",)
         ).split("\n")
         for line in table_list:
             cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
