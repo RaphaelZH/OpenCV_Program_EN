@@ -45,12 +45,12 @@ class Form_Generator:
         printable_lines.append(printable_line)
         return printable_lines
 
-    def definition_generator(self, definitions):
+    def definition_generator(self, definitions, expandtabs=4):
         table = [["Definition"]]
         for definition in definitions:
             printable_lines = [
-                "\n\t".expandtabs(4).join(
-                    self.string_trimmer(line, 4, self.adjusted_width)
+                "\n\t".expandtabs(expandtabs).join(
+                    self.string_trimmer(line, expandtabs, self.adjusted_width)
                 )
                 for line in definition.strip().split("\n")
             ]
@@ -60,13 +60,13 @@ class Form_Generator:
         ).split("\n")
         for line in table_list:
             cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
-    
-    def statement_generator(self, statements):
+
+    def statement_generator(self, statements, expandtabs=4):
         table = [["Statement"]]
         for statement in statements:
             printable_lines = [
-                "\n\t".expandtabs(4).join(
-                    self.string_trimmer(line, 4, self.adjusted_width)
+                "\n\t".expandtabs(expandtabs).join(
+                    self.string_trimmer(line, expandtabs, self.adjusted_width)
                 )
                 for line in statement.strip().split("\n")
             ]
@@ -77,14 +77,16 @@ class Form_Generator:
         for line in table_list:
             cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
 
-    def variable_generator(self, variables, values):
+    def variable_generator(self, variables, values, expandtabs=8):
         table = [["Variable", "Value"]]
         max_length = len(max(variables, key=len))
         length_variable = max(len("Variable"), max_length)
         remainder = self.adjusted_width - length_variable - 3
         for variable, value in zip(variables, values):
             printable_lines = [
-                "\n\t".expandtabs(8).join(self.string_trimmer(line, 8, remainder))
+                "\n\t".expandtabs(expandtabs).join(
+                    self.string_trimmer(line, expandtabs, remainder)
+                )
                 for line in value.strip().split("\n")
             ]
             table.append([variable, "\n".join(printable_lines)])
@@ -94,14 +96,16 @@ class Form_Generator:
         for line in table_list:
             cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
 
-    def expression_generator(self, expressions, results):
+    def expression_generator(self, expressions, results, expandtabs=8):
         table = [["Expression", "Result"]]
         max_length = len(max(expressions, key=len))
         length_expression = max(len("Expression"), max_length)
         remainder = self.adjusted_width - length_expression - 3
         for expression, result in zip(expressions, results):
             printable_lines = [
-                "\n\t".expandtabs(8).join(self.string_trimmer(line, 8, remainder))
+                "\n\t".expandtabs(expandtabs).join(
+                    self.string_trimmer(line, expandtabs, remainder)
+                )
                 for line in result.strip().split("\n")
             ]
             table.append([expression, "\n".join(printable_lines)])
