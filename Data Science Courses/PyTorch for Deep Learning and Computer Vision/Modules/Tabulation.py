@@ -56,7 +56,7 @@ class Form_Generator:
             ]
             table.append(["\n".join(printable_lines)])
         table_list = tabulate(
-            table, headers="firstrow", tablefmt="grid", colalign=("left",)
+            table, headers="firstrow", tablefmt="pretty", colalign=("left",)
         ).split("\n")
         for line in table_list:
             cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
@@ -72,7 +72,7 @@ class Form_Generator:
             ]
             table.append(["\n".join(printable_lines)])
         table_list = tabulate(
-            table, headers="firstrow", tablefmt="grid", colalign=("left",)
+            table, headers="firstrow", tablefmt="pretty", colalign=("left",)
         ).split("\n")
         for line in table_list:
             cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
