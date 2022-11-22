@@ -114,6 +114,8 @@ class Form_Generator:
         ).split("\n")
         for line in table_list:
             cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
+
+
 """
     def dataframe_printer(self, df):
         cprint(df, self.previous_color, attrs=["bold"])
