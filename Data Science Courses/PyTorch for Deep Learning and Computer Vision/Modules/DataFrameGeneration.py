@@ -18,8 +18,7 @@ class DataFrame_Generator:
             self.dict[i].append(j)
 
     def converter(self):
-        self.df = pd.DataFrame.from_dict(self.dict)
-        return self.df
+        return pd.DataFrame.from_dict(self.dict)
 
-    def tabulation(self):
-        return table_converter(self.converter())
+    def tabulation(self, tablefmt="psql"):
+        return table_converter(self.converter(), tablefmt)
