@@ -9,6 +9,9 @@ class Form_Generator:
     def __init__(self):
         self.adjusted_width = 60
 
+    def sign_adjuster(self, string):
+        return string.replace("<", "＜").replace(">", "＞")
+
     def heading_printer(self, heading):
         self.heading = heading
         global font_colors_list
@@ -19,7 +22,12 @@ class Form_Generator:
         if font_colors_list == []:
             font_colors_list = color_list_generator()
         self.previous_color = font_colors_list.pop(0)
-        cprint(self.heading, self.previous_color, attrs=["underline"], end="\n\n")
+        cprint(
+            self.sign_adjuster(self.heading),
+            self.previous_color,
+            attrs=["underline"],
+            end="\n\n",
+        )
 
     def tabulator_replacement(self, string, expandtabs):
         if len(re.findall(r"\t", string)) > 0:
@@ -59,7 +67,11 @@ class Form_Generator:
             table, headers="firstrow", tablefmt="pretty", colalign=("left",)
         ).split("\n")
         for line in table_list:
-            cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
+            cprint(
+                "\t".expandtabs(4) + self.sign_adjuster(line),
+                self.previous_color,
+                attrs=["bold"],
+            )
 
     def statement_generator(self, statements, expandtabs=4):
         table = [["Statement"]]
@@ -75,7 +87,11 @@ class Form_Generator:
             table, headers="firstrow", tablefmt="pretty", colalign=("left",)
         ).split("\n")
         for line in table_list:
-            cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
+            cprint(
+                "\t".expandtabs(4) + self.sign_adjuster(line),
+                self.previous_color,
+                attrs=["bold"],
+            )
 
     def variable_generator(self, variables, values, expandtabs=8):
         table = [["Variable", "Value"]]
@@ -94,7 +110,11 @@ class Form_Generator:
             table, headers="firstrow", tablefmt="pretty", colalign=("left", "left")
         ).split("\n")
         for line in table_list:
-            cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
+            cprint(
+                "\t".expandtabs(4) + self.sign_adjuster(line),
+                self.previous_color,
+                attrs=["bold"],
+            )
 
     def expression_generator(self, expressions, results, expandtabs=8):
         table = [["Expression", "Result"]]
@@ -113,7 +133,11 @@ class Form_Generator:
             table, headers="firstrow", tablefmt="pretty", colalign=("left", "left")
         ).split("\n")
         for line in table_list:
-            cprint("\t".expandtabs(4) + line, self.previous_color, attrs=["bold"])
+            cprint(
+                "\t".expandtabs(4) + self.sign_adjuster(line),
+                self.previous_color,
+                attrs=["bold"],
+            )
 
 
 """
