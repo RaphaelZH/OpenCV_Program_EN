@@ -7,10 +7,10 @@ from .RandomColors import color_list_generator
 
 class Form_Generator:
     def __init__(self):
-        self.adjusted_width = 60
+        self.adjusted_width = 59
 
     def sign_adjuster(self, string):
-        return string.replace("<", "＜").replace(">", "＞")
+        return string.replace("<", "⟨").replace(">", "⟩")
 
     def heading_printer(self, heading):
         self.heading = heading
