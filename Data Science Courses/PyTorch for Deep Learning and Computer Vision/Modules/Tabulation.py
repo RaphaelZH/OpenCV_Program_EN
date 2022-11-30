@@ -2,7 +2,6 @@ import re
 from tabulate import tabulate
 from termcolor import cprint
 
-from .DataFrameGeneration import DataFrame_Generator
 from .RandomColors import color_list_generator
 
 
@@ -140,8 +139,10 @@ class Form_Generator:
                 attrs=["bold"],
             )
 
-
-"""
-    def dataframe_printer(self, df):
-        cprint(df, self.previous_color, attrs=["bold"])
-"""
+    def dataframe_generator(self, df_table):
+        for line in df_table:
+            cprint(
+                "\t".expandtabs(4) + self.sign_adjuster(line),
+                self.previous_color,
+                attrs=["bold"],
+            )
