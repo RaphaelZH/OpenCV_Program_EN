@@ -1,5 +1,4 @@
 import pandas as pd
-from termcolor import cprint
 
 
 from .DataFrameTabulation import table_converter

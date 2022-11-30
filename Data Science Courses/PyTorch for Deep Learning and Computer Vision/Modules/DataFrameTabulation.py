@@ -1,3 +1,4 @@
+import itertools
 from tabulate import tabulate
 
 
@@ -71,7 +72,7 @@ def table_rebuilder(df, tablefmt):
     return [list_splicer(table_lists, i) for i in range(len(table_lists))]
 
 
-def table_converter(df, tablefmt="psql"):
+def table_converter(df, tablefmt):
     table = table_rebuilder(df, tablefmt=tablefmt)
     return [
         table[j][i]

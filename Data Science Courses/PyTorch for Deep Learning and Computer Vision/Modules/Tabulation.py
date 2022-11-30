@@ -2,6 +2,7 @@ import re
 from tabulate import tabulate
 from termcolor import cprint
 
+from .DataFrameGeneration import DataFrame_Generator
 from .RandomColors import color_list_generator
 
 
