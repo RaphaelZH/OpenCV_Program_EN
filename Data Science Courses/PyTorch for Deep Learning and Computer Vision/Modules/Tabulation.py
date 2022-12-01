@@ -45,6 +45,11 @@ class Form_Generator:
         string = self.tabulator_replacement(string, expandtabs)
         printable_line = string
         indent = expandtabs
+        exception = Exception(
+            "The length of the consecutive string is longer than expected."
+        )
+        if True in (len(i) > (width - indent) for i in string.split(" ")):
+            raise exception
         if len(string) > width:
             printable_line = string
             while len(printable_line) > width:
@@ -58,17 +63,11 @@ class Form_Generator:
                 printable_line = printable_line[
                     : self.lookup_checker(printable_line, " ")
                 ]
-                if len(printable_line) > width:
-                    exception = Exception(
-                        "The length of the consecutive string is longer than expected."
-                    )
-                    raise exception
-                else:
-                    printable_lines.append(printable_line)
-                    string = string[len(printable_line) + 1 :]
-                    printable_line = string
-                    width -= indent
-                    indent = 0
+                printable_lines.append(printable_line)
+                string = string[len(printable_line) + 1 :]
+                printable_line = string
+                width -= indent
+                indent = 0
         printable_lines.append(printable_line)
         return printable_lines
 
