@@ -34,6 +34,12 @@ class Form_Generator:
             string = re.sub(r"\t", " " * expandtabs, string)
         return string
 
+    def lookup_checker(self, string, target, type="r"):
+        if string.find(target) == -1:
+            return None
+        else:
+            return string.find(target) if type == "l" else string.rfind(target)
+    
     def string_trimmer(self, string, expandtabs, width):
         printable_lines = []
         string = self.tabulator_replacement(string, expandtabs)
@@ -42,9 +48,9 @@ class Form_Generator:
         if len(string) > width:
             printable_line = string
             while len(printable_line) > width:
-                while printable_line.rfind(" ") > width:
-                    printable_line = printable_line[: printable_line.rfind(" ")]
-                printable_line = printable_line[: printable_line.rfind(" ")]
+                while len(printable_line[: self.lookup_checker(printable_line, " ")]) > width:
+                    printable_line = printable_line[: self.lookup_checker(printable_line, " ")]
+                printable_line = printable_line[: self.lookup_checker(printable_line, " ")]
                 printable_lines.append(printable_line)
                 string = string[len(printable_line) + 1 :]
                 printable_line = string
