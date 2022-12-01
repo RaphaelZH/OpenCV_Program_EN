@@ -31,7 +31,7 @@ def list_splitter(table_lists, i):
         interval_line = "+"
         return table_lists[i].strip("+").split("+")
     elif i == 2:
-        if table_lists[i].strip("|").split("+") == "":
+        if table_lists[i].strip("|").split("+")[0] == "":
             border_line = "+"
             interval_line = "+"
             return table_lists[i].strip("+").split("+")
@@ -50,19 +50,18 @@ def list_splicer(table_lists, i):
     new_string = border_line
     cumulative_length = len(new_string)
     reassembled_list = []
-    reassembling = 0
     for i in range(len(split_list)):
         cumulative_length += len(split_list[i]) + 1
-        if cumulative_length <= 63:
+        if cumulative_length <= 62:
             if i == len(split_list) - 1:
                 new_string += split_list[i] + border_line
+                reassembled_list.append(new_string)
             else:
                 new_string += split_list[i] + interval_line
         else:
             reassembled_list.append(new_string)
-            new_string = f"… {interval_line}"
+            new_string = f"… {interval_line + split_list[i] + interval_line}"
             cumulative_length = len(new_string)
-            reassembling += 1
     return reassembled_list
 
 
