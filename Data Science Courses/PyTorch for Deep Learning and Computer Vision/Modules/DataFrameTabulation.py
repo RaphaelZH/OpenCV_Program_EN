@@ -24,29 +24,27 @@ def display_restrictions(df, tablefmt):
     return table_lists
 
 
-def list_splitter(table_lists, i):
+def list_splitter(arg0, arg1, table_lists, i):
     global border_line, interval_line
+    border_line = arg0
+    interval_line = arg1
+    return table_lists[i].strip(arg0).split(arg1)
+
+
+def row_selector(table_lists, i):
     if i in [0, len(table_lists) - 1]:
-        border_line = "+"
-        interval_line = "+"
-        return table_lists[i].strip("+").split("+")
+        return list_splitter("+", "+", table_lists, i)
     elif i == 2:
         if table_lists[i].strip("|").split("+")[0] == "":
-            border_line = "+"
-            interval_line = "+"
-            return table_lists[i].strip("+").split("+")
+            return list_splitter("+", "+", table_lists, i)
         else:
-            border_line = "|"
-            interval_line = "+"
-            return table_lists[i].strip("|").split("+")
+            return list_splitter("|", "+", table_lists, i)
     else:
-        border_line = "|"
-        interval_line = "|"
-        return table_lists[i].strip("|").split("|")
+        return list_splitter("|", "|", table_lists, i)
 
 
 def list_splicer(table_lists, i):
-    split_list = list_splitter(table_lists, i)
+    split_list = row_selector(table_lists, i)
     new_string = border_line
     cumulative_length = len(new_string)
     reassembled_list = []
