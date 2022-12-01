@@ -39,7 +39,7 @@ class Form_Generator:
             return None
         else:
             return string.find(target) if type == "l" else string.rfind(target)
-    
+
     def string_trimmer(self, string, expandtabs, width):
         printable_lines = []
         string = self.tabulator_replacement(string, expandtabs)
@@ -48,14 +48,27 @@ class Form_Generator:
         if len(string) > width:
             printable_line = string
             while len(printable_line) > width:
-                while len(printable_line[: self.lookup_checker(printable_line, " ")]) > width:
-                    printable_line = printable_line[: self.lookup_checker(printable_line, " ")]
-                printable_line = printable_line[: self.lookup_checker(printable_line, " ")]
-                printable_lines.append(printable_line)
-                string = string[len(printable_line) + 1 :]
-                printable_line = string
-                width -= indent
-                indent = 0
+                while (
+                    len(printable_line[: self.lookup_checker(printable_line, " ")])
+                    > width
+                ):
+                    printable_line = printable_line[
+                        : self.lookup_checker(printable_line, " ")
+                    ]
+                printable_line = printable_line[
+                    : self.lookup_checker(printable_line, " ")
+                ]
+                if len(printable_line) > width:
+                    exception = Exception(
+                        "The length of the consecutive string is longer than expected."
+                    )
+                    raise exception
+                else:
+                    printable_lines.append(printable_line)
+                    string = string[len(printable_line) + 1 :]
+                    printable_line = string
+                    width -= indent
+                    indent = 0
         printable_lines.append(printable_line)
         return printable_lines
 
