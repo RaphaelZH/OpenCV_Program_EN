@@ -50,7 +50,7 @@ def list_splicer(table_lists, i):
     reassembled_list = []
     for i in range(len(split_list)):
         cumulative_length += len(split_list[i]) + 1
-        if cumulative_length <= 62:
+        if cumulative_length <= 63:
             if i == len(split_list) - 1:
                 new_string += split_list[i] + border_line
                 reassembled_list.append(new_string)
@@ -58,8 +58,12 @@ def list_splicer(table_lists, i):
                 new_string += split_list[i] + interval_line
         else:
             reassembled_list.append(new_string)
-            new_string = f"… {interval_line + split_list[i] + interval_line}"
-            cumulative_length = len(new_string)
+            if i == len(split_list) - 1:
+                new_string = f"… {interval_line + split_list[i] + border_line}"
+                reassembled_list.append(new_string)
+            else:
+                new_string = f"… {interval_line + split_list[i] + interval_line}"
+                cumulative_length = len(new_string)
     return reassembled_list
 
 
