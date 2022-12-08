@@ -1,4 +1,4 @@
-name: Miniconda3_Python39
+name: miniconda3_py39
 channels:
   - apple
   - defaults
@@ -11,11 +11,11 @@ dependencies:
   - h5py=3.6.0=py39h7fe8675_0
   - hdf5=1.12.1=h160e8cb_2
   - krb5=1.19.2=h3b8d789_0
-  - libcurl=7.85.0=hc6d1d07_0
+  - libcurl=7.86.0=h0f1d93c_0
   - libcxx=14.0.6=h848a8c0_0
   - libedit=3.1.20210910=h1a28f6b_0
   - libev=4.33=h1a28f6b_1
-  - libffi=3.4.2=hc377ac9_4
+  - libffi=3.4.2=hca03da5_6
   - libgfortran=5.0.0=11_3_0_hca03da5_28
   - libgfortran5=11.3.0=h009349e_28
   - libnghttp2=1.46.0=h95c9599_0
@@ -25,17 +25,17 @@ dependencies:
   - ncurses=6.3=h1a28f6b_3
   - numpy=1.22.3=py39h25ab29e_0
   - numpy-base=1.22.3=py39h974a1f5_0
-  - openssl=1.1.1q=h1a28f6b_0
+  - openssl=1.1.1s=h1a28f6b_0
   - pip=22.2.2=py39hca03da5_0
-  - python=3.9.13=hbdb9e5c_2
+  - python=3.9.15=hc0d8a6c_2
   - readline=8.2=h1a28f6b_0
   - setuptools=65.5.0=py39hca03da5_0
   - six=1.16.0=pyhd3eb1b0_1
-  - sqlite=3.39.3=h1058600_0
+  - sqlite=3.40.0=h7a7dc30_0
   - tensorflow-deps=2.9.0=0
   - tk=8.6.12=hb8d0fd4_0
-  - tzdata=2022f=h04d1e81_0
+  - tzdata=2022g=h04d1e81_0
   - wheel=0.37.1=pyhd3eb1b0_0
-  - xz=5.2.6=h1a28f6b_0
+  - xz=5.2.8=h80987f9_0
   - zlib=1.2.13=h5a0b063_0
-prefix: /Users/haozhang/Miniconda3/envs/Miniconda3_Python39
+prefix: /Users/haozhang/opt/miniconda/envs/miniconda3_py39
