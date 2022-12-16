@@ -11,14 +11,11 @@ class Form_Generator:
 
     def sign_adjuster(self, string):
         regex_pattern = "\<[\s\S]*?\>"
-        if not re.search(regex_pattern, string):
-            return string
         while re.search(regex_pattern, string):
             positions = re.search(regex_pattern, string).span()
             string = f"{string[:positions[0]]}⟨{string[positions[0] + 1:]}"
             string = f"{string[:positions[1] - 1]}⟩{string[positions[1]:]}"
-        string = f"{string[:positions[0]]}⟨{string[positions[0] + 1:]}"
-        return f"{string[:positions[1] - 1]}⟩{string[positions[1]:]}"
+        return string
 
     def heading_printer(self, heading):
         self.heading = heading
