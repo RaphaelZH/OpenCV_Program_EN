@@ -1,3 +1,2 @@
 from .CustomColors import *
-from .DataFrameGeneration import DataFrame_Generator
-from .Tabulation import *
+from .Tabulation import DataFrame_Generator, Form_Generator
