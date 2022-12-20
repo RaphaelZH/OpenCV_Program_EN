@@ -19,15 +19,26 @@ class Form_Generator:
             string = f"{string[:positions[1] - 1]}⟩{string[positions[1]:]}"
         return string
 
-    def heading_printer(self, heading):
-        self.heading = heading
+    def color_selector(self):
+        global font_colors_list
         try:
             font_colors_list
         except NameError:
             font_colors_list = color_list_generator()
         if font_colors_list == []:
             font_colors_list = color_list_generator()
+        return font_colors_list
+
+    def heading_printer(self, heading):
+        global font_colors_list
+        try:
+            font_colors_list
+        except NameError:
+            font_colors_list = self.color_selector()
+        if font_colors_list == []:
+            font_colors_list = self.color_selector()
         self.previous_color = font_colors_list.pop(0)
+        self.heading = heading
         cprint(
             self.sign_adjuster(self.heading),
             self.previous_color,
