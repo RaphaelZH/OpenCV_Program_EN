@@ -65,9 +65,11 @@ class Form_Generator:
         exception = Exception(
             "The length of the consecutive string is longer than expected."
         )
-        if True in (len(i) > (width - indent) for i in string.split(" ")):
+        if len(string.split(" ")[0]) > width:
             raise exception
-        if len(string) > width:
+        elif True in (len(i) > (width - indent) for i in string.split(" ")[1:]):
+            raise exception
+        elif len(string) > width:
             printable_line = string
             while len(printable_line) > width:
                 while (
