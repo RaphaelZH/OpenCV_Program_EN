@@ -130,6 +130,31 @@ class Form_Generator:
                 attrs=["bold"],
             )
 
+    def long_statement_generator(self, statements, expandtabs=4):
+        table = [["Statement"]]
+        for statement in statements:
+            printable_lines = [
+                "\n\t".expandtabs(expandtabs).join(
+                    self.string_trimmer(line, expandtabs, self.adjusted_width)
+                )
+                for line in list(
+                    map(
+                        lambda i: "\t".expandtabs(expandtabs) + i.strip(),
+                        statement.strip().split("\n"),
+                    )
+                )
+            ]
+            table.append(["\n".join(printable_lines)])
+        table_list = tabulate(
+            table, headers="firstrow", tablefmt="pretty", colalign=("left",)
+        ).split("\n")
+        for line in table_list:
+            cprint(
+                "\t".expandtabs(4) + self.sign_adjuster(line),
+                self.previous_color,
+                attrs=["bold"],
+            )
+
     def variable_generator(self, variables, values, expandtabs=8):
         table = [["Variable", "Value"]]
         max_length = len(max(variables, key=len))
