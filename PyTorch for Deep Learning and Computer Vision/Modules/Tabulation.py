@@ -141,7 +141,7 @@ class Form_Generator:
                     map(
                         lambda i: i.strip()
                         if re.match(" ", i) is None
-                        else "\t".expandtabs(4) + i.strip(),
+                        else "\t".expandtabs(expandtabs) + i.strip(),
                         statement.split("\n"),
                     )
                 )
