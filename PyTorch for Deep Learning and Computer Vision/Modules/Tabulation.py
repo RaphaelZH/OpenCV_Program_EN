@@ -139,8 +139,10 @@ class Form_Generator:
                 )
                 for line in list(
                     map(
-                        lambda i: "\t".expandtabs(expandtabs) + i.strip(),
-                        statement.strip().split("\n"),
+                        lambda i: i.strip()
+                        if re.match(" ", i) is None
+                        else "\t".expandtabs(4) + i.strip(),
+                        statement.split("\n"),
                     )
                 )
             ]
