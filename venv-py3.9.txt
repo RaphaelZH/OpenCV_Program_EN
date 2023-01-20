@@ -1,8 +1,7 @@
 autopep8
 beautifultable
 bokeh
-demoji
-emoji
+gitpython
 ipykernel
 ipython
 jupyter
