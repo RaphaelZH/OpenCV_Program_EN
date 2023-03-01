@@ -243,11 +243,11 @@ def display_restrictions(df, tablefmt):
     return table_lists
 
 
-def list_splitter(arg0, arg1, table_lists, i):
+def list_splitter(mark_0, mark_1, table_lists, i):
     global border_line, interval_line
-    border_line = arg0
-    interval_line = arg1
-    return table_lists[i].strip(arg0).split(arg1)
+    border_line = mark_0
+    interval_line = mark_1
+    return table_lists[i].strip(mark_0).split(mark_1)
 
 
 def row_selector(table_lists, i):
