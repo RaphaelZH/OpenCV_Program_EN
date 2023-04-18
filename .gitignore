@@ -1,8 +1,12 @@
 .DS_Store
+.ipynb_checkpoints
 
 venv-python3-10/*
 
 PyTorch for Deep Learning and Computer Vision/Datasets/*
 PyTorch for Deep Learning and Computer Vision/Modules/__pycache__/*
 
-The Ultimate Beginners Guide to Fuzzy Logic in Python/Modules/__pycache__/*
+Modern Computer Vision PyTorch, TensorFlow 2, Keras & OpenCV 4/Modules/__pycache__/*
+
+The Ultimate Beginners Guide to Fuzzy Logic in Python/Modules/__pycache__/*.ipynb_checkpoints.ipynb_checkpoints
+.ipynb_checkpoints
