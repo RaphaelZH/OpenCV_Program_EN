@@ -203,9 +203,10 @@ class Form_Generator:
 
 
 class DataFrame_Generator:
-    def __init__(self, *args):
+    def __init__(self, *args, index=None):
         self.col_name = []
         self.dict = {}
+        self.index = index
         for i in args:
             self.col_name.append(i)
             self.dict.update({str(i): []})
@@ -215,7 +216,10 @@ class DataFrame_Generator:
             self.dict[i].append(j)
 
     def converter(self):
-        return pd.DataFrame.from_dict(self.dict)
+        df = pd.DataFrame.from_dict(self.dict)
+        if self.index != None:
+            df = df.set_axis(self.index, axis="index")
+        return df
 
     def tabulation(self, tablefmt="psql"):
         return table_converter(self.converter(), tablefmt)
