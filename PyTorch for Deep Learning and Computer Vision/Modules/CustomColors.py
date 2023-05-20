@@ -2,6 +2,22 @@ import colorsys
 import numpy as np
 
 
+def hls_to_rgb(h, s, l):
+    return [int(255 * i) for i in colorsys.hls_to_rgb(h, s, l)]
+
+
+def rgb_to_hex(r, g, b):
+    return "#%02x%02x%02x" % (r, g, b)
+
+
+def hex_to_rgb(color):
+    color = color.lstrip("#")
+    length = len(color)
+    return tuple(
+        int(color[i : i + length // 3], 16) for i in range(0, length, length // 3)
+    )
+
+
 def calm_color_generator(n):
     colors = []
     hue = np.repeat(np.random.random(), n)
@@ -14,6 +30,6 @@ def calm_color_generator(n):
     l = np.repeat(lightness, n)
     array_hls = np.concatenate((h, l, s)).reshape(-1, n).T
     for hls in array_hls:
-        r, g, b = [int(256 * e) for e in colorsys.hls_to_rgb(hls[0], hls[1], hls[2])]
-        colors.append("#%02X%02X%02X" % (r, g, b))
+        r, g, b = hls_to_rgb(hls[0], hls[1], hls[2])
+        colors.append(rgb_to_hex(r, g, b))
     return colors
