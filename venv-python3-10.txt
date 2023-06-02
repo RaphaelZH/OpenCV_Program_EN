@@ -3,6 +3,7 @@ beautifultable
 bokeh
 gitpython
 ipykernel
+ipynbcompress
 ipython
 jupyter
 jupyter-contrib-nbextensions
