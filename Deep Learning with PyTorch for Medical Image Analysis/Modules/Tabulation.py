@@ -36,6 +36,9 @@ class Form_Generator:
             end="\n\n",
         )
 
+    def get_font_color(self):
+        return self.previous_color
+
     def tabulator_replacement(self, string, expandtabs):
         if len(re.findall(r"\t", string)) > 0:
             string = re.sub(r"\t", " " * expandtabs, string)

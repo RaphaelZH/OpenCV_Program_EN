@@ -36,6 +36,9 @@ class Form_Generator:
             end="\n\n",
         )
 
+    def get_font_color(self):
+        return self.previous_color
+
     def tabulator_replacement(self, string, expandtabs):
         if len(re.findall(r"\t", string)) > 0:
             string = re.sub(r"\t", " " * expandtabs, string)
@@ -203,10 +206,9 @@ class Form_Generator:
 
 
 class DataFrame_Generator:
-    def __init__(self, *args, index=None):
+    def __init__(self, *args):
         self.col_name = []
         self.dict = {}
-        self.index = index
         for i in args:
             self.col_name.append(i)
             self.dict.update({str(i): []})
@@ -216,10 +218,7 @@ class DataFrame_Generator:
             self.dict[i].append(j)
 
     def converter(self):
-        df = pd.DataFrame.from_dict(self.dict)
-        if self.index != None:
-            df = df.set_axis(self.index, axis="index")
-        return df
+        return pd.DataFrame.from_dict(self.dict)
 
     def tabulation(self, tablefmt="psql"):
         return table_converter(self.converter(), tablefmt)
