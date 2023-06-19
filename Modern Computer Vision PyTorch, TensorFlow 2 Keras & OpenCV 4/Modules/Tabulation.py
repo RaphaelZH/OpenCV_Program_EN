@@ -19,7 +19,7 @@ class Form_Generator:
             string = f"{string[:positions[1] - 1]}⟩{string[positions[1]:]}"
         return string
 
-    def heading_printer(self, heading):
+    def get_font_color(self):
         global font_colors_list
         try:
             font_colors_list
@@ -28,6 +28,13 @@ class Form_Generator:
         if font_colors_list == []:
             font_colors_list = color_list_generator()
         self.previous_color = font_colors_list.pop(0)
+        return self.previous_color
+
+    def heading_printer(self, heading):
+        try:
+            self.previous_color
+        except AttributeError:
+            self.previous_color = self.get_font_color()
         self.heading = heading
         cprint(
             self.sign_adjuster(self.heading),
@@ -35,9 +42,6 @@ class Form_Generator:
             attrs=["underline"],
             end="\n\n",
         )
-
-    def get_font_color(self):
-        return self.previous_color
 
     def tabulator_replacement(self, string, expandtabs):
         if len(re.findall(r"\t", string)) > 0:
