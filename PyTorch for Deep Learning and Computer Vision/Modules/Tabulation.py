@@ -11,14 +11,6 @@ class Form_Generator:
     def __init__(self):
         self.adjusted_width = 59
 
-    def sign_adjuster(self, string):
-        regex_pattern = "\<[\s\S]*?\>"
-        while re.search(regex_pattern, string):
-            positions = re.search(regex_pattern, string).span()
-            string = f"{string[:positions[0]]}⟨{string[positions[0] + 1:]}"
-            string = f"{string[:positions[1] - 1]}⟩{string[positions[1]:]}"
-        return string
-
     def get_font_color(self):
         global font_colors_list
         try:
@@ -29,6 +21,14 @@ class Form_Generator:
             font_colors_list = color_list_generator()
         self.previous_color = font_colors_list.pop(0)
         return self.previous_color
+
+    def sign_adjuster(self, string):
+        regex_pattern = "\<[\s\S]*?\>"
+        while re.search(regex_pattern, string):
+            positions = re.search(regex_pattern, string).span()
+            string = f"{string[:positions[0]]}⟨{string[positions[0] + 1:]}"
+            string = f"{string[:positions[1] - 1]}⟩{string[positions[1]:]}"
+        return string
 
     def heading_printer(self, heading):
         try:
@@ -210,9 +210,10 @@ class Form_Generator:
 
 
 class DataFrame_Generator:
-    def __init__(self, *args):
+    def __init__(self, *args, index=None):
         self.col_name = []
         self.dict = {}
+        self.index = index
         for i in args:
             self.col_name.append(i)
             self.dict.update({str(i): []})
@@ -222,7 +223,10 @@ class DataFrame_Generator:
             self.dict[i].append(j)
 
     def converter(self):
-        return pd.DataFrame.from_dict(self.dict)
+        df = pd.DataFrame.from_dict(self.dict)
+        if self.index != None:
+            df = df.set_axis(self.index, axis="index")
+        return df
 
     def tabulation(self, tablefmt="psql"):
         return table_converter(self.converter(), tablefmt)
