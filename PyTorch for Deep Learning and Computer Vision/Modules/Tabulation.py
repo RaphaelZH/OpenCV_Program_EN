@@ -94,7 +94,9 @@ class Form_Generator:
                 "\n\t".expandtabs(expandtabs).join(
                     self.string_trimmer(line, expandtabs, self.adjusted_width)
                 )
-                for line in definition.strip().split("\n")
+                for line in definition.replace('end="\n\n"', 'end="\\n\\n"')
+                .strip()
+                .split("\n")
             ]
             table.append(["\n".join(printable_lines)])
         table_list = tabulate(
@@ -114,7 +116,9 @@ class Form_Generator:
                 "\n\t".expandtabs(expandtabs).join(
                     self.string_trimmer(line, expandtabs, self.adjusted_width)
                 )
-                for line in statement.strip().split("\n")
+                for line in statement.replace('end="\n\n"', 'end="\\n\\n"')
+                .strip()
+                .split("\n")
             ]
             table.append(["\n".join(printable_lines)])
         table_list = tabulate(
@@ -139,7 +143,7 @@ class Form_Generator:
                         lambda i: i.strip()
                         if re.match(" ", i) is None
                         else "\t".expandtabs(expandtabs) + i.strip(),
-                        statement.split("\n"),
+                        statement.replace('end="\n\n"', 'end="\\n\\n"').split("\n"),
                     )
                 )
             ]
