@@ -6,8 +6,8 @@ dependencies:
   - blas=1.0=openblas
   - bzip2=1.0.8=h620ffc9_4
   - c-ares=1.19.0=h80987f9_0
-  - ca-certificates=2023.01.10=hca03da5_0
-  - certifi=2022.12.7=py310hca03da5_0
+  - ca-certificates=2023.05.30=hca03da5_0
+  - certifi=2023.5.7=py310hca03da5_0
   - grpcio=1.42.0=py310h95c9599_0
   - h5py=3.6.0=py310h181c318_0
   - hdf5=1.12.1=h160e8cb_2
@@ -26,7 +26,7 @@ dependencies:
   - ncurses=6.4=h313beb8_0
   - numpy=1.22.3=py310hdb36b11_0
   - numpy-base=1.22.3=py310h5e3e9f0_0
-  - openssl=1.1.1t=h1a28f6b_0
+  - openssl=1.1.1u=h1a28f6b_0
   - pip=23.0.1=py310hca03da5_0
   - python=3.10.10=hc0d8a6c_2
   - readline=8.2=h1a28f6b_0

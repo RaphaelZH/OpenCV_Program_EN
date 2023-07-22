@@ -19,6 +19,7 @@ opencv-python
 pandas
 pip
 plotly
+pydicom
 pymongo
 pymysql
 pyspark
@@ -26,6 +27,7 @@ scikit-fuzzy
 scikit-learn
 seaborn
 setuptools
+SimpleITK
 spacy
 tabulate
 termcolor
