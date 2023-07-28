@@ -5,14 +5,26 @@ import os, sys
 
 from datetime import datetime, timezone
 
+
+
 from pathlib import Path
 
-courses_list = ["Deep Learning with PyTorch for Medical Image Analysis", "Modern Computer Vision PyTorch, TensorFlow 2 Keras & OpenCV 4"]
+import pandas as pd
 
-dir_notebook = ["/", "/Notebooks/"]
+
+courses_list = [
+    "Deep Learning with PyTorch for Medical Image Analysis",
+    "Modern Computer Vision PyTorch, TensorFlow 2 Keras & OpenCV 4",
+]
+
+dir_notebook = ["./", "/Notebooks/"]
 
 for course in courses_list:
-    print(dir_notebook.join(course))
+    path_object = Path(course.join(dir_notebook))
+    for file in path_object.iterdir():
+        if file.name.split(".")[-1] == "ipynb" and file.name.find("(Compressed)") == -1:
+            print(file.name)
+
 """
 path_object = Path(dir_path)
 dir_path = "../Datasets/Kaggle - CT Medical Images/dicom_dir/"
@@ -29,15 +41,15 @@ dir_path = "../Datasets/Kaggle - CT Medical Images/dicom_dir/"
     ]
 )
 """
-#input_filename = "2 - CNN - Convolutional Neural Networks.ipynb"
+# input_filename = "2 - CNN - Convolutional Neural Networks.ipynb"
 
 # Showing stat information of file
-#stinfo = os.stat(input_filename)
-#print(stinfo)
+# stinfo = os.stat(input_filename)
+# print(stinfo)
 
 # Using os.stat to recieve atime and mtime of file
-#print("access time of .py: %s" %datetime.fromtimestamp(stinfo.st_atime))
-#print("modified time of .py: %s" %datetime.fromtimestamp(stinfo.st_mtime))
+# print("access time of .py: %s" %datetime.fromtimestamp(stinfo.st_atime))
+# print("modified time of .py: %s" %datetime.fromtimestamp(stinfo.st_mtime))
 
 """
 
@@ -48,7 +60,6 @@ input_filename = "2 - CNN - Convolutional Neural Networks.ipynb"
 os.system(f"jupyter nbconvert --to html '{input_filename}'")
 
 """
-
 
 
 """
