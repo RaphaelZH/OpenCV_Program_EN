@@ -40,6 +40,7 @@ def file_checker(func):
     @wraps(func)
     def wrapper():
         global csv_file
+        output_filename_dict = {}
         if csv_file.is_file():
             df = pd.read_csv(csv_file)
             for index, row in df.iterrows():
@@ -55,27 +56,36 @@ def file_checker(func):
                     df.loc[index, "Modification date"] = datetime.fromtimestamp(
                         file_object.stat().st_mtime, tz=pytz.timezone("cet")
                     )
-                    output_filename = func(input_filename)
-                    df.loc[index, "Compressed file"] = output_filename.split(
-                        "/Notebooks/"
-                    )[-1]
-                    file_object = Path(output_filename)
-                    df.loc[index, "Compressed size"] = file_object.stat().st_size
+                    output_filename_dict[index] = func(input_filename)
         else:
             df = dataframe_creation()
             for index, row in df.iterrows():
                 input_filename = row["File path"] + row["File name"]
-                output_filename = func(input_filename)
-                df.loc[index, "Compressed file"] = output_filename.split("/Notebooks/")[
-                    -1
-                ]
-                file_object = Path(output_filename)
-                df.loc[index, "Compressed size"] = file_object.stat().st_size
+                output_filename_dict[index] = func(input_filename)
+        return df, output_filename_dict
+
+    return wrapper
+
+
+def compression_record(func):
+    @wraps(func)
+    def wrapper():
+        global csv_file
+        df, output_filename_dict = func()
+        if output_filename_dict != {}:
+            for (index, _), (key, value) in zip(
+                df.iterrows(), output_filename_dict.items()
+            ):
+                if index == key:
+                    df.loc[index, "Compressed file"] = value.split("/Notebooks/")[-1]
+                    file_object = Path(value)
+                    df.loc[index, "Compressed size"] = file_object.stat().st_size
         df.to_csv(csv_file, index=False)
 
     return wrapper
 
 
+@compression_record
 @file_checker
 def file_generator(input_filename):
     os.system(f"jupyter nbconvert --to html '{input_filename}'")
