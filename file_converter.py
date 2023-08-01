@@ -6,40 +6,44 @@ import pandas as pd
 from pathlib import Path
 import pytz
 
+
 def notebook_selector(path_object):
     return [
         file.name
         for file in path_object.iterdir()
         if (
-            file.name.split(".")[-1] == "ipynb"
-            and file.name.find("(Compressed)") == -1
+            file.name.split(".")[-1] == "ipynb" and file.name.find("(Compressed)") == -1
         )
     ]
+
+
+def info_collector(course, file, info_dict):
+    dir_notebook = ["./", "/Notebooks/"]
+    info_dict["File path"].append(course.join(dir_notebook))
+    info_dict["File name"].append(file)
+    file_object = Path(course.join(dir_notebook) + file)
+    info_dict["File size"].append(file_object.stat().st_size)
+    info_dict["Modification date"].append(
+        datetime.fromtimestamp(file_object.stat().st_mtime, tz=pytz.timezone("cet"))
+    )
+    return info_dict
+
 
 def dataframe_creation():
     global courses_list
     dir_notebook = ["./", "/Notebooks/"]
-    file_name_list = []
-    file_path_list = []
-    st_size_list = []
-    st_mtime_list = []
+    info_dict = {
+        "File path": [],
+        "File name": [],
+        "File size": [],
+        "Modification date": [],
+    }
     for course in courses_list:
         path_object = Path(course.join(dir_notebook))
         file_list = notebook_selector(path_object)
         for file in file_list:
-            file_path_list.append(course.join(dir_notebook))
-            file_name_list.append(file.name)
-            file_object = Path(course.join(dir_notebook) + file.name)
-            st_size_list.append(file_object.stat().st_size)
-            st_mtime_list.append(
-                datetime.fromtimestamp(
-                    file_object.stat().st_mtime, tz=pytz.timezone("cet")
-                )
-            )
-    return pd.DataFrame(
-        list(zip(file_path_list, file_name_list, st_size_list, st_mtime_list)),
-        columns=["File path", "File name", "File size", "Modification date"],
-    )
+            info_dict = info_collector(course, file, info_dict)
+    return pd.DataFrame.from_dict(data=info_dict)
 
 
 def file_checker(func):
@@ -49,19 +53,20 @@ def file_checker(func):
         output_filename_dict = {}
         if csv_object.is_file():
             df = pd.read_csv(csv_object)
-            #if 
-            #folder counterobject
+            # if
+            # folder counterobject
             for index, row in df.iterrows():
                 input_filename = row["File path"] + row["File name"]
                 folder_object = Path(row["File path"])
-                folder_counter = len([file for file in notebook_selector(folder_object)])
+                folder_counter = len(
+                    [file for file in notebook_selector(folder_object)]
+                )
                 row_counter = len(df.loc[df["File path"] == row["File path"]])
                 if folder_counter != row_counter:
                     print(folder_counter)
-                
-                
+
                 file_object = Path(input_filename)
-                
+
                 if (
                     datetime.fromtimestamp(
                         file_object.stat().st_mtime, tz=pytz.timezone("cet")
