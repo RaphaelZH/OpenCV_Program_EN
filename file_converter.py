@@ -49,12 +49,19 @@ def date_format(time):
     return datetime.fromtimestamp(time, tz=pytz.timezone("cet"))
 
 
+def alteration_monitor(file_object, cell_time, cell_size):
+    if date_format(file_object.stat().st_mtime) != cell_time and file_object.stat().st_size != cell_size:
+        cell_time = date_format(file_object.stat().st_mtime)
+        cell_size = file_object.stat().st_size
+    
+
 def file_checker(func):
     @wraps(func)
     def wrapper():
         global courses_list, csv_object, dir_notebook
         output_filename_dict = {}
         if csv_object.is_file():
+            index = 0
             df = pd.read_csv(csv_object)
             info_dict = df.to_dict("list")
             for course in courses_list:
@@ -62,13 +69,19 @@ def file_checker(func):
                 path_counter = len(list(notebook_selector(path_object)))
                 if path_counter != len(df.loc[df["File path"] == course]):
                     for file in notebook_selector(path_object):
-                        input_filename = Path(course.join(dir_notebook) + file)
+                        input_filename = course.join(dir_notebook) + file
                         file_object = Path(input_filename)
                         if file not in df.loc[df["File path"] == course]["File name"]:
                             info_dict = info_collector(course, file, info_dict)
-                            #df = pd.DataFrame.from_dict(data=info_dict)
-                            
-                        print(date_format(file_object.stat().st_mtime))
+                            info_dict["Compressed file"].append("")
+                            info_dict["Compressed size"].append("")
+                            df = pd.DataFrame.from_dict(data=info_dict)
+                            output_filename_dict[index] = func(input_filename)
+                            index += 1
+                        else:
+                            print(df)
+                            alteration_monitor(file_object, df.loc[df["File path"] == course and df["File name"] == file]["Modification date"], df.loc[df["File path"] == course and df["File name"] == file]["File size"])
+                            print(df)
                         """
                         elif (
                             date_format(file_object.stat().st_mtime)
@@ -88,12 +101,16 @@ def file_checker(func):
                             df.loc[
                                 df["File path"] == course and df["File name"] == file
                             ]["File size"] = file_object.stat().st_size
+                            for index, row in df.iterrows():
+                                if file == row["File name"]:
+                                    input_filename = row["File path"].join(dir_notebook) + row["File name"]
+                                    output_filename_dict[index] = func(input_filename)
                         """
         else:
             df = dataframe_creation()
-        for index, row in df.iterrows():
-            input_filename = row["File path"].join(dir_notebook) + row["File name"]
-            output_filename_dict[index] = func(input_filename)
+            for index, row in df.iterrows():
+                input_filename = row["File path"].join(dir_notebook) + row["File name"]
+                output_filename_dict[index] = func(input_filename)
         return df, output_filename_dict
 
     return wrapper
