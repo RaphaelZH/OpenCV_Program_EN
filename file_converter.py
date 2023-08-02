@@ -50,10 +50,12 @@ def date_format(time):
 
 
 def alteration_monitor(file_object, cell_time, cell_size):
-    if date_format(file_object.stat().st_mtime) != cell_time and file_object.stat().st_size != cell_size:
-        cell_time = date_format(file_object.stat().st_mtime)
-        cell_size = file_object.stat().st_size
-    
+    if file_object.stat().st_size != cell_size:
+        #print((date_format(file_object.stat().st_mtime) != cell_time) and (file_object.stat().st_size != cell_size))
+        print(cell_time)# = date_format(file_object.stat().st_mtime)
+        print(cell_size)# = file_object.stat().st_size
+
+
 
 def file_checker(func):
     @wraps(func)
@@ -80,32 +82,17 @@ def file_checker(func):
                             index += 1
                         else:
                             print(df)
-                            alteration_monitor(file_object, df.loc[df["File path"] == course and df["File name"] == file]["Modification date"], df.loc[df["File path"] == course and df["File name"] == file]["File size"])
+                            alteration_monitor(file_object, df.loc[df["File path"] == course and df["File name"] == file, "Modification date"], df.loc[df["File path"] == course and df["File name"] == file, "File size"])
                             print(df)
-                        """
-                        elif (
-                            date_format(file_object.stat().st_mtime)
-                            != df.loc[
-                                df["File path"] == course and df["File name"] == file
-                            ]["Modification date"]
-                            and file_object.stat().st_size
-                            != df.loc[
-                                df["File path"] == course and df["File name"] == file
-                            ]["File size"]
-                        ):
-                            df.loc[
-                                df["File path"] == course and df["File name"] == file
-                            ]["Modification date"] = date_format(
-                                file_object.stat().st_mtime
-                            )
-                            df.loc[
-                                df["File path"] == course and df["File name"] == file
-                            ]["File size"] = file_object.stat().st_size
-                            for index, row in df.iterrows():
-                                if file == row["File name"]:
-                                    input_filename = row["File path"].join(dir_notebook) + row["File name"]
-                                    output_filename_dict[index] = func(input_filename)
-                        """
+                else:
+                    for file in notebook_selector(path_object):
+                        input_filename = course.join(dir_notebook) + file
+                        file_object = Path(input_filename)
+                        #if file_object.stat().st_size != df.loc[(df["File path"] == course) & (df["File name"] != file), "File size"]:
+                        #    print(df)
+                        #alteration_monitor(file_object, df.loc[(df["File path"] == course) & (df["File name"] == file), "Modification date"], df.loc[(df["File path"] == course) & (df["File name"] == file), "File size"])
+                        print((df.loc[(df["File path"] == course) & (df["File name"] == file), "Modification date"] != date_format(file_object.stat().st_mtime)) & (df.loc[(df["File path"] == course) & (df["File name"] != file), "File size"] == file_object.stat().st_size))
+                        #print(df)
         else:
             df = dataframe_creation()
             for index, row in df.iterrows():
