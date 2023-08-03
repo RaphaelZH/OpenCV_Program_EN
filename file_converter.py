@@ -68,57 +68,51 @@ def file_checker(func):
         output_filename_dict = {}
         if csv_object.is_file():
             df = pd.read_csv(csv_object)
-            index = 0
             info_dict = df.to_dict("list")
             for course in courses_list:
                 path_object = Path(course.join(dir_notebook))
-                path_counter = len(list(notebook_selector(path_object)))
-                if path_counter != len(df.loc[df["File path"] == course]):
-                    for file in notebook_selector(path_object):
-                        input_filename = course.join(dir_notebook) + file
-                        file_object = Path(input_filename)
-                        if file not in df.loc[df["File path"] == course]["File name"]:
-                            info_dict = info_collector(course, file, info_dict)
-                            info_dict["Compressed file"].append("")
-                            info_dict["Compressed size"].append("")
-                            df = pd.DataFrame.from_dict(data=info_dict)
-                            output_filename_dict[index] = func(input_filename)
-                            index += 1
-                        else:
-                            print(df)
-                            alteration_monitor(
-                                file_object,
-                                df.loc[
-                                    df["File path"] == course
-                                    and df["File name"] == file,
-                                    "Modification date",
-                                ],
-                                df.loc[
-                                    df["File path"] == course
-                                    and df["File name"] == file,
-                                    "File size",
-                                ],
-                            )
-                            print(df)
-                else:
-                    for file in notebook_selector(path_object):
-                        input_filename = course.join(dir_notebook) + file
-                        file_object = Path(input_filename)
-                        df.loc[(df["File path"] == course) & (df["File name"] == file),["Modification date", "File size"]] = alteration_monitor(
+                for file in notebook_selector(path_object):
+                    input_filename = course.join(dir_notebook) + file
+                    file_object = Path(input_filename)
+                    if (
+                        file
+                        not in df.loc[df["File path"] == course][
+                            "File name"
+                        ].to_list()
+                    ):
+                        info_dict = info_collector(course, file, info_dict)
+                        info_dict["Compressed file"].append("")
+                        info_dict["Compressed size"].append("")
+                        df = pd.DataFrame.from_dict(data=info_dict)
+                        index = df.shape[0]
+                        output_filename_dict[index] = func(input_filename)
+                    else:
+                        df.loc[
+                            (df["File path"] == course) & (df["File name"] == file),
+                            ["Modification date", "File size"],
+                        ] = alteration_monitor(
                             file_object,
                             df.loc[
-                                (df["File path"] == course) & (df["File name"] == file),
+                                (df["File path"] == course)
+                                & (df["File name"] == file),
                                 "Modification date",
                             ],
                             df.loc[
-                                (df["File path"] == course) & (df["File name"] == file),
+                                (df["File path"] == course)
+                                & (df["File name"] == file),
                                 "File size",
                             ],
                         )
                         if alteration:
                             for index, row in df.iterrows():
-                                if input_filename == row["File path"].join(dir_notebook) + row["File name"]:
-                                    output_filename_dict[index] = func(input_filename)
+                                if (
+                                    input_filename
+                                    == row["File path"].join(dir_notebook)
+                                    + row["File name"]
+                                ):
+                                    output_filename_dict[index] = func(
+                                        input_filename
+                                    )
         else:
             df = dataframe_creation()
             for index, row in df.iterrows():
@@ -152,6 +146,7 @@ def file_generator(input_filename):
     output_filename = " (Compressed).ipynb".join(input_filename.split(".ipynb"))
     compress(input_filename, output_filename, img_width=800, img_format="png")
     return output_filename
+
 
 alteration = False
 
