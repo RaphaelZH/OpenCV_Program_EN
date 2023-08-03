@@ -50,21 +50,25 @@ def date_format(time):
 
 
 def alteration_monitor(file_object, cell_time, cell_size):
-    if file_object.stat().st_size != cell_size:
-        #print((date_format(file_object.stat().st_mtime) != cell_time) and (file_object.stat().st_size != cell_size))
-        print(cell_time)# = date_format(file_object.stat().st_mtime)
-        print(cell_size)# = file_object.stat().st_size
-
+    global alteration
+    if (file_object.stat().st_size != cell_size).bool():
+        cell_time = date_format(file_object.stat().st_mtime)
+        cell_size = file_object.stat().st_size
+        alteration = True
+        return cell_time, cell_size
+    else:
+        alteration = False
+        return cell_time.values[0], cell_size.values[0]
 
 
 def file_checker(func):
     @wraps(func)
     def wrapper():
-        global courses_list, csv_object, dir_notebook
+        global alteration, courses_list, csv_object, dir_notebook
         output_filename_dict = {}
         if csv_object.is_file():
-            index = 0
             df = pd.read_csv(csv_object)
+            index = 0
             info_dict = df.to_dict("list")
             for course in courses_list:
                 path_object = Path(course.join(dir_notebook))
@@ -82,17 +86,39 @@ def file_checker(func):
                             index += 1
                         else:
                             print(df)
-                            alteration_monitor(file_object, df.loc[df["File path"] == course and df["File name"] == file, "Modification date"], df.loc[df["File path"] == course and df["File name"] == file, "File size"])
+                            alteration_monitor(
+                                file_object,
+                                df.loc[
+                                    df["File path"] == course
+                                    and df["File name"] == file,
+                                    "Modification date",
+                                ],
+                                df.loc[
+                                    df["File path"] == course
+                                    and df["File name"] == file,
+                                    "File size",
+                                ],
+                            )
                             print(df)
                 else:
                     for file in notebook_selector(path_object):
                         input_filename = course.join(dir_notebook) + file
                         file_object = Path(input_filename)
-                        #if file_object.stat().st_size != df.loc[(df["File path"] == course) & (df["File name"] != file), "File size"]:
-                        #    print(df)
-                        #alteration_monitor(file_object, df.loc[(df["File path"] == course) & (df["File name"] == file), "Modification date"], df.loc[(df["File path"] == course) & (df["File name"] == file), "File size"])
-                        print((df.loc[(df["File path"] == course) & (df["File name"] == file), "Modification date"] != date_format(file_object.stat().st_mtime)) & (df.loc[(df["File path"] == course) & (df["File name"] != file), "File size"] == file_object.stat().st_size))
-                        #print(df)
+                        df.loc[(df["File path"] == course) & (df["File name"] == file),["Modification date", "File size"]] = alteration_monitor(
+                            file_object,
+                            df.loc[
+                                (df["File path"] == course) & (df["File name"] == file),
+                                "Modification date",
+                            ],
+                            df.loc[
+                                (df["File path"] == course) & (df["File name"] == file),
+                                "File size",
+                            ],
+                        )
+                        if alteration:
+                            for index, row in df.iterrows():
+                                if input_filename == row["File path"].join(dir_notebook) + row["File name"]:
+                                    output_filename_dict[index] = func(input_filename)
         else:
             df = dataframe_creation()
             for index, row in df.iterrows():
@@ -127,6 +153,7 @@ def file_generator(input_filename):
     compress(input_filename, output_filename, img_width=800, img_format="png")
     return output_filename
 
+alteration = False
 
 courses_list = [
     "Deep Learning with PyTorch for Medical Image Analysis",
