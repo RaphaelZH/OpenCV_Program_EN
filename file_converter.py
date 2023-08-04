@@ -76,15 +76,13 @@ def file_checker(func):
                     file_object = Path(input_filename)
                     if (
                         file
-                        not in df.loc[df["File path"] == course][
-                            "File name"
-                        ].to_list()
+                        not in df.loc[df["File path"] == course]["File name"].to_list()
                     ):
                         info_dict = info_collector(course, file, info_dict)
                         info_dict["Compressed file"].append("")
                         info_dict["Compressed size"].append("")
                         df = pd.DataFrame.from_dict(data=info_dict)
-                        index = df.shape[0]
+                        index = df.shape[0] - 1
                         output_filename_dict[index] = func(input_filename)
                     else:
                         df.loc[
@@ -93,13 +91,11 @@ def file_checker(func):
                         ] = alteration_monitor(
                             file_object,
                             df.loc[
-                                (df["File path"] == course)
-                                & (df["File name"] == file),
+                                (df["File path"] == course) & (df["File name"] == file),
                                 "Modification date",
                             ],
                             df.loc[
-                                (df["File path"] == course)
-                                & (df["File name"] == file),
+                                (df["File path"] == course) & (df["File name"] == file),
                                 "File size",
                             ],
                         )
@@ -110,9 +106,7 @@ def file_checker(func):
                                     == row["File path"].join(dir_notebook)
                                     + row["File name"]
                                 ):
-                                    output_filename_dict[index] = func(
-                                        input_filename
-                                    )
+                                    output_filename_dict[index] = func(input_filename)
         else:
             df = dataframe_creation()
             for index, row in df.iterrows():
@@ -129,11 +123,10 @@ def compression_record(func):
         global csv_object
         df, output_filename_dict = func()
         if output_filename_dict != {}:
-            for index, (key, value) in zip(df.index, output_filename_dict.items()):
-                if index == key:
-                    df.loc[index, "Compressed file"] = value.split("/Notebooks/")[-1]
-                    file_object = Path(value)
-                    df.loc[index, "Compressed size"] = file_object.stat().st_size
+            for key, value in output_filename_dict.items():
+                df.loc[key, "Compressed file"] = value.split("/Notebooks/")[-1]
+                file_object = Path(value)
+                df.loc[key, "Compressed size"] = file_object.stat().st_size
         df.to_csv(csv_object, index=False)
 
     return wrapper
