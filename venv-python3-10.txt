@@ -1,6 +1,7 @@
 autopep8
 beautifultable
 bokeh
+dicom2nifti
 gitpython
 ipykernel
 ipynbcompress
@@ -11,6 +12,7 @@ jupyterlab
 lightning
 matplotlib
 nbconvert
+nibabel
 nltk
 notebook
 numpy
