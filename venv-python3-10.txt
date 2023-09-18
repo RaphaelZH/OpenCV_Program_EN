@@ -8,11 +8,9 @@ ipykernel
 ipynbcompress
 ipython
 jupyter
-jupyter-contrib-nbextensions
 jupyterlab
 lightning
 matplotlib
-nbconvert
 nibabel
 nltk
 notebook
@@ -23,11 +21,6 @@ pandas
 pip
 plotly
 pydicom
-pymongo
-pymysql
-pyppeteer
-pyspark
-scikit-fuzzy
 scikit-learn
 seaborn
 setuptools
@@ -35,6 +28,5 @@ SimpleITK
 spacy
 tabulate
 termcolor
-transformers
 wheel
 yapf

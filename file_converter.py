@@ -1,7 +1,6 @@
 from datetime import datetime
 from functools import wraps
 from ipynbcompress import compress
-import os
 import pandas as pd
 from pathlib import Path
 import pytz
@@ -51,7 +50,7 @@ def date_format(time):
 
 def alteration_monitor(file_object, cell_time, cell_size):
     global alteration
-    if (file_object.stat().st_size != cell_size).bool():
+    if file_object.stat().st_size != cell_size.item():
         cell_time = date_format(file_object.stat().st_mtime)
         cell_size = file_object.stat().st_size
         alteration = True
@@ -122,6 +121,8 @@ def compression_record(func):
     def wrapper():
         global csv_object
         df, output_filename_dict = func()
+        df["Compressed file"] = ""
+        df["Compressed file"].astype("object")
         if output_filename_dict != {}:
             for key, value in output_filename_dict.items():
                 df.loc[key, "Compressed file"] = value.split("/Notebooks/")[-1]
@@ -135,7 +136,6 @@ def compression_record(func):
 @compression_record
 @file_checker
 def file_generator(input_filename):
-    os.system(f"jupyter nbconvert --to html '{input_filename}'")
     output_filename = " (Compressed).ipynb".join(input_filename.split(".ipynb"))
     compress(input_filename, output_filename, img_width=800, img_format="png")
     return output_filename
