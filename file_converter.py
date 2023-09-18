@@ -122,7 +122,6 @@ def compression_record(func):
         global csv_object
         df, output_filename_dict = func()
         df["Compressed file"] = ""
-        df["Compressed file"].astype("object")
         if output_filename_dict != {}:
             for key, value in output_filename_dict.items():
                 df.loc[key, "Compressed file"] = value.split("/Notebooks/")[-1]
