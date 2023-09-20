@@ -126,6 +126,10 @@ def compression_record(func):
             for key, value in output_filename_dict.items():
                 df.loc[key, "Compressed file"] = value.split("/Notebooks/")[-1]
                 file_object = Path(value)
+                scale = 1
+                while file_object.stat().st_size > 15 * (10**6):
+                    compress(value, value, img_width=800 - 80 * scale, img_format="png")
+                    scale += 1
                 df.loc[key, "Compressed size"] = file_object.stat().st_size
         df.to_csv(csv_object, index=False)
 
