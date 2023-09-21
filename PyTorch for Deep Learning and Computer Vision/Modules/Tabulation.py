@@ -215,16 +215,25 @@ class Form_Generator:
 
 class DataFrame_Generator:
     def __init__(self, *args, index=None):
-        self.col_name = []
         self.dict = {}
         self.index = index
-        for i in args:
-            self.col_name.append(i)
-            self.dict.update({str(i): []})
+        if len(args) == 1 and type(args[0]) == list:
+            self.col_name = args[0]
+            for i in self.col_name:
+                self.dict |= {i: []}
+        else:
+            self.col_name = []
+            for i in args:
+                self.col_name.append(i)
+                self.dict |= {str(i): []}
 
     def updater(self, *args):
-        for i, j in zip(self.col_name, args):
-            self.dict[i].append(j)
+        if len(args) == 1 and type(args[0]) == list:
+            for i, j in zip(self.col_name, args[0]):
+                self.dict[i].append(j)
+        else:
+            for i, j in zip(self.col_name, args):
+                self.dict[i].append(j)
 
     def converter(self):
         df = pd.DataFrame.from_dict(self.dict)
