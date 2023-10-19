@@ -4,6 +4,16 @@ from lightning.pytorch.callbacks.progress.rich_progress import RichProgressBarTh
 from .CustomColors import *
 
 
+def boolean_value(input):
+    exception = Exception("Unable to convert this input value to a Boolean value.")
+    if int(float(input)) == 1:
+        return True
+    elif int(float(input)) == 0:
+        return False
+    else:
+        raise exception
+
+
 def custom_progress_bar():
     colors = calm_color_generator(2)
     color_group_1 = gradient_dark_generator(colors[0], 3)
@@ -24,3 +34,12 @@ def custom_progress_bar():
             metrics_format=".3e",
         )
     )
+
+
+def log_config(on_step, on_epoch, prog_bar, logger=True):
+    return {
+        "on_step": boolean_value(on_step),
+        "on_epoch": boolean_value(on_epoch),
+        "prog_bar": boolean_value(prog_bar),
+        "logger": boolean_value(logger),
+    }
