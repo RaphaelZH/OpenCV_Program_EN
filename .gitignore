@@ -14,6 +14,7 @@ Modern Computer Vision PyTorch, TensorFlow 2 Keras & OpenCV 4/Notebooks/1 - Open
 
 Deep Learning with PyTorch for Medical Image Analysis/Datasets/*
 Deep Learning with PyTorch for Medical Image Analysis/Images/*
+Deep Learning with PyTorch for Medical Image Analysis/Logs/*
 Deep Learning with PyTorch for Medical Image Analysis/Modules/__pycache__/*
 Deep Learning with PyTorch for Medical Image Analysis/Notebooks/2 - CNN - Convolutional Neural Networks.ipynb
 Deep Learning with PyTorch for Medical Image Analysis/Notebooks/3 - Data Formats in Medical Imaging.ipynb
