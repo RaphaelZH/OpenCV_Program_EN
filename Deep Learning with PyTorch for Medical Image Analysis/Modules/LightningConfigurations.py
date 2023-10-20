@@ -16,11 +16,12 @@ def custom_progress_bar():
             progress_bar=color_group_1[1],
             progress_bar_finished=color_group_1[2],
             progress_bar_pulse=color_group_1[0],
-            batch_progress=color_group_2[3],
+            batch_progress=color_group_2[2],
             time=color_group_2[1],
             processing_speed=color_group_2[0],
-            metrics=color_group_2[2],
+            metrics=color_group_2[3],
             metrics_text_delimiter="\n",
-            metrics_format=".3e",
-        )
+            metrics_format="<7n",
+        ),
+        leave=True,
     )
