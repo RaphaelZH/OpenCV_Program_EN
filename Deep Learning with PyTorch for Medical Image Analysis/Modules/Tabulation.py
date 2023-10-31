@@ -94,7 +94,7 @@ class Form_Generator:
                 "\n\t".expandtabs(expandtabs).join(
                     self.string_trimmer(line, expandtabs, self.adjusted_width)
                 )
-                for line in definition.replace('end="\n\n"', 'end="\\n\\n"')
+                for line in definition.replace('end = "\n\n"', 'end="\\n\\n"')
                 .strip()
                 .split("\n")
             ]
