@@ -1,23 +1,22 @@
+**/__pycache__/*
+**/Checkpoints/*
+**/Datasets/*
+**/Images/*
+**/LaTeX Source Files/*
+**/Logs/*
+*.pdf
+
+!main.pdf
+
 .DS_Store
 .ipynb_checkpoints
 
 venv-python3-10/*
 
-PyTorch for Deep Learning and Computer Vision/Datasets/*
-PyTorch for Deep Learning and Computer Vision/Images/*
-PyTorch for Deep Learning and Computer Vision/Modules/__pycache__/*
+PyTorch for Deep Learning and Computer Vision/Modules/
 
-Modern Computer Vision PyTorch, TensorFlow 2 Keras & OpenCV 4/Datasets/*
-Modern Computer Vision PyTorch, TensorFlow 2 Keras & OpenCV 4/Images/*
-Modern Computer Vision PyTorch, TensorFlow 2 Keras & OpenCV 4/Modules/__pycache__/*
 Modern Computer Vision PyTorch, TensorFlow 2 Keras & OpenCV 4/Notebooks/1 - OpenCV - Image Operations.ipynb
 
-Deep Learning with PyTorch for Medical Image Analysis/Checkpoints/*
-Deep Learning with PyTorch for Medical Image Analysis/Datasets/*
-Deep Learning with PyTorch for Medical Image Analysis/Images/*
-Deep Learning with PyTorch for Medical Image Analysis/Logs/*
-Deep Learning with PyTorch for Medical Image Analysis/Modules/__pycache__/*
 Deep Learning with PyTorch for Medical Image Analysis/Notebooks/2 - CNN - Convolutional Neural Networks.ipynb
 Deep Learning with PyTorch for Medical Image Analysis/Notebooks/3 - Data Formats in Medical Imaging.ipynb
 Deep Learning with PyTorch for Medical Image Analysis/Notebooks/4 - Pneumonia-Classification.ipynb
-Deep Learning with PyTorch for Medical Image Analysis/References/3. Learning Deep Features for Discriminative Localization/Learning Deep Features for Discriminative Localization.pdf
