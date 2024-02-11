@@ -4,6 +4,7 @@
 **/Images/*
 **/LaTeX Source Files/*
 **/Logs/*
+*.key
 *.pdf
 
 !main.pdf
@@ -12,8 +13,6 @@
 .ipynb_checkpoints
 
 venv-python3-10/*
-
-PyTorch for Deep Learning and Computer Vision/Modules/
 
 Modern Computer Vision PyTorch, TensorFlow 2 Keras & OpenCV 4/Notebooks/1 - OpenCV - Image Operations.ipynb
 
