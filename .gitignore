@@ -4,7 +4,6 @@
 **/LaTeX Source Files/*
 **/Logs/*
 *.key
-*.md
 *.pdf
 
 !main.pdf
