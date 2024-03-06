@@ -45,7 +45,7 @@ The framework of CNN is trained to perform classification on medical image datas
 - The `TensorBoardLogger` class from the `lightning.pytorch.loggers` module: logs to local or remote file system in TensorBoard format, for more information on TensorBoard, click [here](https://www.tensorflow.org/tensorboard).
 
 > ***Tips***
-> 
+>
 > - TensorBoard can be started either from the command line or directly from the notebook by experiencing the magic commands provided by the IPython kernel. The two commands are roughly the same, except that in the notebook, the IPython kernel uses `%` as a syntax element for magic commands, i.e., the line magic starting with `%tensorboard`. On the command line, run the same command without `%`.
 >
 > - Before using the line magic `%tensorboard`, the TensorBoard notebook extension needs to be loaded using the magic command `%load_ext tensorboard`.
@@ -119,33 +119,36 @@ The framework of CNN is trained to perform classification on medical image datas
 **Introduction to the Dataset**
 
 - Pneumonia is a serious disease that kills more than 15% of children under 5 years old worldwide, is a common cause of emergency department visits, and is the leading cause of death in the United States. Diagnosing pneumonia is difficult and requires reviewing chest X-ray images, considering other lung issues and technical factors.
+
 - The [Radiological Society of North America (RSNA®)](https://www.rsna.org/) is an international society comprised of radiologists, medical physicists, and other medical professionals from around the world who work with medical imaging, such as X-ray images. The RSNA has reached out to [Kaggle](https://www.kaggle.com/)’s machine learning community and collaborated with other partners in organizing the [RSNA Pneumonia Detection Challenge](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/) and developing a rich X-ray image dataset for this challenge.
+
 - The medical image dataset used in this lecture was downloaded from the aforementioned Kaggle Competition, which was originally sourced from the [National Institutes of Health (NIH) Clinical Center](https://clinicalcenter.nih.gov/)'s publicly available [chest X-ray image dataset](https://nihcc.app.box.com/v/ChestXray-NIHCC). The related [NIH](https://www.nih.gov/) press release is available at the following [link](https://www.nih.gov/news-events/news-releases/nih-clinical-center-provides-one-largest-publicly-available-chest-x-ray-datasets-scientific-community).
+
 - The citation for the paper published concurrently with this publicly available chest X-ray image dataset is as follows: [X. Wang, Y. Peng, L. Lu, Z. Lu, M. Bagheri and R. M. Summers, "ChestX-Ray8: Hospital-Scale Chest X-Ray Database and Benchmarks on Weakly-Supervised Classification and Localization of Common Thorax Diseases," 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Honolulu, HI, USA, 2017, pp. 3462-3471, doi: 10.1109/CVPR.2017.369.](https://arxiv.org/abs/1705.02315)
 
 ---
 
-````
+```
 # Positive targets indicated that these subjects suffered from pneumonia, with more positive targets indicating a more significant condition.
-````
+```
 
 Obtaining Labels from the Original Training Dataset
 
 ---
 
-````
+```
 # The `drop_duplicates` function from the `pandas.DataFrame` class: returns the DataFrame from which duplicate rows have been removed.
-````
+```
 
 Removing Duplicate Labels from the Original Training Dataset
 
 ---
 
-````
+```
 # The `with_suffix` function from the `pathlib.PurePath` class returns a new path with the suffix changed. Note that if the original path has no suffix, the specified argument `suffix` is appended instead; if the specified argument `suffix` is an empty string, the original suffix is removed.
-````
+```
 
-Subject with 4 Diagnostic Targets
+Subject with {targets} Diagnostic Targets
 
 Subject without Any Diagnostic Targets
 
@@ -155,14 +158,15 @@ Visual Comparison of Subjects with the Most Pneumonia Diagnostic Targets to Rand
 
 ### Preprocessing of DICOM Files in the Original Training Dataset
 
-**DICOM**
+**Introduction to DICOM**
 
 - The Digital Imaging and Communications in Medicine (DICOM) is a standard for the storing and transferring medical images and related information that specifies a non-proprietary data exchange protocol designed to facilitate the transmission of images between machines from different manufacturers.
-- (0028,0101) Bits Stored Attribute: the number of bits stored for each pixel sample. Note that the number of bits stored for each sample must be the same.
+
+- Bits Stored (0028,0101) Attribute: the number of bits stored for each pixel sample. Note that the number of bits stored for each sample must be the same.
 
 ---
 
-````
+```
 # Resize the original image to 224 x 224 to reduce the processing load on the deep learning model. Meanwhile, when storing the image, the image is converted to the half-precision data type to reduce the amount of space used. Because in computing, half-precision (sometimes referred to as FP16 or float16) is a binary floating-point computer number format that occupies two bytes in computer memory and is used to represent numbers with small storage space and low precision.
 
 # Retrieve the corresponding label for each image.
@@ -172,17 +176,17 @@ Visual Comparison of Subjects with the Most Pneumonia Diagnostic Targets to Rand
 # Divide each of the two freshly split datasets into labeled subsets based on their labels.
 
 # The `mkdir` function from the `pathlib.Path` class creates a new directory at the given path. If the argument `parents` is False (the default is False), the `FileNotFoundError` exception is raised if the parent directory is missing; otherwise, it creates the missing parent directory under the path as needed. As well, if the argument `exist_ok` is False (the default is False), it raises the `FileExistsError` exception if the given path already exists on the file system; otherwise it is ignored if the given path already exists and is not a directory.
-````
+```
 
 Preprocessing and Splitting the Original Training Dataset
 
 ---
 
-````
+```
 # Calculate dataset statistics using only the processed training dataset.
 
 # The`numpy.load` function can load arrays or pickled objects from `.npy`, `.npz`, or pickle files.
-````
+```
 
 Statistical Computing on the Processed Training Dataset
 
@@ -226,9 +230,9 @@ Statistical Computing on the Processed Training Dataset
 
 ---
 
-````
+```
 # Data augmentation is only required for the processed training dataset, not the processed validation dataset.
-````
+```
 
 Defining Pipelines for Data Transformation and Data Augmentation
 
@@ -247,25 +251,25 @@ Defining Pipelines for Data Transformation and Data Augmentation
 
 ---
 
-````
+```
 # Since the data was previously stored as float16 to reduce space, a reconversion to float32 is required to improve calculation accuracy.
 
 # The `np.unique` function returns the sorted unique elements of the array, where the argument `ar` denotes the input array, and if the optional argument `return_counts` is True, it also returns the number of times each unique item appears in the input array.
-````
+```
 
 Loading the Processed Training Dataset and the Processed Validation Dataset
 
 ---
 
-````
+```
 # Create a new class for each dataset and add indexes so that the data can be retrieved later by the indexes.
-````
+```
 
 Labeled Image Grid of the Processed Training Dataset Samples
 
-````
+```
 # The `torch.cat` function concatenates the given sequence tensor by a given dimension. The argument `dim` indicates the dimension over which the tensors are concatenated.
-````
+```
 
 Visual Comparison of Labeled Image Grids for Two Processed Dataset Samples
 
@@ -287,9 +291,9 @@ Visual Comparison of Labeled Image Grids for Two Processed Dataset Samples
 
 ---
 
-````
+```
 # Since Jupyter Notebook does not support Python multiprocessing, the argument `num_workers` can only be set to 0 here.
-````
+```
 
 Configuring Batch Loading
 
