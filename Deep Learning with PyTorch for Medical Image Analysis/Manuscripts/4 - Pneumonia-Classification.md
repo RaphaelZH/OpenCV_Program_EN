@@ -50,7 +50,7 @@ The framework of CNN is trained to perform classification on medical image datas
 >
 > - Before using the line magic `%tensorboard`, the TensorBoard notebook extension needs to be loaded using the magic command `%load_ext tensorboard`.
 >
-> - To start TensorBoard, the previously used root log directory must be specified. The argument `logdir` is used to point to the directory where TensorBoard recursively walks the directory structure rooted at `logdir` in order to locate the event files that can be displayed. The command line to start TensorBoard is: `tensorboard --logdir=path_to_logs`. Of course, the magic command to start TensorBoard is: `%tensorboard --logdir=path_to_logs`.
+> - To start TensorBoard, the previously used root log directory must be specified. The argument `logdir` is used to point to the directory where the root directory structure is located, and then TensorBoard will recursively traverse this directory and find the event files to display. The command line to start TensorBoard is: `tensorboard --logdir=path_to_logs`. Of course, the magic command to start TensorBoard is: `%tensorboard --logdir=path_to_logs`.
 
 **The *TorchMetrics* Library**
 
@@ -158,9 +158,9 @@ Visual Comparison of Subjects with the Most Pneumonia Diagnostic Targets to Rand
 
 ### Preprocessing of DICOM Files in the Original Training Dataset
 
-**Introduction to DICOM**
+**The Digital Imaging and Communications in Medicine (*DICOM*)**
 
-- The Digital Imaging and Communications in Medicine (DICOM) is a standard for the storing and transferring medical images and related information that specifies a non-proprietary data exchange protocol designed to facilitate the transmission of images between machines from different manufacturers.
+- The Digital Imaging and Communications in Medicine (*DICOM*) is a standard for the storing and transferring medical images and related information that specifies a non-proprietary data exchange protocol designed to facilitate the transmission of images between machines from different manufacturers.
 
 - Bits Stored (0028,0101) Attribute: the number of bits stored for each pixel sample. Note that the number of bits stored for each sample must be the same.
 
@@ -175,7 +175,7 @@ Visual Comparison of Subjects with the Most Pneumonia Diagnostic Targets to Rand
 
 # Divide each of the two freshly split datasets into labeled subsets based on their labels.
 
-# The `mkdir` function from the `pathlib.Path` class creates a new directory at the given path. If the argument `parents` is False (the default is False), the `FileNotFoundError` exception is raised if the parent directory is missing; otherwise, it creates the missing parent directory under the path as needed. As well, if the argument `exist_ok` is False (the default is False), it raises the `FileExistsError` exception if the given path already exists on the file system; otherwise it is ignored if the given path already exists and is not a directory.
+# The `mkdir` function from the `pathlib.Path` class creates a new directory at the given path. If the argument `parents` is False (the default is False), the `FileNotFoundError` exception is raised if the parent directory is missing; otherwise, it creates the missing parent directory under the path as needed. As well, if the argument `exist_ok` is False (the default is False), it raises the `FileExistsError` exception in case the given path already exists on the file system; otherwise it is ignored if the given path already exists and is not a directory.
 ```
 
 Preprocessing and Splitting the Original Training Dataset
@@ -196,37 +196,43 @@ Statistical Computing on the Processed Training Dataset
 
 ### Data Transformation
 
-**`torchvision.transforms`** **torchvision.transforms** **torchvision.transforms**
+**The `torchvision.transforms` Module**
 
-- The `torchvision.transforms` module in the *torchvision* library supports common computer vision transformations i.e., transforming or augmenting data for training or inference on different tasks (image classification, detection, segmentation, video classification).
+- The `torchvision.transforms` module in the torchvision library supports common computer vision transformations i.e., transforming or augmenting data for training or inference on different tasks (image classification, detection, segmentation, video classification).
 
-> **Tips**
-> 
+> ***Tips***
+>
 > - In order to make reliable predictions, deep learning models usually require a large amount of training data, which is not always available, and thus require augmentation of existing data to build better generalized models.
+>
 > - Data augmentation is a technique to increase the amount of data used to train a model.
+>
 > - The most commonly used image data augmentation techniques include *positional augmentation* (e.g., scaling, cropping, flipping, padding, rotation, translation, affine transformation) and *color augmentation* (e.g., brightness, contrast, saturation, hue).
 
 - The `torchvision.transforms.Compose` class: composes several transforms together.
 
-  - The argument `transforms`: list of transforms to compose.
+  - The argument `transforms`: the list of transforms to compose.
 
 - The `torchvision.transforms.Normalize` class: normalizes the tensor image with mean and standard deviation.
 
-  - The argument `inplace`: bool, used to make this operation in-place, defaults to False.
+  - The argument `inplace`: indicates whether used to make this operation in-place, defaults to False.
 
 - The `torchvision.transforms.RandomAffine` class: sets up a random affine transformation of the image, by keeping the center invariant. Note that if the image is a PyTorch tensor, its shape should be [... , H, W], where ... denotes an arbitrary number of leading dimensions.
 
   - The argument `degrees`: the range of degrees to be selected. Note that if it is a number and not a sequence like (min, max), the range of degrees will be between its positive and negative absolute values, if it is set to 0, it means that the rotation is deactivated.
+  
   - The argument `translate`: the maximum absolute fraction tuple for horizontal and vertical translation.
+  
   - The argument `scale`: the scaling factor interval.
 
 - The `torchvision.transforms.RandomResizedCrop` class: crops a random portion of the image and resizes it to a given size.
 
   - The argument `size`: the expected size of the cropping output for each edge.
+  
   - The argument `scale`: specifies the upper and lower bounds for cropping a random area before resizing.
+  
   - The argument `ratio`: specifies the upper and lower bounds of the random aspect ratio for cropping before resizing.
-  - The argument `antialias`: whether antialiasing is applied. Note that it only affects tensors with bilinear or bicubic modes; otherwise it is ignored.
-
+  
+  - The argument `antialias`: indicates whether antialiasing is applied. Note that it only affects tensors with bilinear or bicubic modes; otherwise it is ignored.
 
 ---
 
@@ -238,16 +244,19 @@ Defining Pipelines for Data Transformation and Data Augmentation
 
 ---
 
-**`torchvision.datasets`** **torchvision.datasets** **torchvision.datasets**
+**The `torchvision.datasets` Module**
 
 - The `torchvision.datasets` module in the *torchvision* library provides several built-in datasets, along with utility classes for constructing users' own datasets.
+
 - The `torchvision.datasets.DatasetFolder` class: a generic dataset loader with a custom root path and a custom function to load samples for the given path, which are set by the arguments `root` and `loader`.
 
-  - The argument `root`: root directory path.
-  - The argument `loader`: a function to load a sample given its path.
-  - The argument `extensions`: a list of allowed extensions.
-  - The argument `transform`: a function/transformation that takes the sample and returns the transformed version.
-
+  - The argument `root`: the root directory path.
+  
+  - The argument `loader`: the function to load a sample given its path.
+  
+  - The argument `extensions`: the list of allowed extensions.
+  
+  - The argument `transform`: the function/transformation that takes the sample and returns the transformed version.
 
 ---
 
@@ -265,7 +274,7 @@ Loading the Processed Training Dataset and the Processed Validation Dataset
 # Create a new class for each dataset and add indexes so that the data can be retrieved later by the indexes.
 ```
 
-Labeled Image Grid of the Processed Training Dataset Samples
+Labeled Image Grid of the Processed {dataset} Dataset Samples
 
 ```
 # The `torch.cat` function concatenates the given sequence tensor by a given dimension. The argument `dim` indicates the dimension over which the tensors are concatenated.
@@ -277,16 +286,19 @@ Visual Comparison of Labeled Image Grids for Two Processed Dataset Samples
 
 ### Batch Loading
 
-**`torch.utils.data.DataLoader`** **torch.utils.data.DataLoader** **torch.utils.data.DataLoader**
+**The `torch.utils.data.DataLoader` Class**
 
 - The `torch.utils.data.DataLoader` class: a data loader that combines a dataset with a sampler and provides an iterable over a given dataset. Note that this class supports mapped and iterable datasets, single- or multi-process loading, custom loading order, and optional automatic batching (collation) and memory pinning.
 - The argument `batch_size`: indicates how many samples to load per batch, default value is 1.
-- The argument `shuffle`: bool, when set to True, the data is reshuffled at every epoch, the default value is False.
+
+- The argument `shuffle`: indicates whether the data is reshuffled at every epoch, the default value is False.
+
 - The argument `num_workers`: indicates how many child processes will be used to load the data, the default value is 0.
 
-> **Tips**
+> ***Tips***
 > 
 > - When the argument `num_workers` is set to 0 (i.e., the default value), it means that the data will be loaded in the main process.
+>
 > - When the parameter `num_workers` is set to greater than 0, PyTorch will use multiple processes to load the data, but the Jupyter Notebook (IPython kernel) does not support Python multiprocessing.
 
 ---
