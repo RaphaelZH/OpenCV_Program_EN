@@ -36,7 +36,7 @@ The framework of CNN is trained to perform classification on medical image datas
 
 ## Theme-Related Libraries
 
-**The *PyTorch Lightning* Library**
+***PyTorch Lightning***
 
 - *PyTorch Lightning* is an open source Python library that provides a high-level interface to PyTorch, a popular deep learning framework for professional artificial intelligence researchers and machine learning engineers.
 
@@ -44,7 +44,7 @@ The framework of CNN is trained to perform classification on medical image datas
 
 - The `TensorBoardLogger` class from the `lightning.pytorch.loggers` module: logs to local or remote file system in TensorBoard format, for more information on TensorBoard, click [here](https://www.tensorflow.org/tensorboard).
 
-> ***Tips***
+> **Tips**
 >
 > - TensorBoard can be started either from the command line or directly from the notebook by experiencing the magic commands provided by the IPython kernel. The two commands are roughly the same, except that in the notebook, the IPython kernel uses `%` as a syntax element for magic commands, i.e., the line magic starting with `%tensorboard`. On the command line, run the same command without `%`.
 >
@@ -52,7 +52,7 @@ The framework of CNN is trained to perform classification on medical image datas
 >
 > - To start TensorBoard, the previously used root log directory must be specified. The argument `logdir` is used to point to the directory where the root directory structure is located, and then TensorBoard will recursively traverse this directory and find the event files to display. The command line to start TensorBoard is: `tensorboard --logdir=path_to_logs`. Of course, the magic command to start TensorBoard is: `%tensorboard --logdir=path_to_logs`.
 
-**The *TorchMetrics* Library**
+***TorchMetrics***
 
 - *TorchMetrics* is a collection of over 100 PyTorch metric implementations and an easy-to-use API for creating custom metrics. Among other benefits, it provides a standardized interface for improved repeatability and automatic batch accumulation.
 
@@ -158,9 +158,9 @@ Visual Comparison of Subjects with the Most Pneumonia Diagnostic Targets to Rand
 
 ### Preprocessing of DICOM Files in the Original Training Dataset
 
-**The Digital Imaging and Communications in Medicine (*DICOM*)**
+**Digital Imaging and Communications in Medicine (*DICOM*)**
 
-- The Digital Imaging and Communications in Medicine (*DICOM*) is a standard for the storing and transferring medical images and related information that specifies a non-proprietary data exchange protocol designed to facilitate the transmission of images between machines from different manufacturers.
+- Digital Imaging and Communications in Medicine (*DICOM*) is a standard for the storing and transferring medical images and related information that specifies a non-proprietary data exchange protocol designed to facilitate the transmission of images between machines from different manufacturers.
 
 - Bits Stored (0028,0101) Attribute: the number of bits stored for each pixel sample. Note that the number of bits stored for each sample must be the same.
 
@@ -200,7 +200,7 @@ Statistical Computing on the Processed Training Dataset
 
 - The `torchvision.transforms` module in the torchvision library supports common computer vision transformations i.e., transforming or augmenting data for training or inference on different tasks (image classification, detection, segmentation, video classification).
 
-> ***Tips***
+> **Tips**
 >
 > - In order to make reliable predictions, deep learning models usually require a large amount of training data, which is not always available, and thus require augmentation of existing data to build better generalized models.
 >
@@ -295,7 +295,7 @@ Visual Comparison of Labeled Image Grids for Two Processed Dataset Samples
 
 - The argument `num_workers`: indicates how many child processes will be used to load the data, the default value is 0.
 
-> ***Tips***
+> **Tips**
 > 
 > - When the argument `num_workers` is set to 0 (i.e., the default value), it means that the data will be loaded in the main process.
 >
@@ -319,22 +319,17 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
 ---
 
-
-
-
-
 ## Train - Part Two - Model Creation
 
-**Introduction to the Residual Network (ResNet)**
+**Residual Neural Network (*ResNet*)**
 
-- Deep convolutional neural networks significantly improve image classification by using multiple layers to process different levels of features. The effectiveness of deep convolutional neural networks is due to their depth. *Is it true that networks with deeper layers are better?* Past experiments have shown otherwise.
+- Deep convolutional neural networks significantly improve image classification by using multiple layers to process different levels of features. The effectiveness of deep convolutional neural networks depends on their depth, but past experiments have shown that networks with deeper layers are not really better.
+
 - Recent evidence demonstrates that the first problem faced by deep networks is the vanishing/exploding gradients, which can make it difficult for the network to converge. However, this issue is also effectively addressed through normalized initialization and intermediate normalization layers, allowing deep networks to converge.
+
 - As deeper networks are able to start converging, deeper networks expose a second problem, degradation: an increase in the depth of the network in turn decreases the accuracy of the network. This degradation issue is different from overfitting because degradation not only leads to saturation of accuracy, but also increases the training error of the model.
-- Recent evidence demonstrates that the first problem faced by deep networks is the vanishing/exploding gradients, which can make it difficult for the network to converge. However, this issue is also effectively addressed through normalized initialization and intermediate normalization layers, allowing deep networks to converge.
-- As deeper networks are able to start converging, deeper networks expose a second problem, degradation: an increase in the depth of the network in turn decreases the accuracy of the network. This degradation issue is different from overfitting because degradation not only leads to saturation of accuracy, but also increases the training error of the model.
 
-
-
+- Therefore, a deep residual learning framework is proposed to address this degradation problem. Instead of directly letting every few stacked layers fit the desired underlying mapping, the aim is to explicitly let these layers fit a residual mapping: assuming that the desired underlying mapping is $\mathcal{H}(x)$, the stacked nonlinear layers have to fit another mapping as $\mathcal{F}(x) \coloneqq \mathcal{H}(x) - x$.
 
 
 
