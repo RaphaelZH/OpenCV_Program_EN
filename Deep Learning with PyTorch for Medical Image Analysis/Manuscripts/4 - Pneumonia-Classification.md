@@ -58,7 +58,7 @@ The framework of CNN is trained to perform classification on medical image datas
 
 - *TorchMetrics* was originally created as part of PyTorch Lightning and can be used in any PyTorch model, as well as in PyTorch Lightning to enjoy additional benefits such as the ability to log `Metric` objects directly in Lightning in order to reduce even more boilerplate.
 
-**The *torchvision* Library**
+**The *Torchvision* Library**
 
 - The *torchvision* library is part of the PyTorch project and consists of popular datasets, model architectures, and common image transformations for computer vision.
 
@@ -321,15 +321,21 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
 ## Train - Part Two - Model Creation
 
-**Residual Neural Network (*ResNet*)**
+***Deep Residual Learning***
 
 - Deep convolutional neural networks significantly improve image classification by using multiple layers to process different levels of features. The effectiveness of deep convolutional neural networks depends on their depth, but past experiments have shown that networks with deeper layers are not really better.
 
 - Recent evidence demonstrates that the first problem faced by deep networks is the vanishing/exploding gradients, which can make it difficult for the network to converge. However, this issue is also effectively addressed through normalized initialization and intermediate normalization layers, allowing deep networks to converge.
 
-- As deeper networks are able to start converging, deeper networks expose a second problem, degradation: an increase in the depth of the network in turn decreases the accuracy of the network. This degradation issue is different from overfitting because degradation not only leads to saturation of accuracy, but also increases the training error of the model.
+- As deeper networks are able to start converging, deeper networks expose a second problem, degradation: an increase in the depth of the network in turn decreases the accuracy of the network. However, this degradation problem is not caused by overfitting; as the depth of the network increases, the accuracy saturates and then degrades rapidly, leading to an increase in the training error of the model.
 
-- Therefore, a deep residual learning framework is proposed to address this degradation problem. Instead of directly letting every few stacked layers fit the desired underlying mapping, the aim is to explicitly let these layers fit a residual mapping: assuming that the desired underlying mapping is $\mathcal{H}(x)$, the stacked nonlinear layers have to fit another mapping as $\mathcal{F}(x) \coloneqq \mathcal{H}(x) - x$.
+- Therefore, a *deep residual learning* framework is proposed to address this degradation problem. Instead of directly letting every few stacked layers fit the desired underlying mapping, the aim is to explicitly let these layers fit a residual mapping: 
+
+
+
+
+
+assuming that the desired underlying mapping is $\mathcal{H}(\mathrm{x})$, the residual mapping to be fitted by the stacked nonlinear layers is $\mathcal{F}(\mathrm{x}) \coloneqq \mathcal{H}(\mathrm{x}) - \mathrm{x}$.
 
 
 
