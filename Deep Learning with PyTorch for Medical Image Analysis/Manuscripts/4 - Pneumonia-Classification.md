@@ -327,16 +327,15 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
 - Recent evidence demonstrates that the first problem faced by deep networks is the vanishing/exploding gradients, which can make it difficult for the network to converge. However, this issue is also effectively addressed through normalized initialization and intermediate normalization layers, allowing deep networks to converge.
 
-- As deeper networks are able to start converging, deeper networks expose a second problem, degradation: the increase in depth of the network in turn decreases the accuracy of the network. However, this degradation problem is not caused by overfitting, because as the depth of the network increases, not only does the accuracy saturate and then rapidly degrade, but the training error of the model also increases.
+- As deeper networks are able to start converging, deeper networks expose a second problem, degradation: the increase in depth of the network in turn decreases the accuracy of the network. However, this degradation problem is not caused by overfitting, because as the depth of the network increases, not only does the accuracy degrade rapidly after reaching saturation, but the training error of the model also increases.
 
-- The degradation in training accuracy reveals that not all systems are similarly easy to optimize. Thus for the deeper model, there exists a constructive solution: the added layers are identity mapping, while the other layers are copied from the shallower model that was learned. The existence of this constructed solution suggests that deeper models should not produce higher training errors than their shallower counterparts.
+- The degradation in training accuracy reveals that not all systems are similarly easy to optimize. In fact, for the deeper model, there exists a constructive solution: the added layers are identity mapping, while the other layers are copied from the shallower model that was learned. The existence of this constructed solution suggests that deeper models should not produce higher training errors than their shallower counterparts.
 
+- Therefore, the *deep residual learning* framework is proposed to address this degradation problem.
 
-
-
-
-
-- Therefore, a *deep residual learning* framework is proposed to address this degradation problem. Instead of directly letting every few stacked layers fit t he desired underlying mapping, the aim is to explicitly let these layers fit a residual mapping: assuming that the desired underlying mapping is $\mathcal{H}(\mathrm{x})$, the residual mapping to be fitted by the stacked nonlinear layers is $\mathcal{F}(\mathrm{x}) \coloneqq \mathcal{H}(\mathrm{x}) - \mathrm{x}$.
+	- The goal is not to directly let every few stacked layers fit the desired underlying mapping, but to explicitly let these layers fit a residual mapping: assuming that the desired underlying mapping is $\mathcal{H}(\mathrm{x})$, the residual mapping to be fitted by the stacked nonlinear layers is $\mathcal{F}(\mathrm{x}) \coloneqq \mathcal{H}(\mathrm{x}) - \mathrm{x}$. 
+	
+	- Thus, the original mapping is reformulated as $\mathcal{F}(\mathrm{x}) + \mathrm{x}$. In the extreme case, if an identity mapping is optimal, then it is easier to render the residual mapping to zero rather than to fit an identity mapping by a stack of nonlinear layers.
 
 
 
