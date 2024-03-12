@@ -321,7 +321,7 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
 ## Train - Part Two - Model Creation
 
-***Deep Residual Learning***
+***Residual Learning* and *Identity Mapping***
 
 - Deep convolutional neural networks significantly improve image classification by using multiple layers to process different levels of features. The effectiveness of deep convolutional neural networks depends on their depth, but past experiments have shown that networks with deeper layers are not really better.
 
@@ -329,13 +329,16 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
 - As deeper networks are able to start converging, deeper networks expose a second problem, degradation: the increase in depth of the network in turn decreases the accuracy of the network. However, this degradation problem is not caused by overfitting, because as the depth of the network increases, not only does the accuracy degrade rapidly after reaching saturation, but the training error of the model also increases.
 
-- The degradation in training accuracy reveals that not all systems are similarly easy to optimize. In fact, for the deeper model, there exists a constructive solution: the added layers are identity mapping, while the other layers are copied from the shallower model that was learned. The existence of this constructed solution suggests that deeper models should not produce higher training errors than their shallower counterparts.
+- The degradation in training accuracy reveals that not all systems are similarly easy to optimize. In fact, for the deeper model, there exists a constructive solution: the added layers are *identity mapping*, while the other layers are copied from the shallower model that was learned. The existence of this constructed solution suggests that deeper models should not produce higher training errors than their shallower counterparts.
 
-- Therefore, the *deep residual learning* framework is proposed to address this degradation problem.
+- Therefore, the deep *residual learning* framework is proposed to address this degradation problem.
 
-	- The goal is not to directly let every few stacked layers fit the desired underlying mapping, but to explicitly let these layers fit a residual mapping: assuming that the desired underlying mapping is $\mathcal{H}(\mathrm{x})$, the residual mapping to be fitted by the stacked nonlinear layers is $\mathcal{F}(\mathrm{x}) \coloneqq \mathcal{H}(\mathrm{x}) - \mathrm{x}$. 
+	- The goal is not to directly let every few stacked layers fit the desired underlying mapping, but to explicitly let these layers fit a residual mapping: assuming that the desired underlying mapping is $\mathcal{H}(\mathrm{x})$, the residual mapping to be fitted by the stacked nonlinear layers is $\mathcal{F}(\mathrm{x}) \coloneqq \mathcal{H}(\mathrm{x}) - \mathrm{x}$. Thus, the original mapping is reformulated as $\mathcal{F}(\mathrm{x}) + \mathrm{x}$.
 	
-	- Thus, the original mapping is reformulated as $\mathcal{F}(\mathrm{x}) + \mathrm{x}$. In the extreme case, if an identity mapping is optimal, then it is easier to render the residual mapping to zero rather than to fit an identity mapping by a stack of nonlinear layers.
+	- As mentioned earlier, if the added layers can be constructed as *identity mappings*, the training error of a deeper model should not be larger than that of its corresponding shallow model. With the *residual learning* recasts, if *identity mappings* are optimal, the solver can simply drive the weights of multiple nonlinear layers to zero to approximate *identity mappings*, and in the extreme case, it is much easier to render the residual mapping to zero rather than to fit an *identity mapping* by a stack of nonlinear layers.
+	
+	- In reality, *identity mappings* are unlikely to be optimal, and the *residual learning* reformulation can be helpful for preconditioning this problem. If the optimal function approaches an *identity mapping* more closely than a zero mapping, it is much easier for the solver to find perturbations with respect to an *identity mapping* than it is to learn a new function. Experiments show that the learned residual functions are generally smaller in response, suggesting that *identity mappings* provide reasonable preconditioning.
+
 
 
 
