@@ -124,7 +124,11 @@ The framework of CNN is trained to perform classification on medical image datas
 
 - The medical image dataset used in this lecture was downloaded from the aforementioned Kaggle Competition, which was originally sourced from the [National Institutes of Health (NIH) Clinical Center](https://clinicalcenter.nih.gov/)'s publicly available [chest X-ray image dataset](https://nihcc.app.box.com/v/ChestXray-NIHCC). The related [NIH](https://www.nih.gov/) press release is available at the following [link](https://www.nih.gov/news-events/news-releases/nih-clinical-center-provides-one-largest-publicly-available-chest-x-ray-datasets-scientific-community).
 
-- The citation for the paper published concurrently with this publicly available chest X-ray image dataset is as follows: [X. Wang, Y. Peng, L. Lu, Z. Lu, M. Bagheri and R. M. Summers, "ChestX-Ray8: Hospital-Scale Chest X-Ray Database and Benchmarks on Weakly-Supervised Classification and Localization of Common Thorax Diseases," 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Honolulu, HI, USA, 2017, pp. 3462-3471, doi: 10.1109/CVPR.2017.369.](https://arxiv.org/abs/1705.02315)
+>**Bibliographies**
+>
+>- [RSNA Pneumonia Detection Challenge](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/)
+>
+>- [X. Wang, Y. Peng, L. Lu, Z. Lu, M. Bagheri and R. M. Summers, "ChestX-Ray8: Hospital-Scale Chest X-Ray Database and Benchmarks on Weakly-Supervised Classification and Localization of Common Thorax Diseases," 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Honolulu, HI, USA, 2017, pp. 3462-3471, doi: 10.1109/CVPR.2017.369.](https://arxiv.org/abs/1705.02315)
 
 ---
 
@@ -335,9 +339,23 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
 	- The goal is not to directly let every few stacked layers fit the desired underlying mapping, but to explicitly let these layers fit a residual mapping: assuming that the desired underlying mapping is $\mathcal{H}(\mathrm{x})$, the residual mapping to be fitted by the stacked nonlinear layers is $\mathcal{F}(\mathrm{x}) \coloneqq \mathcal{H}(\mathrm{x}) - \mathrm{x}$. Thus, the original mapping is reformulated as $\mathcal{F}(\mathrm{x}) + \mathrm{x}$.
 	
-	- As mentioned earlier, if the added layers can be constructed as *identity mappings*, the training error of a deeper model should not be larger than that of its corresponding shallow model. With the *residual learning* recasts, if *identity mappings* are optimal, the solver can simply drive the weights of multiple nonlinear layers to zero to approximate *identity mappings*, and in the extreme case, it is much easier to render the residual mapping to zero rather than to fit an *identity mapping* by a stack of nonlinear layers.
+	- As mentioned earlier, if the added layers can be constructed as *identity mappings*, the training error of a deeper model should not be larger than that of its corresponding shallow model. With the *residual learning* recasts, if *identity mappings* are optimal, the solver can approximate *identity mappings* by simply setting the weights of multiple nonlinear layers (i.e., residual mappings) toward zero, which is much easier than fitting an *identity mapping* by a stack of nonlinear layers.
 	
 	- In reality, *identity mappings* are unlikely to be optimal, and the *residual learning* reformulation can be helpful for preconditioning this problem. If the optimal function approaches an *identity mapping* more closely than a zero mapping, it is much easier for the solver to find perturbations with respect to an *identity mapping* than it is to learn a new function. Experiments show that the learned residual functions are generally smaller in response, suggesting that *identity mappings* provide reasonable preconditioning.
+	
+	- The operation of the formula $\mathcal{F}(\mathrm{x}) + \mathrm{x}$ can be realized by feedforward neural networks with "shortcut connections" (i.e., connections that skip one or more layers) and element-wise addition.
+	
+		- In this *residual learning* framework, the shortcut connections simply perform *identity mapping*, then add their outputs to the outputs of the stacked layers, and adopt a second nonlinearity after the addition, as shown below. 
+		
+			![Shortcut Connections](../Images/Shortcut_Connections.png)
+		
+		- Since identity shortcut connections add no extra parameters or computational complexity, it is possible to make fair comparisons between plain and residual networks with the same parameters, depth, width, and computational cost (except for negligible element-wise additions). This not only applicable to fully-connected layers, but also to convolutional layers.
+		
+		- The entire network can still be trained end-to-end using SGD and backpropagation, and can be easily implemented using common libraries without modifying the solvers.
+
+>**Bibliographies**
+>
+>- [K. He, X. Zhang, S. Ren and J. Sun, "Deep Residual Learning for Image Recognition," 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Las Vegas, NV, USA, 2016, pp. 770-778, doi: 10.1109/CVPR.2016.90.](https://arxiv.org/abs/1512.03385)
 
 
 
@@ -345,4 +363,3 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
 
 
-![Residual Block](../Images/Residual_Block.png)
