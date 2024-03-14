@@ -352,6 +352,18 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 		- Since identity shortcut connections add no extra parameters or computational complexity, it is possible to make fair comparisons between plain and residual networks with the same parameters, depth, width, and computational cost (except for negligible element-wise additions). This not only applicable to fully-connected layers, but also to convolutional layers.
 		
 		- The entire network can still be trained end-to-end using SGD and backpropagation, and can be easily implemented using common libraries without modifying the solvers.
+		
+**Plain Networks vs. Residual Networks (*ResNets*)**
+
+- The baselines of plain networks are mainly inspired by the philosophy of VGG networks. The convolutional layers mostly use $3 \times 3$ filters, which are directly downsampled by a convolutional layer with a stride of $2$, and follow two simple design rules:
+
+  1. for the same output feature map size, the number of filters in each layer is the same;
+  
+  2. if the feature map size is halved, the number of filters is doubled to maintain the time complexity of each layer.
+
+- It is worth noting that compared to the model of VGG networks (with the VGG-19 model as a reference), the model of plain networks has a smaller number of filters and a lower complexity.
+
+
 
 >**Bibliographies**
 >
