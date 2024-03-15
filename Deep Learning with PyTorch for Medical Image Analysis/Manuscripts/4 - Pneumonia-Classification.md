@@ -2,7 +2,7 @@
 
 **Course Tags:** #Python, #PyTorch, #machine learning, #deep learning, #medical image analysis
 
-**Section Tags:** #PyTorch Lightning, #Pydicom, #convolutional neural network, #CNN, #ResNet-18, #image classification, #object localization, #discriminative regions, #class activation mapping, #CAM, #gradient-weighted class activation mapping, #Grad-CAM, #Grad-CAM++, #chest X-ray images, #pneumonia
+**Section Tags:** #PyTorch Lightning, #Pydicom, #convolutional neural network, #CNN, #residual learning, #residual network, #ResNet-18, #image classification, #object localization, #discriminative regions, #class activation mapping, #CAM, #gradient-weighted class activation mapping, #Grad-CAM, #Grad-CAM++, #chest X-ray images, #pneumonia
 
 **Author:** [Hao ZHANG](https://www.linkedin.com/in/hao-zhang-6b7008107/)
 
@@ -353,17 +353,29 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 		
 		- The entire network can still be trained end-to-end using SGD and backpropagation, and can be easily implemented using common libraries without modifying the solvers.
 		
-**Plain Networks vs. Residual Networks (*ResNets*)**
+**Plain Network and *Residual Network***
 
 - The baselines of plain networks are mainly inspired by the philosophy of VGG networks. The convolutional layers mostly use $3 \times 3$ filters, which are directly downsampled by a convolutional layer with a stride of $2$, and follow two simple design rules:
 
-  1. for the same output feature map size, the number of filters in each layer is the same;
+  1. For the same output feature map size, the number of filters in each layer is the same;
   
-  2. if the feature map size is halved, the number of filters is doubled to maintain the time complexity of each layer.
+  2. If the feature map size is halved, the number of filters is doubled to maintain the time complexity of each layer.
 
-- It is worth noting that compared to the model of VGG networks (with the VGG-19 model as a reference), the model of plain networks has a smaller number of filters and a lower complexity.
+- Inserting shortcut connections on the above plain network enables it to be converted to its counterpart residual version, i.e., the *residual network*.
 
+	- When the dimensions of the input and output feature maps are the same, the identity shortcuts can be used directly.
+	
+	- When the dimensions of the output feature maps increase compared to the dimensions of the counterpart input feature maps, the following two options can be considered, both of which perform a stride of $2$ when the shortcuts go through feature maps of two sizes:
+	
+		1. The shortcut still performs identity mapping, with extra zero entries padded for increasing dimensions, and this option introduces no extra parameter;
+		
+		2. Use the projection shortcut to match dimensions (done by $1 \times 1$ convolutions).
 
+- The detailed network architecture of the plain and *residual networks* is shown below. For ease of representation, the 18/34/50/101/152-layer *residual network* (ResNet) could be abbreviated as ResNet-18/34/50/101/152, respectively.
+
+	![Network Architecture](../Images/Network_Architecture.png)
+
+- It is worth noting that compared to the model of VGG networks (with the VGG-16/19 model as a reference), the model of 18/34/50/101/152-layer plain and *residual networks* and  has fewer filters and lower complexity.
 
 >**Bibliographies**
 >
