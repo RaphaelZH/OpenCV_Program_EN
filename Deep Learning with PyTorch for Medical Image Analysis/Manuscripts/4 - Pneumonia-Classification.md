@@ -357,9 +357,9 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
 - The baselines of plain networks are mainly inspired by the philosophy of VGG networks. The convolutional layers mostly use $3 \times 3$ filters, which are directly downsampled by a convolutional layer with a stride of $2$, and follow two simple design rules:
 
-  1. For the same output feature map size, the number of filters in each layer is the same;
+  1. Feature map size equal: the number of filters in each layer is the same;
   
-  2. If the feature map size is halved, the number of filters is doubled to maintain the time complexity of each layer.
+  2. Feature map size halved: the number of filters in each layer is doubled to maintain the time complexity.
 
 - Inserting shortcut connections on the above plain network enables it to be converted to its counterpart residual version, i.e., the *residual network*.
 
@@ -367,10 +367,10 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 	
 	- When the dimensions of the output feature maps increase compared to the dimensions of the counterpart input feature maps, the following two options can be considered, both of which perform a stride of $2$ when the shortcuts go through feature maps of two sizes:
 	
-		1. The shortcut still performs identity mapping, with extra zero entries padded for increasing dimensions, and this option introduces no extra parameter;
+		1. Zero-padding shortcuts: shortcuts with this option still perform identity mapping, with extra zero entries padded for increasing dimensions, and this option introduces no extra parameter;
 		
-		2. Use the projection shortcut to match dimensions (done by $1 \times 1$ convolutions).
-
+		2. Projection shortcuts: shortcuts with this option match dimensions by a $1 \times 1$ convolution.
+		
 - The detailed network architecture of the plain and *residual networks* is shown below. For ease of representation, the 18/34/50/101/152-layer *residual network* (ResNet) could be abbreviated as ResNet-18/34/50/101/152, respectively.
 
 	![Network Architecture](../Images/Network_Architecture.png)
