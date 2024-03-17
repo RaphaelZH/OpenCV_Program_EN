@@ -6,35 +6,7 @@
 \deftab560
 \pard\pardeftab560\slleading20\partightenfactor0
 
-\f0\fs26 \cf0 \
-\
-\
-\
-\
-# In this model, the parameter `weights` defines the pre-training weights to be used, and the default value is None, i.e., no pre-training weights are used\
-\
-\
-\
-\
-\
-\
-Initial Understanding on the ResNet-18 Model Architecture\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-# A `LightningModule` organizes the PyTorch code into 6 sections, which are initialization (`__init__`and`setup`), train loop (`training_step`), validation loop (`validation_step`), test loop (`test_step`), prediction loop (`predict_step`) or optimizers and learning rate schedulers(`configure_optimizers`)\
-\
-# A `LightningModule` is a `torch.nn.Module` but with added functionality\
-\
-# Based on personal experience training this model on these processed datasets, it has been found that the use of pre-training weights leads to an early saturation of the model's learning capacity, at which point the model stops learning about the general problem and begins to learn about the data, thus showing a decrease in the training loss and an increase in the validation loss, i.e., overfitting\
+\f0\fs26 \cf0 # Based on personal experience training this model on these processed datasets, it has been found that the use of pre-training weights leads to an early saturation of the model's learning capacity, at which point the model stops learning about the general problem and begins to learn about the data, thus showing a decrease in the training loss and an increase in the validation loss, i.e., overfitting\
 \
 # Change the original 3 input channels of the first `conv1` layer to 1 input channel because the images in these datasets are not the default RGB color images, but grayscale images\
 \

@@ -383,10 +383,42 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
 ---
 
-```
-# Torchvision provides a new backwards compatible API for building models with multi-weight support, allowing different weights to be loaded in existing model builder methods, in which the argument `weights` defines the pre-training weights to be used, with a default value of None, i.e., no pre-training weights are used.
-```
 
-Initial Understanding on the Architecture of the ResNet-18 Model
+# Torchvision provides a new backwards compatible API for building models with multi-weight support, allowing different weights to be loaded in existing model builder methods, in which the argument `weights` defines the pre-training weights to be used, with a default value of None, i.e., no pre-training weights are used.
+
+
+Initial Understanding of the ResNet-18 Architecture
 
 ---
+
+**The `lightning.pytorch.LightningModule` API**
+
+- The `lightning.pytorch.LightningModule` API is one of the two core APIs for PyTorch Lightning, and it organizes PyTorch code into 6 sections:
+
+	1. Initialization (the `__init__` and `setup` functions);
+
+	2. Train loop (the `training_step`functions);
+
+	3. Validation loop (the `validation_step` functions);
+
+	4. Test loop (the `test_step` functions);
+
+	5. Prediction loop (the `predict_step` functions);
+
+	6. Optimizers and learning rate schedulers (the `configure_optimizers` functions).
+
+- The `lightning.pytorch.LightningModule` API is equivalent to the `torch.nn.Module` class, but with added functionality and many convenient methods.
+
+
+---
+
+
+# Based on empirical studies and experience in training a model on these processed datasets, it has been found that using pre-training weights leads to early saturation of the model's learning capacity, at which point the model stops learning about the general problem and begins to learn about the data, thus showing a decrease in the training loss and an increase in the validation loss, i.e., overfitting.
+
+
+
+
+
+
+
+
