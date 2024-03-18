@@ -411,10 +411,13 @@ Initial Understanding of the ResNet-18 Architecture
 
 **The `torch.nn.BCEWithLogitsLoss` Class**
 
-- The `torch.nn.BCEWithLogitsLoss` class combines an instantiated layer from the `torch.nn.Sigmoid` class with the error criterion from the `torch.nn.BCELoss` class in a single class.
+- The `torch.nn.BCEWithLogitsLoss` class combines the `torch.nn.Sigmoid` class with the `torch.nn.BCELoss` class in a single class.
 
-- This recombined class is numerically more stable than using a plain sigmoid function (the `torch.nn.Sigmoid` class) followed by a binary cross entropy loss function (the `torch.nn.BCELoss` class), as combining these operations into a single layer facilitates the use of the log-sum-exp trick to improve numerical stability.
+	- The `torch.nn.Sigmoid` class:
+	
+	- The `torch.nn.BCELoss` class:
 
+- Using this recombined class at the input layer is numerically more stable than using a plain sigmoid function (the `torch.nn.Sigmoid` class) followed by a loss measure based on the criterion of the binary cross-entropy (the `torch.nn.BCELoss` class), since combining these operations into a single layer facilitates the use of the log-sum-exp trick to improve numerical stability.
 
 
 
