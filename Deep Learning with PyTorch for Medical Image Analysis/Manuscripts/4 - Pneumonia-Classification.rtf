@@ -6,23 +6,16 @@
 \deftab560
 \pard\pardeftab560\slleading20\partightenfactor0
 
-\f0\fs26 \cf0 # Based on personal experience training this model on these processed datasets, it has been found that the use of pre-training weights leads to an early saturation of the model's learning capacity, at which point the model stops learning about the general problem and begins to learn about the data, thus showing a decrease in the training loss and an increase in the validation loss, i.e., overfitting\
-\
-# Change the original 3 input channels of the first `conv1` layer to 1 input channel because the images in these datasets are not the default RGB color images, but grayscale images\
-\
-# The parameter `bias` is set to True by default, whether in the `torch.nn.Conv2d` class or in the `torch.nn.Linear` class, and if it is set to False, the layer will not learn an additive bias\
-\
-# Change the `out_features` of the last fully connected (FC) layer, referred to as `fc` layer in the `resnet18` model, from 1000 to 1, since both the processed training dataset and the processed validation dataset contain only one binary class label\
-\
-# `nn.BCEWithLogitsLoss` computes a loss that combines the Sigmoid layer and BCELoss in a single class\
-\
-# This version is more numerically stable than using a plain Sigmoid followed by a BCELoss because combining the operations into a single layer makes it easier to take advantage of the log-sum-exp trick for numerical stability\
-\
+\f0\fs26 \cf0 \
 # `nn.Sigmoid` applies the element-wise function: Sigmoid(x) = \uc0\u963 (x) = 1 / (1 + exp(-x)) = exp(x) / (1 + exp(x)) = 1 - \u963 (-x)\
 \
 # `nn.BCELoss` creates a criterion that measures the Binary Cross Entropy between the target and the input probabilities\
 \
 # The log-sum-exp trick helps prevent underflow/overflow errors, and is in essence just taking advantage of mathematical properties to reduce underflow/overflow by using the log-sum-exp function which computes a smoothed maximum, i.e., a smoothed approximation of the maximum value function, and is mainly used in machine learning algorithms\
+\
+\
+\
+\
 \
 # The parameter `pos_weight` denotes the weight of the positive example to be broadcast with the target, which must be a tensor transformed by a list whose length can be 1 or equal to batch size\
 \

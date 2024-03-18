@@ -383,9 +383,9 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
 ---
 
-
-# Torchvision provides a new backwards compatible API for building models with multi-weight support, allowing different weights to be loaded in existing model builder methods, in which the argument `weights` defines the pre-training weights to be used, with a default value of None, i.e., no pre-training weights are used.
-
+```
+# Torchvision provides a new backwards compatible API for building models with multi-weight support, allowing different weights to be loaded in existing model builder methods, in which the argument `weights` defines the pre-training weights to be used, with the default value of None, i.e., no pre-training weights are used.
+```
 
 Initial Understanding of the ResNet-18 Architecture
 
@@ -409,15 +409,25 @@ Initial Understanding of the ResNet-18 Architecture
 
 - The `lightning.pytorch.LightningModule` API is equivalent to the `torch.nn.Module` class, but with added functionality and many convenient methods.
 
+**The `torch.nn.BCEWithLogitsLoss` Class**
+
+- The `torch.nn.BCEWithLogitsLoss` class combines an instantiated layer from the `torch.nn.Sigmoid` class with the error criterion from the `torch.nn.BCELoss` class in a single class.
+
+- This recombined class is numerically more stable than using a plain sigmoid function (the `torch.nn.Sigmoid` class) followed by a binary cross entropy loss function (the `torch.nn.BCELoss` class), as combining these operations into a single layer facilitates the use of the log-sum-exp trick to improve numerical stability.
+
+
+
 
 ---
 
 
 # Based on empirical studies and experience in training a model on these processed datasets, it has been found that using pre-training weights leads to early saturation of the model's learning capacity, at which point the model stops learning about the general problem and begins to learn about the data, thus showing a decrease in the training loss and an increase in the validation loss, i.e., overfitting.
 
+# Since the images in these datasets are not default RGB color images, but grayscale images, the model's first convolutional layer needs to be changed from the original 3 input channels to 1 input channel.
 
+# Whether in the `torch.nn.Conv2d` class or the `torch.nn.Linear` class, the argument `bias` defaults to True, indicating whether the layer learns an additive bias.
 
-
+# Since both processed datasets contain only one binary class label, the argument `out_features` for the last layer of the model, i.e., the fully connected (FC) layer, needs to be changed from 1000 to 1, which refers to the Boolean result of the binary class label.
 
 
 
