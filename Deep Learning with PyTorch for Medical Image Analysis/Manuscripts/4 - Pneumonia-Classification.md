@@ -17,20 +17,14 @@ The framework of CNN is trained to perform classification on medical image datas
 **References:**
 
 1. [Deep Learning with PyTorch for Medical Image Analysis](https://www.udemy.com/course/deep-learning-with-pytorch-for-medical-image-analysis/)
-
 2. [RSNA Pneumonia Detection Challenge](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/)
-
 3. [X. Wang, Y. Peng, L. Lu, Z. Lu, M. Bagheri and R. M. Summers, "ChestX-Ray8: Hospital-Scale Chest X-Ray Database and Benchmarks on Weakly-Supervised Classification and Localization of Common Thorax Diseases," 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Honolulu, HI, USA, 2017, pp. 3462-3471, doi: 10.1109/CVPR.2017.369.](https://arxiv.org/abs/1705.02315)
-
 4. [K. He, X. Zhang, S. Ren and J. Sun, "Deep Residual Learning for Image Recognition," 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Las Vegas, NV, USA, 2016, pp. 770-778, doi: 10.1109/CVPR.2016.90.](https://arxiv.org/abs/1512.03385)
-
 5. [B. Zhou, A. Khosla, A. Lapedriza, A. Oliva and A. Torralba, "Learning Deep Features for Discriminative Localization," 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Las Vegas, NV, USA, 2016, pp. 2921-2929, doi: 10.1109/CVPR.2016.319.](https://arxiv.org/abs/1512.04150)
-
 6. [R. R. Selvaraju, M. Cogswell, A. Das, R. Vedantam, D. Parikh and D. Batra, "Grad-CAM: Visual Explanations from Deep Networks via Gradient-Based Localization," 2017 IEEE International Conference on Computer Vision (ICCV), Venice, Italy, 2017, pp. 618-626, doi: 10.1109/ICCV.2017.74.](https://arxiv.org/abs/1610.02391)
-
 7. [A. Chattopadhay, A. Sarkar, P. Howlader and V. N. Balasubramanian, "Grad-CAM++: Generalized Gradient-Based Visual Explanations for Deep Convolutional Networks," 2018 IEEE Winter Conference on Applications of Computer Vision (WACV), Lake Tahoe, NV, USA, 2018, pp. 839-847, doi: 10.1109/WACV.2018.00097.](https://arxiv.org/abs/1710.11063)
 
----
+***
 
 # Importing Libraries
 
@@ -39,76 +33,63 @@ The framework of CNN is trained to perform classification on medical image datas
 ***PyTorch Lightning***
 
 - *PyTorch Lightning* is an open source Python library that provides a high-level interface to PyTorch, a popular deep learning framework for professional artificial intelligence researchers and machine learning engineers.
-
 - The `ModelCheckpoint` class from the `lightning.pytorch.callbacks` module: periodically saves the model by monitoring a quantity, where each metric recorded as a key-value pair or value dictionary is a candidate for the monitored key.
-
 - The `TensorBoardLogger` class from the `lightning.pytorch.loggers` module: logs to local or remote file system in TensorBoard format, for more information on TensorBoard, click [here](https://www.tensorflow.org/tensorboard).
 
 > **Tips**
->
+> 
 > - TensorBoard can be started either from the command line or directly from the notebook by experiencing the magic commands provided by the IPython kernel. The two commands are roughly the same, except that in the notebook, the IPython kernel uses `%` as a syntax element for magic commands, i.e., the line magic starting with `%tensorboard`. On the command line, run the same command without `%`.
->
 > - Before using the line magic `%tensorboard`, the TensorBoard notebook extension needs to be loaded using the magic command `%load_ext tensorboard`.
->
 > - To start TensorBoard, the previously used root log directory must be specified. The argument `logdir` is used to point to the directory where the root directory structure is located, and then TensorBoard will recursively traverse this directory and find the event files to display. The command line to start TensorBoard is: `tensorboard --logdir=path_to_logs`. Of course, the magic command to start TensorBoard is: `%tensorboard --logdir=path_to_logs`.
 
 ***TorchMetrics***
 
 - *TorchMetrics* is a collection of over 100 PyTorch metric implementations and an easy-to-use API for creating custom metrics. Among other benefits, it provides a standardized interface for improved repeatability and automatic batch accumulation.
-
 - *TorchMetrics* was originally created as part of PyTorch Lightning and can be used in any PyTorch model, as well as in PyTorch Lightning to enjoy additional benefits such as the ability to log `Metric` objects directly in Lightning in order to reduce even more boilerplate.
 
-**The *Torchvision* Library**
+**The** ***Torchvision*** **Library**
 
 - The *torchvision* library is part of the PyTorch project and consists of popular datasets, model architectures, and common image transformations for computer vision.
-
 - The `torchvision.datasets` module: contains numerous built-in datasets, as well as utility classes for building users' own datasets.
-
 - The `torchvision.models` package: contains definitions of models to handle different tasks including image classification, object detection, and so forth.
-
 - The `torchvision.transforms` module: contains commonly used computer vision transformations that can be used to transform or augment data for training or inference on different tasks (image classification, detection, and so on).
-
 - The `torchvision.utils` module: contains various utilities, mainly for visualization. Among them, the `make_grid` function is used to make image grids.
 
-**The `torch.utils.data` API**
+**The** **`torch.utils.data`** **torch.utils.data API**
 
 - The `torch.utils.data` API is a PyTorch data loading utility centered around the `DataLoader` class.
-
 - The `torch.utils.data.Dataset` class: an abstract class that represents a dataset.
-
 - The `torch.utils.data.DataLoader` class: a data loader that combines a dataset with a sampler and provides an iterable over the given dataset.
-
 - The `torch.utils.data.RandomSampler` class: a sampler that samples elements randomly. If no replacement is performed, samples elements from a shuffled dataset.
 
-**The `sklearn.utils` Module**
+**The** **`sklearn.utils`** **sklearn.utils Module**
 
 - Scikit-learn contains numerous utilities that assist in development, these are located in the `sklearn.utils` module and include several categories of tools.
-
 - The `sklearn.utils.class_weight` module: contains utilities for handling weights based on class labels, including the `compute_class_weight` function used to estimate class weights for imbalanced datasets.
 
----
+***
 
 ## Visualization-Related Libraries
 
----
+***
 
 ## Other Auxiliary Libraries
 
----
+***
 
 # Configuring Settings
 
 ## Visualization-Related Settings
 
----
+***
 
 ## Other Auxiliary Settings
 
----
+***
 
 # Pre-installing Custom Modules
 
----
+***
 
 # Implementation of Lecture Content
 
@@ -119,38 +100,35 @@ The framework of CNN is trained to perform classification on medical image datas
 **Introduction to the Dataset**
 
 - Pneumonia is a serious disease that kills more than 15% of children under 5 years old worldwide, is a common cause of emergency department visits, and is the leading cause of death in the United States. Diagnosing pneumonia is difficult and requires reviewing chest X-ray images, considering other lung issues and technical factors.
-
 - The [Radiological Society of North America (RSNA®)](https://www.rsna.org/) is an international society comprised of radiologists, medical physicists, and other medical professionals from around the world who work with medical imaging, such as X-ray images. The RSNA has reached out to [Kaggle](https://www.kaggle.com/)’s machine learning community and collaborated with other partners in organizing the [RSNA Pneumonia Detection Challenge](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/) and developing a rich X-ray image dataset for this challenge.
-
 - The medical image dataset used in this lecture was downloaded from the aforementioned Kaggle Competition, which was originally sourced from the [National Institutes of Health (NIH) Clinical Center](https://clinicalcenter.nih.gov/)'s publicly available [chest X-ray image dataset](https://nihcc.app.box.com/v/ChestXray-NIHCC). The related [NIH](https://www.nih.gov/) press release is available at the following [link](https://www.nih.gov/news-events/news-releases/nih-clinical-center-provides-one-largest-publicly-available-chest-x-ray-datasets-scientific-community).
 
->**Bibliographies**
->
->- [RSNA Pneumonia Detection Challenge](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/)
->
->- [X. Wang, Y. Peng, L. Lu, Z. Lu, M. Bagheri and R. M. Summers, "ChestX-Ray8: Hospital-Scale Chest X-Ray Database and Benchmarks on Weakly-Supervised Classification and Localization of Common Thorax Diseases," 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Honolulu, HI, USA, 2017, pp. 3462-3471, doi: 10.1109/CVPR.2017.369.](https://arxiv.org/abs/1705.02315)
+> **Bibliographies**
+> 
+> - [RSNA Pneumonia Detection Challenge](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/)
+> - [X. Wang, Y. Peng, L. Lu, Z. Lu, M. Bagheri and R. M. Summers, "ChestX-Ray8: Hospital-Scale Chest X-Ray Database and Benchmarks on Weakly-Supervised Classification and Localization of Common Thorax Diseases," 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Honolulu, HI, USA, 2017, pp. 3462-3471, doi: 10.1109/CVPR.2017.369.](https://arxiv.org/abs/1705.02315)
 
----
+***
 
-```
+````
 # Positive targets indicated that these subjects suffered from pneumonia, with more positive targets indicating a more significant condition.
-```
+````
 
 Obtaining Labels from the Original Training Dataset
 
----
+***
 
-```
+````
 # The `drop_duplicates` function from the `pandas.DataFrame` class: returns the DataFrame from which duplicate rows have been removed.
-```
+````
 
 Removing Duplicate Labels from the Original Training Dataset
 
----
+***
 
-```
+````
 # The `with_suffix` function from the `pathlib.PurePath` class returns a new path with the suffix changed. Note that if the original path has no suffix, the specified argument `suffix` is appended instead; if the specified argument `suffix` is an empty string, the original suffix is removed.
-```
+````
 
 Subject with {targets} Diagnostic Targets
 
@@ -158,19 +136,18 @@ Subject without Any Diagnostic Targets
 
 Visual Comparison of Subjects with the Most Pneumonia Diagnostic Targets to Randomized Subjects without Any Pneumonia Diagnostic Targets
 
----
+***
 
 ### Preprocessing of DICOM Files in the Original Training Dataset
 
-**Digital Imaging and Communications in Medicine (*DICOM*)**
+**Digital Imaging and Communications in Medicine (*****DICOM*** **)**
 
 - Digital Imaging and Communications in Medicine (*DICOM*) is a standard for the storing and transferring medical images and related information that specifies a non-proprietary data exchange protocol designed to facilitate the transmission of images between machines from different manufacturers.
-
 - Bits Stored (0028,0101) Attribute: the number of bits stored for each pixel sample. Note that the number of bits stored for each sample must be the same.
 
----
+***
 
-```
+````
 # Resize the original image to 224 x 224 to reduce the processing load on the deep learning model. Meanwhile, when storing the image, the image is converted to the half-precision data type to reduce the amount of space used. Because in computing, half-precision (sometimes referred to as FP16 or float16) is a binary floating-point computer number format that occupies two bytes in computer memory and is used to represent numbers with small storage space and low precision.
 
 # Retrieve the corresponding label for each image.
@@ -180,36 +157,34 @@ Visual Comparison of Subjects with the Most Pneumonia Diagnostic Targets to Rand
 # Divide each of the two freshly split datasets into labeled subsets based on their labels.
 
 # The `mkdir` function from the `pathlib.Path` class creates a new directory at the given path. If the argument `parents` is False (the default is False), the `FileNotFoundError` exception is raised if the parent directory is missing; otherwise, it creates the missing parent directory under the path as needed. As well, if the argument `exist_ok` is False (the default is False), it raises the `FileExistsError` exception in case the given path already exists on the file system; otherwise it is ignored if the given path already exists and is not a directory.
-```
+````
 
 Preprocessing and Splitting the Original Training Dataset
 
----
+***
 
-```
+````
 # Calculate dataset statistics using only the processed training dataset.
 
 # The`numpy.load` function can load arrays or pickled objects from `.npy`, `.npz`, or pickle files.
-```
+````
 
 Statistical Computing on the Processed Training Dataset
 
----
+***
 
 ## Train - Part One - Data Loading
 
 ### Data Transformation
 
-**The `torchvision.transforms` Module**
+**The** **`torchvision.transforms`** **torchvision.transforms Module**
 
 - The `torchvision.transforms` module in the torchvision library supports common computer vision transformations i.e., transforming or augmenting data for training or inference on different tasks (image classification, detection, segmentation, video classification).
 
 > **Tips**
->
+> 
 > - In order to make reliable predictions, deep learning models usually require a large amount of training data, which is not always available, and thus require augmentation of existing data to build better generalized models.
->
 > - Data augmentation is a technique to increase the amount of data used to train a model.
->
 > - The most commonly used image data augmentation techniques include *positional augmentation* (e.g., scaling, cropping, flipping, padding, rotation, translation, affine transformation) and *color augmentation* (e.g., brightness, contrast, saturation, hue).
 
 - The `torchvision.transforms.Compose` class: composes several transforms together.
@@ -223,97 +198,87 @@ Statistical Computing on the Processed Training Dataset
 - The `torchvision.transforms.RandomAffine` class: sets up a random affine transformation of the image, by keeping the center invariant. Note that if the image is a PyTorch tensor, its shape should be [... , H, W], where ... denotes an arbitrary number of leading dimensions.
 
   - The argument `degrees`: the range of degrees to be selected. Note that if it is a number and not a sequence like (min, max), the range of degrees will be between its positive and negative absolute values, if it is set to 0, it means that the rotation is deactivated.
-  
   - The argument `translate`: the maximum absolute fraction tuple for horizontal and vertical translation.
-  
   - The argument `scale`: the scaling factor interval.
 
 - The `torchvision.transforms.RandomResizedCrop` class: crops a random portion of the image and resizes it to a given size.
 
   - The argument `size`: the expected size of the cropping output for each edge.
-  
   - The argument `scale`: specifies the upper and lower bounds for cropping a random area before resizing.
-  
   - The argument `ratio`: specifies the upper and lower bounds of the random aspect ratio for cropping before resizing.
-  
   - The argument `antialias`: indicates whether antialiasing is applied. Note that it only affects tensors with bilinear or bicubic modes; otherwise it is ignored.
 
----
 
-```
+***
+
+````
 # Data augmentation is only required for the processed training dataset, not the processed validation dataset.
-```
+````
 
 Defining Pipelines for Data Transformation and Data Augmentation
 
----
+***
 
-**The `torchvision.datasets` Module**
+**The** **`torchvision.datasets`** **torchvision.datasets Module**
 
 - The `torchvision.datasets` module in the *torchvision* library provides several built-in datasets, along with utility classes for constructing users' own datasets.
-
 - The `torchvision.datasets.DatasetFolder` class: a generic dataset loader with a custom root path and a custom function to load samples for the given path, which are set by the arguments `root` and `loader`.
 
   - The argument `root`: the root directory path.
-  
   - The argument `loader`: the function to load a sample given its path.
-  
   - The argument `extensions`: the list of allowed extensions.
-  
   - The argument `transform`: the function/transformation that takes the sample and returns the transformed version.
 
----
 
-```
+***
+
+````
 # Since the data was previously stored as float16 to reduce space, a reconversion to float32 is required to improve calculation accuracy.
 
 # The `np.unique` function returns the sorted unique elements of the array, where the argument `ar` denotes the input array, and if the optional argument `return_counts` is True, it also returns the number of times each unique item appears in the input array.
-```
+````
 
 Loading the Processed Training Dataset and the Processed Validation Dataset
 
----
+***
 
-```
+````
 # Create a new class for each dataset and add indexes so that the data can be retrieved later by the indexes.
-```
+````
 
 Labeled Image Grid of the Processed {dataset} Dataset Samples
 
-```
+````
 # The `torch.cat` function concatenates the given sequence tensor by a given dimension. The argument `dim` indicates the dimension over which the tensors are concatenated.
-```
+````
 
 Visual Comparison of Labeled Image Grids for Two Processed Dataset Samples
 
----
+***
 
 ### Batch Loading
 
-**The `torch.utils.data.DataLoader` Class**
+**The** **`torch.utils.data.DataLoader`** **torch.utils.data.DataLoader Class**
 
 - The `torch.utils.data.DataLoader` class: a data loader that combines a dataset with a sampler and provides an iterable over a given dataset. Note that this class supports mapped and iterable datasets, single- or multi-process loading, custom loading order, and optional automatic batching (collation) and memory pinning.
 - The argument `batch_size`: indicates how many samples to load per batch, default value is 1.
-
 - The argument `shuffle`: indicates whether the data is reshuffled at every epoch, the default value is False.
-
 - The argument `num_workers`: indicates how many child processes will be used to load the data, the default value is 0.
 
 > **Tips**
 > 
 > - When the argument `num_workers` is set to 0 (i.e., the default value), it means that the data will be loaded in the main process.
->
 > - When the argument `num_workers` is set to greater than 0, PyTorch will use multiple processes to load the data, but the Jupyter Notebook (IPython kernel) does not support Python multiprocessing.
 
----
+***
 
-```
+````
 # Since Jupyter Notebook does not support Python multiprocessing, the argument `num_workers` can only be set to 0 here.
-```
+````
 
 Configuring Batch Loading
 
----
+***
 
 Labeled Image Grid of the First Batch of Data Extracted from the Processed Training Dataset
 
@@ -321,108 +286,102 @@ Labeled Image Grid of the First Batch of Data Extracted from the Processed Valid
 
 Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted from Two Processed Datasets
 
----
+***
 
 ## Train - Part Two - Model Creation
 
-***Residual Learning* and *Identity Mapping***
+***Residual Learning*** **and** ***Identity Mapping***
 
 - Deep convolutional neural networks significantly improve image classification by using multiple layers to process different levels of features. The effectiveness of deep convolutional neural networks depends on their depth, but past experiments have shown that networks with deeper layers are not really better.
-
 - Recent evidence demonstrates that the first problem faced by deep networks is the vanishing/exploding gradients, which can make it difficult for the network to converge. However, this issue is also effectively addressed through normalized initialization and intermediate normalization layers, allowing deep networks to converge.
-
 - As deeper networks are able to start converging, deeper networks expose a second problem, degradation: the increase in depth of the network in turn decreases the accuracy of the network. However, this degradation problem is not caused by overfitting, because as the depth of the network increases, not only does the accuracy degrade rapidly after reaching saturation, but the training error of the model also increases.
-
 - The degradation in training accuracy reveals that not all systems are similarly easy to optimize. In fact, for the deeper model, there exists a constructive solution: the added layers are *identity mapping*, while the other layers are copied from the shallower model that was learned. The existence of this constructed solution suggests that deeper models should not produce higher training errors than their shallower counterparts.
-
 - Therefore, the deep *residual learning* framework is proposed to address this degradation problem.
 
-	- The goal is not to directly let every few stacked layers fit the desired underlying mapping, but to explicitly let these layers fit a residual mapping: assuming that the desired underlying mapping is $\mathcal{H}(\mathrm{x})$, the residual mapping to be fitted by the stacked nonlinear layers is $\mathcal{F}(\mathrm{x}) \coloneqq \mathcal{H}(\mathrm{x}) - \mathrm{x}$. Thus, the original mapping is reformulated as $\mathcal{F}(\mathrm{x}) + \mathrm{x}$.
-	
-	- As mentioned earlier, if the added layers can be constructed as *identity mappings*, the training error of a deeper model should not be larger than that of its corresponding shallow model. With the *residual learning* recasts, if *identity mappings* are optimal, the solver can approximate *identity mappings* by simply setting the weights of multiple nonlinear layers (i.e., residual mappings) toward zero, which is much easier than fitting an *identity mapping* by a stack of nonlinear layers.
-	
-	- In reality, *identity mappings* are unlikely to be optimal, and the *residual learning* reformulation can be helpful for preconditioning this problem. If the optimal function approaches an *identity mapping* more closely than a zero mapping, it is much easier for the solver to find perturbations with respect to an *identity mapping* than it is to learn a new function. Experiments show that the learned residual functions are generally smaller in response, suggesting that *identity mappings* provide reasonable preconditioning.
-	
-	- The operation of the formula $\mathcal{F}(\mathrm{x}) + \mathrm{x}$ can be realized by feedforward neural networks with "shortcut connections" (i.e., connections that skip one or more layers) and element-wise addition.
-	
-		- In this *residual learning* framework, the shortcut connections simply perform *identity mapping*, then add their outputs to the outputs of the stacked layers, and adopt a second nonlinearity after the addition, as shown below. 
-		
-			![Shortcut Connections](../Images/Shortcut_Connections.png)
-		
-		- Since identity shortcut connections add no extra parameters or computational complexity, it is possible to make fair comparisons between plain and residual networks with the same parameters, depth, width, and computational cost (except for negligible element-wise additions). This not only applicable to fully-connected layers, but also to convolutional layers.
-		
-		- The entire network can still be trained end-to-end using SGD and backpropagation, and can be easily implemented using common libraries without modifying the solvers.
-		
-**Plain Network and *Residual Network***
+  - The goal is not to directly let every few stacked layers fit the desired underlying mapping, but to explicitly let these layers fit a residual mapping: assuming that the desired underlying mapping is $\mathcal{H}(\mathrm{x})$, the residual mapping to be fitted by the stacked nonlinear layers is $\mathcal{F}(\mathrm{x}) \coloneqq \mathcal{H}(\mathrm{x}) - \mathrm{x}$. Thus, the original mapping is reformulated as $\mathcal{F}(\mathrm{x}) + \mathrm{x}$.
+  - As mentioned earlier, if the added layers can be constructed as *identity mappings*, the training error of a deeper model should not be larger than that of its corresponding shallow model. With the *residual learning* recasts, if *identity mappings* are optimal, the solver can approximate *identity mappings* by simply setting the weights of multiple nonlinear layers (i.e., residual mappings) toward zero, which is much easier than fitting an *identity mapping* by a stack of nonlinear layers.
+  - In reality, *identity mappings* are unlikely to be optimal, and the *residual learning* reformulation can be helpful for preconditioning this problem. If the optimal function approaches an *identity mapping* more closely than a zero mapping, it is much easier for the solver to find perturbations with respect to an *identity mapping* than it is to learn a new function. Experiments show that the learned residual functions are generally smaller in response, suggesting that *identity mappings* provide reasonable preconditioning.
+  - The operation of the formula $\mathcal{F}(\mathrm{x}) + \mathrm{x}$ can be realized by feedforward neural networks with "shortcut connections" (i.e., connections that skip one or more layers) and element-wise addition.
+
+    - In this *residual learning* framework, the shortcut connections simply perform *identity mapping*, then add their outputs to the outputs of the stacked layers, and adopt a second nonlinearity after the addition, as shown below.
+
+      ![Shortcut Connections](../Images/Shortcut_Connections.png)
+
+    - Since identity shortcut connections add no extra parameters or computational complexity, it is possible to make fair comparisons between plain and residual networks with the same parameters, depth, width, and computational cost (except for negligible element-wise additions). This not only applicable to fully-connected layers, but also to convolutional layers.
+    - The entire network can still be trained end-to-end using SGD and backpropagation, and can be easily implemented using common libraries without modifying the solvers.
+
+
+
+**Plain Network and** ***Residual Network***
 
 - The baselines of plain networks are mainly inspired by the philosophy of VGG networks. The convolutional layers mostly use $3 \times 3$ filters, which are directly downsampled by a convolutional layer with a stride of $2$, and follow two simple design rules:
 
   1. Feature map size equal: the number of filters in each layer is the same;
-  
   2. Feature map size halved: the number of filters in each layer is doubled to maintain the time complexity.
 
 - Inserting shortcut connections on the above plain network enables it to be converted to its counterpart residual version, i.e., the *residual network*.
 
-	- When the dimensions of the input and output feature maps are the same, the identity shortcuts can be used directly.
-	
-	- When the dimensions of the output feature maps increase compared to the dimensions of the counterpart input feature maps, the following two options can be considered, both of which perform a stride of $2$ when the shortcuts go through feature maps of two sizes:
-	
-		1. Zero-padding shortcuts: shortcuts with this option still perform identity mapping, with extra zero entries padded for increasing dimensions, and this option introduces no extra parameter;
-		
-		2. Projection shortcuts: shortcuts with this option match dimensions by a $1 \times 1$ convolution.
-		
+  - When the dimensions of the input and output feature maps are the same, the identity shortcuts can be used directly.
+  - When the dimensions of the output feature maps increase compared to the dimensions of the counterpart input feature maps, the following two options can be considered, both of which perform a stride of $2$ when the shortcuts go through feature maps of two sizes:
+
+    1. Zero-padding shortcuts: shortcuts with this option still perform identity mapping, with extra zero entries padded for increasing dimensions, and this option introduces no extra parameter;
+    2. Projection shortcuts: shortcuts with this option match dimensions by a $1 \times 1$ convolution.
+
+
 - The detailed network architecture of the plain and *residual networks* is shown below. For ease of representation, the 18/34/50/101/152-layer *residual network* (ResNet) could be abbreviated as ResNet-18/34/50/101/152, respectively.
 
-	![Network Architecture](../Images/Network_Architecture.png)
+  ![Network Architecture](../Images/Network_Architecture.png)
 
 - It is worth noting that compared to the model of VGG networks (with the VGG-16/19 model as a reference), the model of 18/34/50/101/152-layer plain and *residual networks* and  has fewer filters and lower complexity.
 
->**Bibliographies**
->
->- [K. He, X. Zhang, S. Ren and J. Sun, "Deep Residual Learning for Image Recognition," 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Las Vegas, NV, USA, 2016, pp. 770-778, doi: 10.1109/CVPR.2016.90.](https://arxiv.org/abs/1512.03385)
+> **Bibliographies**
+> 
+> - [K. He, X. Zhang, S. Ren and J. Sun, "Deep Residual Learning for Image Recognition," 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Las Vegas, NV, USA, 2016, pp. 770-778, doi: 10.1109/CVPR.2016.90.](https://arxiv.org/abs/1512.03385)
 
----
+***
 
-```
+````
 # Torchvision provides a new backwards compatible API for building models with multi-weight support, allowing different weights to be loaded in existing model builder methods, in which the argument `weights` defines the pre-training weights to be used, with the default value of None, i.e., no pre-training weights are used.
-```
+````
 
 Initial Understanding of the ResNet-18 Architecture
 
----
+***
 
-**The `lightning.pytorch.LightningModule` API**
+**The** **`lightning.pytorch.LightningModule`** **lightning.pytorch.LightningModule API**
 
 - The `lightning.pytorch.LightningModule` API is one of the two core APIs for PyTorch Lightning, and it organizes PyTorch code into 6 sections:
 
-	1. Initialization (the `__init__` and `setup` functions);
-
-	2. Train loop (the `training_step`functions);
-
-	3. Validation loop (the `validation_step` functions);
-
-	4. Test loop (the `test_step` functions);
-
-	5. Prediction loop (the `predict_step` functions);
-
-	6. Optimizers and learning rate schedulers (the `configure_optimizers` functions).
+  1. Initialization (the `__init__` and `setup` functions);
+  2. Train loop (the `training_step`functions);
+  3. Validation loop (the `validation_step` functions);
+  4. Test loop (the `test_step` functions);
+  5. Prediction loop (the `predict_step` functions);
+  6. Optimizers and learning rate schedulers (the `configure_optimizers` functions).
 
 - The `lightning.pytorch.LightningModule` API is equivalent to the `torch.nn.Module` class, but with added functionality and many convenient methods.
 
-**The `torch.nn.BCEWithLogitsLoss` Class**
+**The** **`torch.nn.BCEWithLogitsLoss`** **torch.nn.BCEWithLogitsLoss Class**
 
 - The `torch.nn.BCEWithLogitsLoss` class combines the `torch.nn.Sigmoid` class with the `torch.nn.BCELoss` class in a single class.
 
-	- The `torch.nn.Sigmoid` class:
-	
-	- The `torch.nn.BCELoss` class:
+  - The `torch.nn.Sigmoid` class: applies the element-wise logistic sigmoid function.
+  
+  	- A sigmoid function is any mathematical function whose graph has a characteristic S-shaped curve or sigmoid curve. There are a number of common sigmoid functions, such as the logistic function, the hyperbolic tangent, and the arctangent.
+  	
+  	- A logistic sigmoid function is a special form of the logistic function and a common example of the sigmoid function, usually denoted by $\sigma(x)$. It converts any value in the domain $(-\infty, \infty)$ to a number between $0$ and $1$ by the following formula:
+  	
+  		$$\sigma(x) = \frac{1}{1 + e^{-x}} = \frac{e^{x}}{1 + e^{x}} = 1 - \sigma(-x)$$
+  
+  - The `torch.nn.BCELoss` class:
 
-- Using this recombined class at the input layer is numerically more stable than using a plain sigmoid function (the `torch.nn.Sigmoid` class) followed by a loss measure based on the criterion of the binary cross-entropy (the `torch.nn.BCELoss` class), since combining these operations into a single layer facilitates the use of the log-sum-exp trick to improve numerical stability.
+- Using this recombined class at the input layer is numerically more stable than using a plain sigmoid function (the `torch.nn.Sigmoid` class) followed by the loss function based on the binary cross-entropy criterion (the `torch.nn.BCELoss` class), since combining these operations into a single layer facilitates the use of the log-sum-exp trick to improve numerical stability.
 
 
 
----
 
+
+***
 
 # Based on empirical studies and experience in training a model on these processed datasets, it has been found that using pre-training weights leads to early saturation of the model's learning capacity, at which point the model stops learning about the general problem and begins to learn about the data, thus showing a decrease in the training loss and an increase in the validation loss, i.e., overfitting.
 
@@ -431,7 +390,4 @@ Initial Understanding of the ResNet-18 Architecture
 # Whether in the `torch.nn.Conv2d` class or the `torch.nn.Linear` class, the argument `bias` defaults to True, indicating whether the layer learns an additive bias.
 
 # Since both processed datasets contain only one binary class label, the argument `out_features` for the last layer of the model, i.e., the fully connected (FC) layer, needs to be changed from 1000 to 1, which refers to the Boolean result of the binary class label.
-
-
-
 
