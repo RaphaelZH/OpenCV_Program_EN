@@ -420,15 +420,23 @@ Initial Understanding of the ResNet-18 Architecture
   	
   	- In some fields, notably artificial neural networks, the sigmoid function is often used to refer specifically to the logistic sigmoid function, which is a special form of the logistic function and a common example of the sigmoid function, usually denoted by $\sigma(x)$.
   	
-  	- The logistic sigmoid function converts any value in the domain $(-\infty, \infty)$ to a number between $0$ and $1$ by the following formula, which is often useful in predicting probabilities and solving binary classification problems:
+  	- The logistic sigmoid function converts any real number in the domain $(-\infty, \infty)$ to a number between $0$ and $1$ by the following formula, which is often useful in predicting probabilities and solving binary classification problems:
   	
   		$$\sigma(x) = \frac{1}{1 + e^{-x}} = \frac{e^{x}}{1 + e^{x}} = 1 - \sigma(-x)$$
   		
   	- There are two common problems with the logistic sigmoid function:
   	
-  		1. The most common problem with the logistic sigmoid function is the gradient vanishing problem, commonly seen in multilayer neural networks that use the logistic sigmoid function. Since the derivatives of the logistic sigmoid functions are very small, they become smaller and smaller when they are multiplied together during backpropagation, i.e., the smaller the gradient, the less effective the backpropagation will be.
+  		1. The most common problem with the logistic sigmoid function is the gradient vanishing problem, which is commonly seen in multilayer neural networks that use logistic sigmoid functions. Since the derivatives of logistic sigmoid functions are very small, the derivatives become smaller and smaller when they are multiplied together during backpropagation, i.e., the smaller the gradients, the less effective the backpropagation will be.
   		
-  		2. Furthermore, as mentioned earlier, the output of the logistic sigmoid function is between $0$ and $1$, whereas the better output values of the neural network are centered around zero, e.g., between $-1$ and $1$.
+  		2. Furthermore, as mentioned earlier, the output of the logistic sigmoid function is a number between $0$ and $1$, whereas the better output values of the neural network are centered around the origin, e.g., a number between $-1$ and $1$.
+  		
+  	- The hyperbolic tangent (tanh) function is very similar to the logistic sigmoid function, and although it has its own drawbacks, as an improved version of the logistic sigmoid function, it is usually a better choice than the logistic sigmoid function. A comparison of the two functions is shown below.
+  	  	
+  		![Logistic Sigmoid and Hyperbolic Tangent](../Images/Logistic_Sigmoid_and_Hyperbolic_Tangent.png)
+  	
+  	- As shown above, the hyperbolic tangent function mitigates the above two problems to some extent:
+  	
+  		1. The hyperbolic tangent function has a codomain of $(-1, 1)$. This larger range allows the hyperbolic tangent function to map negative inputs to negative outputs, while inputs near zero will map to outputs near zero.
   		
   		
   
