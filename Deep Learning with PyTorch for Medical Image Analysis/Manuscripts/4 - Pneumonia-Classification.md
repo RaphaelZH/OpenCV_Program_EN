@@ -47,9 +47,9 @@ The framework of CNN is trained to perform classification on medical image datas
 > **Tips**
 > 
 > - TensorBoard can be started either from the command line or directly from the notebook by experiencing the magic commands provided by the IPython kernel. The two commands are roughly the same, except that in the notebook, the IPython kernel uses `%` as a syntax element for magic commands, i.e., the line magic starting with `%tensorboard`. On the command line, run the same command without `%`.
->
+> 
 > - Before using the line magic `%tensorboard`, the TensorBoard notebook extension needs to be loaded using the magic command `%load_ext tensorboard`.
->
+> 
 > - To start TensorBoard, the previously used root log directory must be specified. The argument `logdir` is used to point to the directory where the root directory structure is located, and then TensorBoard will recursively traverse this directory and find the event files to display. The command line to start TensorBoard is: `tensorboard --logdir=path_to_logs`. Of course, the magic command to start TensorBoard is: `%tensorboard --logdir=path_to_logs`.
 
 ***TorchMetrics***
@@ -127,7 +127,7 @@ The framework of CNN is trained to perform classification on medical image datas
 > **Bibliographies**
 > 
 > - [RSNA Pneumonia Detection Challenge](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/)
->
+> 
 > - [X. Wang, Y. Peng, L. Lu, Z. Lu, M. Bagheri and R. M. Summers, "ChestX-Ray8: Hospital-Scale Chest X-Ray Database and Benchmarks on Weakly-Supervised Classification and Localization of Common Thorax Diseases," 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Honolulu, HI, USA, 2017, pp. 3462-3471, doi: 10.1109/CVPR.2017.369.](https://arxiv.org/abs/1705.02315)
 
 ***
@@ -207,9 +207,9 @@ Statistical Computing on the Processed Training Dataset
 > **Tips**
 > 
 > - In order to make reliable predictions, deep learning models usually require a large amount of training data, which is not always available, and thus require augmentation of existing data to build better generalized models.
->
+> 
 > - Data augmentation is a technique to increase the amount of data used to train a model.
->
+> 
 > - The most commonly used image data augmentation techniques include *positional augmentation* (e.g., scaling, cropping, flipping, padding, rotation, translation, affine transformation) and *color augmentation* (e.g., brightness, contrast, saturation, hue).
 
 - The `torchvision.transforms.Compose` class: composes several transforms together.
@@ -303,7 +303,7 @@ Visual Comparison of Labeled Image Grids for Two Processed Dataset Samples
 > **Tips**
 > 
 > - When the argument `num_workers` is set to 0 (i.e., the default value), it means that the data will be loaded in the main process.
->
+> 
 > - When the argument `num_workers` is set to greater than 0, PyTorch will use multiple processes to load the data, but the Jupyter Notebook (IPython kernel) does not support Python multiprocessing.
 
 ***
@@ -348,7 +348,7 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
     - In this *residual learning* framework, the shortcut connections simply perform *identity mapping*, then add their outputs to the outputs of the stacked layers, and adopt a second nonlinearity after the addition, as shown below.
 
-      ![Shortcut Connections](../Images/Shortcut_Connections.png)
+    	![Shortcut Connections](../Images/Shortcut_Connections.png)
 
     - Since identity shortcut connections add no extra parameters or computational complexity, it is possible to make fair comparisons between plain and residual networks with the same parameters, depth, width, and computational cost (except for negligible element-wise additions). This not only applicable to fully-connected layers, but also to convolutional layers.
     
@@ -374,7 +374,7 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
 - The detailed network architecture of the plain and *residual networks* is shown below. For ease of representation, the 18/34/50/101/152-layer *residual network* (ResNet) could be abbreviated as ResNet-18/34/50/101/152, respectively.
 
-  ![Network Architecture](../Images/Network_Architecture.png)
+	![Network Architecture](../Images/Network_Architecture.png)
 
 - It is worth noting that compared to the model of VGG networks (with the VGG-16/19 model as a reference), the model of 18/34/50/101/152-layer plain and *residual networks* and  has fewer filters and lower complexity.
 
@@ -422,23 +422,31 @@ Initial Understanding of the ResNet-18 Architecture
   	
   	- The logistic sigmoid function converts any real number in the domain $(-\infty, \infty)$ to a number between $0$ and $1$ by the following formula, which is often useful in predicting probabilities and solving binary classification problems:
   	
-  		$$\sigma(x) = \frac{1}{1 + e^{-x}} = \frac{e^{x}}{1 + e^{x}} = 1 - \sigma(-x)$$
-  		
+  		$$\sigma(x) = \frac{1}{1 + e^{-x}} = \frac{e^{x}}{1 + e^{x}} = 1 - \frac{1}{1 + e^{x}} = 1 - \sigma(-x)$$
+  	
+  	- The derivative of the logistic sigmoid function is symmetric with respect to the y-axis, has a maximum value (when $x = 0$) of $0.25$, and its codomain is $(0, 0.25]$. The formula for its derivative is shown below:
+  	
+  		$$\sigma(x)' = \frac{d}{dx} \left( \frac{1}{1 + e^{-x}} \right) = -\frac{1}{(1 + e^{-x})^2} \cdot \frac{d}{dx} (1 + e^{-x}) = -\frac{1}{(1 + e^{-x})^2} \cdot e^{-x} \cdot \frac{d}{dx} (-x) = \frac{e^{-x}}{(1 + e^{-x})^2} = \frac{1}{1 + e^{-x}} \cdot \left( 1 - \frac{1}{1 + e^{-x}} \right) = \sigma(x)(1 - \sigma(x))$$
+  	
   	- There are two common problems with the logistic sigmoid function:
   	
   		1. The most common problem with the logistic sigmoid function is the gradient vanishing problem, which is commonly seen in multilayer neural networks that use logistic sigmoid functions. Since the derivatives of logistic sigmoid functions are very small, the derivatives become smaller and smaller when they are multiplied together during backpropagation, i.e., the smaller the gradients, the less effective the backpropagation will be.
   		
-  		2. Furthermore, as mentioned earlier, the output of the logistic sigmoid function is a number between $0$ and $1$, whereas the better output values of the neural network are centered around the origin, e.g., a number between $-1$ and $1$.
-  		
-  	- The hyperbolic tangent (tanh) function is very similar to the logistic sigmoid function, and although it has its own drawbacks, as an improved version of the logistic sigmoid function, it is usually a better choice than the logistic sigmoid function. A comparison of the two functions is shown below.
-  	  	
-  		![Logistic Sigmoid and Hyperbolic Tangent](../Images/Logistic_Sigmoid_and_Hyperbolic_Tangent.png)
+  		2. Furthermore, as mentioned earlier, the output of the logistic sigmoid function is a number between $0$ and $1$, whereas the better output values of the neural network are centered around the origin, e.g., the output value ranges between $-1$ and $1$.
   	
-  	- As shown above, the hyperbolic tangent function mitigates the above two problems to some extent:
-  	
-  		1. The hyperbolic tangent function has a codomain of $(-1, 1)$. This larger range allows the hyperbolic tangent function to map negative inputs to negative outputs, while inputs near zero will map to outputs near zero.
+  	> **Tips**
+	> 
+  	> - The hyperbolic tangent (tanh) function is very similar to the logistic sigmoid function, although it has its own drawbacks. As an improved version of the logarithmic sigmoid function, it is commonly used in the hidden layer of a neural network, while the latter is often used in the output layer of a binary classification neural network. The function and derivative graphs of these two functions are shown below.
+  	> 
+  	> 	![Logistic Sigmoid and Hyperbolic Tangent](../Images/Logistic_Sigmoid_and_Hyperbolic_Tangent.png)
+  	> 
+  	> - As shown above, the hyperbolic tangent function mitigates the above two problems to some extent:
+  	> 
+  	> 	1. The hyperbolic tangent function has a codomain of $(-1, 1)$. This larger range allows the hyperbolic tangent function to map negative inputs to negative outputs, while inputs near zero will map to outputs near zero.
   		
   		
+  		
+  		$tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} = \frac{e^{2x} - 1}{e^{2x} + 1} = 2 \cdot \frac{e^{2x}}{1 + e^{2x}} - 1 = 2 \cdot \sigma(2x) − 1$
   
   - The `torch.nn.BCELoss` class:
 
