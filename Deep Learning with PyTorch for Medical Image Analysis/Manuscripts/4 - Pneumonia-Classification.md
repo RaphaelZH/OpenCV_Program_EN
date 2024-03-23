@@ -440,13 +440,25 @@ Initial Understanding of the ResNet-18 Architecture
   	> 
   	> 	![Logistic Sigmoid and Hyperbolic Tangent](../Images/Logistic_Sigmoid_and_Hyperbolic_Tangent.png)
   	> 
+  	
+  	
+  	
+  	
   	> - As shown above, the hyperbolic tangent function mitigates the above two problems to some extent:
   	> 
-  	> 	1. The hyperbolic tangent function has a codomain of $(-1, 1)$. This larger range allows the hyperbolic tangent function to map negative inputs to negative outputs, while inputs near zero will map to outputs near zero.
+  	
+  	
+  	
+  	
+  	> - As shown above, the hyperbolic tangent function is a rescaling and stretching of the logistic sigmoid function, which maps $(-1, 1)$ to a rescaled version of the latter, as can be observed from the following formula and its variants:
+  	> 
+  	> 	$$tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} = \frac{e^{2x} - 1}{e^{2x} + 1} = 2 \cdot \frac{e^{2x}}{1 + e^{2x}} - 1 = 2 \cdot \sigma(2x) − 1$$
+  	> 
+  	> - Because the output of the hyperbolic tangent function is centered at the origin, its codomain is $(-1, 1)$, a large range that allows the hyperbolic tangent function to map negative inputs to negative outputs and near-zero inputs to near-zero outputs. Since the hyperbolic tangent function is able to make the data more centered on zero, it is able to make the hidden layer of the neural network to have a mean value of zero or very close to zero, which helps to centralize the data, and to some extent, makes the learning of the next layer easier.
+  	
+  	
   		
-  		
-  		
-  		$tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} = \frac{e^{2x} - 1}{e^{2x} + 1} = 2 \cdot \frac{e^{2x}}{1 + e^{2x}} - 1 = 2 \cdot \sigma(2x) − 1$
+  	
   
   - The `torch.nn.BCELoss` class:
 
