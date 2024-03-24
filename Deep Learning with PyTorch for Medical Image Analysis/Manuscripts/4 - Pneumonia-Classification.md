@@ -424,13 +424,13 @@ Initial Understanding of the ResNet-18 Architecture
   	
   		$$\sigma(x) = \frac{1}{1 + e^{-x}} = \frac{e^{x}}{1 + e^{x}} = 1 - \frac{1}{1 + e^{x}} = 1 - \sigma(-x)$$
   	
-  	- The derivative of the logistic sigmoid function is symmetric with respect to the y-axis, has a maximum value (when $x = 0$) of $0.25$, and its codomain is $(0, 0.25]$. The formula for its derivative is shown below:
+  	- The derivative of the logistic sigmoid function is symmetric with respect to the y-axis, which has a maximum value (when $x = 0$) of $0.25$, and its codomain is $(0, 0.25]$. The formula for its derivative is shown below:
   	
-  		$$\sigma(x)' = \frac{d}{dx} \left( \frac{1}{1 + e^{-x}} \right) = -\frac{1}{(1 + e^{-x})^2} \cdot \frac{d}{dx} (1 + e^{-x}) = -\frac{1}{(1 + e^{-x})^2} \cdot e^{-x} \cdot \frac{d}{dx} (-x) = \frac{e^{-x}}{(1 + e^{-x})^2} = \frac{1}{1 + e^{-x}} \cdot \left( 1 - \frac{1}{1 + e^{-x}} \right) = \sigma(x)(1 - \sigma(x))$$
+  		$$\frac{d}{dx} \sigma(x) = \frac{d}{dx} \left( \frac{1}{1 + e^{-x}} \right) = -\frac{1}{(1 + e^{-x})^2} \cdot \frac{d}{dx} (1 + e^{-x}) = -\frac{1}{(1 + e^{-x})^2} \cdot e^{-x} \cdot \frac{d}{dx} (-x) = \frac{e^{-x}}{(1 + e^{-x})^2} = \frac{1}{1 + e^{-x}} \cdot \left( 1 - \frac{1}{1 + e^{-x}} \right) = \sigma(x)(1 - \sigma(x))$$
   	
   	- There are two common problems with the logistic sigmoid function:
   	
-  		1. The most common problem with the logistic sigmoid function is the gradient vanishing problem, which is commonly seen in multilayer neural networks that use logistic sigmoid functions. Since the derivatives of logistic sigmoid functions are very small, the derivatives become smaller and smaller when they are multiplied together during backpropagation, i.e., the smaller the gradients, the less effective the backpropagation will be.
+  		1. The most common problem with the logistic sigmoid function is the vanishing gradient problem, which is commonly seen in multilayer neural networks that use logistic sigmoid functions. Since the derivatives of logistic sigmoid functions are very small, the derivatives become smaller and smaller when they are multiplied together during backpropagation, i.e., the smaller the gradients, the less effective the backpropagation will be.
   		
   		2. Furthermore, as mentioned earlier, the output of the logistic sigmoid function is a number between $0$ and $1$, whereas the better output values of the neural network are centered around the origin, e.g., the output value ranges between $-1$ and $1$.
   	
@@ -440,25 +440,21 @@ Initial Understanding of the ResNet-18 Architecture
   	> 
   	> 	![Logistic Sigmoid and Hyperbolic Tangent](../Images/Logistic_Sigmoid_and_Hyperbolic_Tangent.png)
   	> 
-  	
-  	
-  	
-  	
-  	> - As shown above, the hyperbolic tangent function mitigates the above two problems to some extent:
-  	> 
-  	
-  	
-  	
-  	
-  	> - As shown above, the hyperbolic tangent function is a rescaling and stretching of the logistic sigmoid function, which maps $(-1, 1)$ to a rescaled version of the latter, as can be observed from the following formula and its variants:
+  	> - As shown above, the hyperbolic tangent function is a rescaling and stretching of the logistic sigmoid function, which maps $(-1, 1)$ to a rescaled version of the latter, as can be observed from the following formula:
   	> 
   	> 	$$tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} = \frac{e^{2x} - 1}{e^{2x} + 1} = 2 \cdot \frac{e^{2x}}{1 + e^{2x}} - 1 = 2 \cdot \sigma(2x) − 1$$
   	> 
-  	> - Because the output of the hyperbolic tangent function is centered at the origin, its codomain is $(-1, 1)$, a large range that allows the hyperbolic tangent function to map negative inputs to negative outputs and near-zero inputs to near-zero outputs. Since the hyperbolic tangent function is able to make the data more centered on zero, it is able to make the hidden layer of the neural network to have a mean value of zero or very close to zero, which helps to centralize the data, and to some extent, makes the learning of the next layer easier.
+  	> - Because the output of the hyperbolic tangent function is centered at the origin and its codomain is $(-1, 1)$, it is able to map strong positive (negative) inputs to positive (negative) outputs, respectively, map near-zero inputs to near-zero outputs, and converge faster when the inputs are close to zero. Since the hyperbolic tangent function is a zero-centered activation function, when acting on the hidden layers of the neural network, it is able to make the mean of the hidden layers to be zero or very close to zero, which helps in centering the data and makes learning for the next layers much easier. This is an advantage over the logarithmic sigmoid function.
+  	> 
+  	> - The derivative of the hyperbolic tangent function is also symmetric with respect to the y-axis, which has a maximum value (when $x = 0$) of $1$, and its codomain is $(0, 1]$. The formula for its derivative is shown below:
+  	> 
+  	> 	$$\frac{d}{dx} tanh(x) = \frac{(e^{x} + e^{-x}) \cdot \frac{d}{dx} (e^{x} - e^{-x}) - (e^{x} - e^{-x}) \cdot \frac{d}{dx} (e^{x} + e^{-x})}{(e^{x} + e^{-x})^2} = \frac{(e^{x} + e^{-x})^2 - (e^{x} - e^{-x})^2}{(e^{x} + e^{-x})^2} = 1 - \left( \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} \right) ^2 = 1 - tanh(x)^2$$
+  	> 
+  	> - The hyperbolic tangent function has better performance than the logistic sigmoid function to some extent due to its steep gradient, which is another advantage it has over the logistic sigmoid function. However, activation functions with saturated regions like the logistic sigmoid function and the hyperbolic tangent function are not immune to the vanishing gradient problem during training.
   	
-  	
-  		
-  	
+  
+  
+  
   
   - The `torch.nn.BCELoss` class:
 
