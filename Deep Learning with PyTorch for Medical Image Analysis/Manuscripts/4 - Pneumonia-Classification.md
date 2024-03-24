@@ -420,11 +420,11 @@ Initial Understanding of the ResNet-18 Architecture
   	
   	- In some fields, notably artificial neural networks, the sigmoid function is often used to refer specifically to the logistic sigmoid function, which is a special form of the logistic function and a common example of the sigmoid function, usually denoted by $\sigma(x)$.
   	
-  	- The logistic sigmoid function converts any real number in the domain $(-\infty, \infty)$ to a number between $0$ and $1$ by the following formula, which is often useful in predicting probabilities and solving binary classification problems:
+  	- The logistic sigmoid function converts any real number in the domain $(-\infty, \infty)$ to a number between $0$ and $1$ by the following deduced formula, which is often useful in predicting probabilities and solving binary classification problems.
   	
   		$$\sigma(x) = \frac{1}{1 + e^{-x}} = \frac{e^{x}}{1 + e^{x}} = 1 - \frac{1}{1 + e^{x}} = 1 - \sigma(-x)$$
   	
-  	- The derivative of the logistic sigmoid function is symmetric with respect to the y-axis, which has a maximum value (when $x = 0$) of $0.25$, and its codomain is $(0, 0.25]$. The formula for its derivative is shown below:
+  	- The derivative of the logistic sigmoid function is symmetric with respect to the y-axis, which has a maximum value (when $x = 0$) of $0.25$, and its codomain is $(0, 0.25]$. The derivative formula is deduced as follows.
   	
   		$$\frac{d}{dx} \sigma(x) = \frac{d}{dx} \left( \frac{1}{1 + e^{-x}} \right) = -\frac{1}{(1 + e^{-x})^2} \cdot \frac{d}{dx} (1 + e^{-x}) = -\frac{1}{(1 + e^{-x})^2} \cdot e^{-x} \cdot \frac{d}{dx} (-x) = \frac{e^{-x}}{(1 + e^{-x})^2} = \frac{1}{1 + e^{-x}} \cdot \left( 1 - \frac{1}{1 + e^{-x}} \right) = \sigma(x)(1 - \sigma(x))$$
   	
@@ -432,36 +432,48 @@ Initial Understanding of the ResNet-18 Architecture
   	
   		1. The most common problem with the logistic sigmoid function is the vanishing gradient problem, which is commonly seen in multilayer neural networks that use logistic sigmoid functions. Since the derivatives of logistic sigmoid functions are very small, the derivatives become smaller and smaller when they are multiplied together during backpropagation, i.e., the smaller the gradients, the less effective the backpropagation will be.
   		
-  		2. Furthermore, as mentioned earlier, the output of the logistic sigmoid function is a number between $0$ and $1$, whereas the better output values of the neural network are centered around the origin, e.g., the output value ranges between $-1$ and $1$.
+  		2. In addition, the logistic sigmoid function is a non zero-centered activation function, which usually makes training a neural network more difficult and unstable. Therefore, for a neural network, a zero-centered activation function is preferred as it ensures that the average activation value is around $0$, which helps in smoother and faster convergence during the training process.
   	
   	> **Tips**
 	> 
-  	> - The hyperbolic tangent (tanh) function is very similar to the logistic sigmoid function, although it has its own drawbacks. As an improved version of the logarithmic sigmoid function, it is commonly used in the hidden layer of a neural network, while the latter is often used in the output layer of a binary classification neural network. The function and derivative graphs of these two functions are shown below.
+  	> - The hyperbolic tangent (tanh) function is very similar to the logistic sigmoid function, although it has its own drawbacks. As an improved version of the logistic sigmoid function, it is commonly used as the activation function in the hidden layers of a recurrent neural network (RNN) which helps capture complex temporal dependencies and can handle both positive and negative values in sequential data, while the latter is often used in the output layer of a binary classification neural network. The function and derivative graphs of these two functions are shown below.
   	> 
   	> 	![Logistic Sigmoid and Hyperbolic Tangent](../Images/Logistic_Sigmoid_and_Hyperbolic_Tangent.png)
   	> 
-  	> - As shown above, the hyperbolic tangent function is a rescaling and stretching of the logistic sigmoid function, which maps $(-1, 1)$ to a rescaled version of the latter, as can be observed from the following formula:
+  	> - As shown above, the hyperbolic tangent function is a rescaling and stretching of the logistic sigmoid function with an output ranging from $-1$ to $1$, and can be thought of as a rescaled version of the latter, whose formula can be deduced as follows.
   	> 
   	> 	$$tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} = \frac{e^{2x} - 1}{e^{2x} + 1} = 2 \cdot \frac{e^{2x}}{1 + e^{2x}} - 1 = 2 \cdot \sigma(2x) − 1$$
   	> 
-  	> - Because the output of the hyperbolic tangent function is centered at the origin and its codomain is $(-1, 1)$, it is able to map strong positive (negative) inputs to positive (negative) outputs, respectively, map near-zero inputs to near-zero outputs, and converge faster when the inputs are close to zero. Since the hyperbolic tangent function is a zero-centered activation function, when acting on the hidden layers of the neural network, it is able to make the mean of the hidden layers to be zero or very close to zero, which helps in centering the data and makes learning for the next layers much easier. This is an advantage over the logarithmic sigmoid function.
+  	> The output of the hyperbolic tangent function is centered at the origin, which maps strongly positive (negative) inputs to positive (negative) outputs, respectively, with a codomain of $(-1,1)$, and maps near-zero inputs to near-zero outputs, making the outputs near-zero in mean, which helps in centering the data. This allows for better weight initialization and faster convergence during training, which is an advantage over logistic sigmoid functions.
   	> 
-  	> - The derivative of the hyperbolic tangent function is also symmetric with respect to the y-axis, which has a maximum value (when $x = 0$) of $1$, and its codomain is $(0, 1]$. The formula for its derivative is shown below:
+  	> - The derivative of the hyperbolic tangent function is also symmetric with respect to the y-axis, which has a maximum value (when $x = 0$) of $1$, and its codomain is $(0, 1]$. The derivative formula follows the deduction below.
   	> 
   	> 	$$\frac{d}{dx} tanh(x) = \frac{(e^{x} + e^{-x}) \cdot \frac{d}{dx} (e^{x} - e^{-x}) - (e^{x} - e^{-x}) \cdot \frac{d}{dx} (e^{x} + e^{-x})}{(e^{x} + e^{-x})^2} = \frac{(e^{x} + e^{-x})^2 - (e^{x} - e^{-x})^2}{(e^{x} + e^{-x})^2} = 1 - \left( \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} \right) ^2 = 1 - tanh(x)^2$$
   	> 
-  	> - The hyperbolic tangent function has better performance than the logistic sigmoid function to some extent due to its steep gradient, which is another advantage it has over the logistic sigmoid function. However, activation functions with saturated regions like the logistic sigmoid function and the hyperbolic tangent function are not immune to the vanishing gradient problem during training.
+  	> - The gradient of the hyperbolic tangent function is steeper than that of the logistic sigmoid function, especially near the origin, and the steeper gradient helps to avoid the vanishing gradient problem to some extent. And the former will obtain higher gradient values during training, allowing faster learning and convergence, which is another advantage over the latter. 
+  	>
+  	> - However, activation functions with saturated regions like the logistic sigmoid function and the hyperbolic tangent function are not immune to the vanishing gradient problem during training.
   	
+  - The `torch.nn.BCELoss` class: 
   
   
   
   
-  - The `torch.nn.BCELoss` class:
+  
+  creates a criterion that measures the Binary Cross Entropy between the target and the input probabilities.
+  
+  
+  
+  
 
 - Using this recombined class at the input layer is numerically more stable than using a plain sigmoid function (the `torch.nn.Sigmoid` class) followed by the loss function based on the binary cross-entropy criterion (the `torch.nn.BCELoss` class), since combining these operations into a single layer facilitates the use of the log-sum-exp trick to improve numerical stability.
 
 
 
+
+**Tips**
+
+The log-sum-exp trick helps prevent underflow/overflow errors, and is in essence just taking advantage of mathematical properties to reduce underflow/overflow by using the log-sum-exp function which computes a smoothed maximum, i.e., a smoothed approximation of the maximum value function, and is mainly used in machine learning algorithms.
 
 
 
