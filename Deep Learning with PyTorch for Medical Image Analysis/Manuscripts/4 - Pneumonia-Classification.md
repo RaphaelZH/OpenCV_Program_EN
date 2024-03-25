@@ -420,11 +420,11 @@ Initial Understanding of the ResNet-18 Architecture
   	
   	- In some fields, notably artificial neural networks, the sigmoid function is often used to refer specifically to the logistic sigmoid function, which is a special form of the logistic function and a common example of the sigmoid function, usually denoted by $\sigma(x)$.
   	
-  	- The logistic sigmoid function converts any real number in the domain $(-\infty, \infty)$ to a number between $0$ and $1$ by the following deduced formula, which is often useful in predicting probabilities and solving binary classification problems.
+  	- The logistic sigmoid function converts any real number in the domain $(-\infty, \infty)$ to a number between the codomain $(0, 1)$, and it is often useful in predicting probabilities and solving binary classification problems. More precisely, the logistic sigmoid function asymptotes at $\displaystyle{\lim_{x \to \infty} \sigma(x) = 1}$ and $\displaystyle{\lim_{x \to -\infty} \sigma(x) = 0}$, and crosses zero at $\sigma(x) = 0.5$. The formula is deduced as follows.
   	
   		$$\sigma(x) = \frac{1}{1 + e^{-x}} = \frac{e^{x}}{1 + e^{x}} = 1 - \frac{1}{1 + e^{x}} = 1 - \sigma(-x)$$
   	
-  	- The derivative of the logistic sigmoid function is symmetric with respect to the y-axis, which has a maximum value (when $x = 0$) of $0.25$, and its codomain is $(0, 0.25]$. The derivative formula is deduced as follows.
+  	- The derivative of the logistic sigmoid function is symmetric with respect to the y-axis and has a maximum at $\frac{d}{dx} \sigma(0) = 0.25$, with a codomain of $(0, 0.25]$. The derivative formula is deduced as follows.
   	
   		$$\frac{d}{dx} \sigma(x) = \frac{d}{dx} \left( \frac{1}{1 + e^{-x}} \right) = -\frac{1}{(1 + e^{-x})^2} \cdot \frac{d}{dx} (1 + e^{-x}) = -\frac{1}{(1 + e^{-x})^2} \cdot e^{-x} \cdot \frac{d}{dx} (-x) = \frac{e^{-x}}{(1 + e^{-x})^2} = \frac{1}{1 + e^{-x}} \cdot \left( 1 - \frac{1}{1 + e^{-x}} \right) = \sigma(x)(1 - \sigma(x))$$
   	
@@ -432,7 +432,7 @@ Initial Understanding of the ResNet-18 Architecture
   	
   		1. The most common problem with the logistic sigmoid function is the vanishing gradient problem, which is commonly seen in multilayer neural networks that use logistic sigmoid functions. Since the derivatives of logistic sigmoid functions are very small, the derivatives become smaller and smaller when they are multiplied together during backpropagation, i.e., the smaller the gradients, the less effective the backpropagation will be.
   		
-  		2. In addition, the logistic sigmoid function is a non zero-centered activation function, which usually makes training a neural network more difficult and unstable. Therefore, for a neural network, a zero-centered activation function is preferred as it ensures that the average activation value is around $0$, which helps in smoother and faster convergence during the training process.
+  		2. In addition, the logistic sigmoid function an activation function not zero-centered, which usually makes training a neural network more difficult and unstable. Therefore, for a neural network, a zero-centered activation function is preferred as it ensures that the average activation value is around zero, which helps in smoother and faster convergence during the training process.
   	
   	> **Tips**
 	> 
@@ -440,27 +440,23 @@ Initial Understanding of the ResNet-18 Architecture
   	> 
   	> 	![Logistic Sigmoid and Hyperbolic Tangent](../Images/Logistic_Sigmoid_and_Hyperbolic_Tangent.png)
   	> 
-  	> - As shown above, the hyperbolic tangent function is a rescaling and stretching of the logistic sigmoid function with an output ranging from $-1$ to $1$, and can be thought of as a rescaled version of the latter, whose formula can be deduced as follows.
+  	> - As shown above, the hyperbolic tangent function is a rescaling and stretching of the logistic sigmoid function with an output range of $(-1, 1)$, which can be thought of as a rescaled version of the latter. More precisely, the hyperbolic tangent function asymptotes at $\displaystyle{\lim_{x \to \infty} tanh(x) = 1}$ and $\displaystyle{\lim_{x \to -\infty} tanh(x) = -1}$, and crosses zero at $tanh(x) = 0$. The formula is deduced as follows.
   	> 
   	> 	$$tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} = \frac{e^{2x} - 1}{e^{2x} + 1} = 2 \cdot \frac{e^{2x}}{1 + e^{2x}} - 1 = 2 \cdot \sigma(2x) − 1$$
   	> 
-  	> The output of the hyperbolic tangent function is centered at the origin, which maps strongly positive (negative) inputs to positive (negative) outputs, respectively, with a codomain of $(-1,1)$, and maps near-zero inputs to near-zero outputs, making the outputs near-zero in mean, which helps in centering the data. This allows for better weight initialization and faster convergence during training, which is an advantage over logistic sigmoid functions.
+  	> The output of the hyperbolic tangent function is centered at the origin, which maps strongly positive (negative) inputs to positive (negative) outputs, respectively, with a codomain of $(-1, 1)$, and maps near-zero inputs to near-zero outputs, making the outputs near-zero in mean, which helps in centering the data. This allows for better weight initialization and faster convergence during training, which is an advantage over logistic sigmoid functions.
   	> 
-  	> - The derivative of the hyperbolic tangent function is also symmetric with respect to the y-axis, which has a maximum value (when $x = 0$) of $1$, and its codomain is $(0, 1]$. The derivative formula follows the deduction below.
+  	> - The derivative of the hyperbolic tangent function is also symmetric with respect to the y-axis, which has a maximum at $\frac{d}{dx} tanh(0) = 1$, with a codomain of $(0, 1]$. The derivative formula is deduced as follows.
   	> 
   	> 	$$\frac{d}{dx} tanh(x) = \frac{(e^{x} + e^{-x}) \cdot \frac{d}{dx} (e^{x} - e^{-x}) - (e^{x} - e^{-x}) \cdot \frac{d}{dx} (e^{x} + e^{-x})}{(e^{x} + e^{-x})^2} = \frac{(e^{x} + e^{-x})^2 - (e^{x} - e^{-x})^2}{(e^{x} + e^{-x})^2} = 1 - \left( \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} \right) ^2 = 1 - tanh(x)^2$$
   	> 
-  	> - The gradient of the hyperbolic tangent function is steeper than that of the logistic sigmoid function, especially near the origin, and the steeper gradient helps to avoid the vanishing gradient problem to some extent. And the former will obtain higher gradient values during training, allowing faster learning and convergence, which is another advantage over the latter. 
-  	>
-  	> - However, activation functions with saturated regions like the logistic sigmoid function and the hyperbolic tangent function are not immune to the vanishing gradient problem during training.
+  	> - The gradient of the hyperbolic tangent function is steeper than that of the logistic sigmoid function, especially near the origin. The steeper gradient not only helps to avoid the vanishing gradient problem to some extent, but also allows the network to obtain higher gradient values during backpropagation, thereby fastening the learning and convergence of the network. This is another advantage over the latter.
+  	> 
+  	> - However, activation functions with saturated regions like the logistic sigmoid function and the hyperbolic tangent function are not immune to the vanishing gradient problem during backpropagation.
   	
-  - The `torch.nn.BCELoss` class: 
+  - The `torch.nn.BCELoss` class: creates a criterion that measures the binary cross-entropy between the target and the input probabilities.
   
-  
-  
-  
-  
-  creates a criterion that measures the Binary Cross Entropy between the target and the input probabilities.
+  	- Shannon entropy, or simply entropy, is a mathematical function that intuitively corresponds to the amount of information a source contains or provides. In information theory, the entropy of a random variable is the average level of information or uncertainty inherent in the possible outcomes of that variable.
   
   
   
@@ -486,4 +482,9 @@ The log-sum-exp trick helps prevent underflow/overflow errors, and is in essence
 # Whether in the `torch.nn.Conv2d` class or the `torch.nn.Linear` class, the argument `bias` defaults to True, indicating whether the layer learns an additive bias.
 
 # Since both processed datasets contain only one binary class label, the argument `out_features` for the last layer of the model, i.e., the fully connected (FC) layer, needs to be changed from 1000 to 1, which refers to the Boolean result of the binary class label.
+
+
+
+
+
 
