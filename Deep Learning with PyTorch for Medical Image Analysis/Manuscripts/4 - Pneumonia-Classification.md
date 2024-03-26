@@ -356,7 +356,7 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
 **Plain Network and *Residual Network***
 
-- The baselines of plain networks are mainly inspired by the philosophy of VGG networks. The convolutional layers mostly use $3 \times 3$ filters, which are directly downsampled by a convolutional layer with a stride of $2$, and follow two simple design rules:
+- The baselines of plain networks are mainly inspired by the philosophy of VGG networks. The convolutional layers mostly use $3 \times 3$ filters, which are directly downsampled by a convolutional layer with a stride of 2, and follow two simple design rules:
 
   1. Feature map size equal: the number of filters in each layer is the same;
   
@@ -366,7 +366,7 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
   - When the dimensions of the input and output feature maps are the same, the identity shortcuts can be used directly.
   
-  - When the dimensions of the output feature maps increase compared to the dimensions of the counterpart input feature maps, the following two options can be considered, both of which perform a stride of $2$ when the shortcuts go through feature maps of two sizes:
+  - When the dimensions of the output feature maps increase compared to the dimensions of the counterpart input feature maps, the following two options can be considered, both of which perform a stride of 2 when the shortcuts go through feature maps of two sizes:
 
     1. Zero-padding shortcuts: shortcuts with this option still perform identity mapping, with extra zero entries padded for increasing dimensions, and this option introduces no extra parameter;
     
@@ -440,21 +440,32 @@ Initial Understanding of the ResNet-18 Architecture
   	> 
   	> 	![Logistic Sigmoid and Hyperbolic Tangent](../Images/Logistic_Sigmoid_and_Hyperbolic_Tangent.png)
   	> 
-  	> - As shown above, the hyperbolic tangent function is a rescaling and stretching of the logistic sigmoid function with an output range of $(-1, 1)$, which can be thought of as a rescaled version of the latter. More precisely, the hyperbolic tangent function asymptotes at $\displaystyle{\lim_{x \to \infty} tanh(x) = 1}$ and $\displaystyle{\lim_{x \to -\infty} tanh(x) = -1}$, and crosses zero at $tanh(x) = 0$. The formula is deduced as follows.
+  	> - As shown above, the hyperbolic tangent function is a rescaling and stretching of the logistic sigmoid function with an output range of $(-1, 1)$, which can be thought of as a rescaled version of the latter. More precisely, the hyperbolic tangent function asymptotes at $\displaystyle{\lim_{x \to \infty} \mathrm{tanh}(x) = 1}$ and $\displaystyle{\lim_{x \to -\infty} \mathrm{tanh}(x) = -1}$, and crosses zero at $\mathrm{tanh}(x) = 0$. The formula is deduced as follows.
   	> 
-  	> 	$$tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} = \frac{e^{2x} - 1}{e^{2x} + 1} = 2 \cdot \frac{e^{2x}}{1 + e^{2x}} - 1 = 2 \cdot \sigma(2x) − 1$$
+  	> 	$$\mathrm{tanh}(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} = \frac{e^{2x} - 1}{e^{2x} + 1} = 2 \cdot \frac{e^{2x}}{1 + e^{2x}} - 1 = 2 \cdot \sigma(2x) − 1$$
   	> 
   	> The output of the hyperbolic tangent function is centered at the origin, which maps strongly positive (negative) inputs to positive (negative) outputs, respectively, with a codomain of $(-1, 1)$, and maps near-zero inputs to near-zero outputs, making the outputs near-zero in mean, which helps in centering the data. This allows for better weight initialization and faster convergence during training, which is an advantage over logistic sigmoid functions.
   	> 
-  	> - The derivative of the hyperbolic tangent function is also symmetric with respect to the y-axis, which has a maximum at $\frac{d}{dx} tanh(0) = 1$, with a codomain of $(0, 1]$. The derivative formula is deduced as follows.
+  	> - The derivative of the hyperbolic tangent function is also symmetric with respect to the y-axis, which has a maximum at $\frac{d}{dx} \mathrm{tanh}(0) = 1$, with a codomain of $(0, 1]$. The derivative formula is deduced as follows.
   	> 
-  	> 	$$\frac{d}{dx} tanh(x) = \frac{(e^{x} + e^{-x}) \cdot \frac{d}{dx} (e^{x} - e^{-x}) - (e^{x} - e^{-x}) \cdot \frac{d}{dx} (e^{x} + e^{-x})}{(e^{x} + e^{-x})^2} = \frac{(e^{x} + e^{-x})^2 - (e^{x} - e^{-x})^2}{(e^{x} + e^{-x})^2} = 1 - \left( \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} \right) ^2 = 1 - tanh(x)^2$$
+  	> 	$$\frac{d}{dx} \mathrm{tanh}(x) = \frac{(e^{x} + e^{-x}) \cdot \frac{d}{dx} (e^{x} - e^{-x}) - (e^{x} - e^{-x}) \cdot \frac{d}{dx} (e^{x} + e^{-x})}{(e^{x} + e^{-x})^2} = \frac{(e^{x} + e^{-x})^2 - (e^{x} - e^{-x})^2}{(e^{x} + e^{-x})^2} = 1 - \left( \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} \right) ^2 = 1 - \mathrm{tanh}(x)^2$$
   	> 
   	> - The gradient of the hyperbolic tangent function is steeper than that of the logistic sigmoid function, especially near the origin. The steeper gradient not only helps to avoid the vanishing gradient problem to some extent, but also allows the network to obtain higher gradient values during backpropagation, thereby fastening the learning and convergence of the network. This is another advantage over the latter.
   	> 
   	> - However, activation functions with saturated regions like the logistic sigmoid function and the hyperbolic tangent function are not immune to the vanishing gradient problem during backpropagation.
   	
-  - The `torch.nn.BCELoss` class: creates a criterion that measures the binary cross-entropy between the target and the input probabilities.
+   - The `torch.nn.BCELoss` class: creates a criterion that measures the binary cross-entropy between the target and the input probabilities.
+  
+  	- In information theory, information entropy is a measure of the uncertainty associated with a random variable. It quantifies the information contained in a message, usually in bits or bits per symbol, and is the minimum length of information required to convey a message. The concept of information entropy was introduced by Claude Shannon in his 1948 paper “A Mathematical Theory of Communication,” hence it is also known as the Shannon entropy.
+  	
+  	- Given a discrete random variable $X$, which takes values in the alphabet $\mathcal{X}$ and is distributed according to $p\colon \mathcal{X} \to [0, 1]$, the information entropy is shown below.
+  	
+  		$$\mathrm{H}(X) \coloneqq - \displaystyle{\sum_{x \in \mathcal{X}}} p(x) \log_{b} p(x),$$
+
+		where $\sum$ denotes the sum over the variable's possible values, and the choice of base $b$ for $\log$, the logarithm, varies for different applications. 		
+  	
+  	
+  	
   
   	- Shannon entropy, or simply entropy, is a mathematical function that intuitively corresponds to the amount of information a source contains or provides. In information theory, the entropy of a random variable is the average level of information or uncertainty inherent in the possible outcomes of that variable.
   
