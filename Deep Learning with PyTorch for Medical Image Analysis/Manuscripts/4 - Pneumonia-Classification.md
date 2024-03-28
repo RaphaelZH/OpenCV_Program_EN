@@ -448,7 +448,7 @@ Initial Understanding of the ResNet-18 Architecture
   	> 
   	> - The derivative of the hyperbolic tangent function is also symmetric with respect to the y-axis, which has a maximum at $\frac{d}{dx} \tanh(0) = 1$, with a codomain of $(0, 1]$. The derivative formula is deduced as follows.
   	> 
-  	> 	$$\frac{d}{dx} \tanh(x) = \frac{(e^{x} + e^{-x}) \cdot \frac{d}{dx} (e^{x} - e^{-x}) - (e^{x} - e^{-x}) \cdot \frac{d}{dx} (e^{x} + e^{-x})}{(e^{x} + e^{-x})^2} = \frac{(e^{x} + e^{-x})^2 - (e^{x} - e^{-x})^2}{(e^{x} + e^{-x})^2} = 1 - \left( \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} \right) ^2 = 1 - \tanh(x)^2$$
+  	> 	$$\frac{d}{dx} \tanh(x) = \frac{(e^{x} + e^{-x}) \cdot \frac{d}{dx} (e^{x} - e^{-x}) - (e^{x} - e^{-x}) \cdot \frac{d}{dx} (e^{x} + e^{-x})}{(e^{x} + e^{-x})^2} = \frac{(e^{x} + e^{-x})^2 - (e^{x} - e^{-x})^2}{(e^{x} + e^{-x})^2} = 1 - \left( \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} \right) ^2 = 1 - \tanh^2(x)$$
   	> 
   	> - The gradient of the hyperbolic tangent function is steeper than that of the logistic sigmoid function, especially near the origin. The steeper gradient enables the network to obtain higher gradient values during backpropagation, thereby mitigating the vanishing gradient problem to some extent (which may still occur in deep networks), and fastening the learning and convergence of the network. This is another advantage over the latter.
   	> 
@@ -456,11 +456,21 @@ Initial Understanding of the ResNet-18 Architecture
   	
    - The `torch.nn.BCELoss` class: creates a criterion that measures the binary cross-entropy between the target and the input probabilities.
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   	- In information theory, the entropy is a measure of the uncertainty associated with a random variable. It quantifies the information contained in a message, usually in bits or bits per symbol, and is the minimum length of information required to convey a message. The concept of information entropy was introduced by Claude Shannon in his 1948 paper “A Mathematical Theory of Communication,” hence it is also known as Shannon entropy.
   	
-  	- Given a discrete random variable $X$, which takes values in the alphabet $\mathcal{X}$ and is distributed according to $p\colon \mathcal{X} \to [0, 1]$, such that $p(x) \coloneqq \mathbb{P}[X = x]$. The entropy of this discrete random variable $X$ is defined as $\Eta(X) = \mathbb{E}[\Iota(X)] = \mathbb{E}[-\log p(X)]$, here $\mathbb{E}$ is the expected value operator, $\Iota$ is the information content of $X$, and $\Iota(X)$ is itself a random variable. The entropy can explicitly be written as follows.
+  	- Given a discrete random variable $X$, which takes values in the alphabet $\mathcal{X}$ and is distributed according to $p\colon \mathcal{X} \to [0, 1]$, such that $p(x) \coloneqq \mathbb{P}[X = x]$. The entropy of this discrete random variable $X$ is defined as $H(X) = \mathbb{E}[\Iota(X)] = \mathbb{E}[-\log p(X)]$, here $\mathbb{E}$ is the expected value operator, $\Iota$ is the information content of $X$, and $\Iota(X)$ is itself a random variable. The entropy can explicitly be written as follows.
   	
-  		$$\Eta(X) \coloneqq - \displaystyle{\sum_{x \in \mathcal{X}}} p(x) \log_{b} p(x),$$
+  		$$H(X) \coloneqq - \displaystyle{\sum_{x \in \mathcal{X}}} p(x) \log_{b} p(x),$$
   		
   		where $\sum$ denotes the sum over the variable's possible values, $b$ is the base of the logarithm used, which is chosen variably for different applications.		
 		
