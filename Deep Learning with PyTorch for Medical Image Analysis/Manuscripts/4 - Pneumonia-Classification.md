@@ -454,7 +454,11 @@ Initial Understanding of the ResNet-18 Architecture
   	> 
   	> - However, activation functions with saturated regions, such as the logistic sigmoid function and the hyperbolic tangent function, always fail to completely avoid the vanishing gradient problem during backpropagation.
   	
-   - The `torch.nn.BCELoss` class: creates a criterion that measures the binary cross-entropy between the target and the input probabilities.
+  - The `torch.nn.BCELoss` class: creates a criterion that measures the binary cross-entropy between the target and the input probabilities.
+  
+  	- In information theory, information entropy, or simply entropy, is a mathematical function that intuitively corresponds to the quantity of information contained in or supplied by an information source. The information source here can be a text written in a specific language, an electrical signal, or any type of a computer file in a sequence of bytes. The concept of information entropy was introduced by Claude Shannon in his monumental 1948 paper “A Mathematical Theory of Communication,” hence it is also known as Shannon entropy.
+  	
+  	
   
   
   
@@ -466,7 +470,8 @@ Initial Understanding of the ResNet-18 Architecture
   
   
   
-  	- In information theory, the entropy is a measure of the uncertainty associated with a random variable. It quantifies the information contained in a message, usually in bits or bits per symbol, and is the minimum length of information required to convey a message. The concept of information entropy was introduced by Claude Shannon in his 1948 paper “A Mathematical Theory of Communication,” hence it is also known as Shannon entropy.
+  	- It quantifies the information contained in a message, usually in bits or bits per symbol, and is the minimum length of information required to convey a message. 
+  	
   	
   	- Given a discrete random variable $X$, which takes values in the alphabet $\mathcal{X}$ and is distributed according to $p\colon \mathcal{X} \to [0, 1]$, such that $p(x) \coloneqq \mathbb{P}[X = x]$. The entropy of this discrete random variable $X$ is defined as $H(X) = \mathbb{E}[\Iota(X)] = \mathbb{E}[-\log p(X)]$, here $\mathbb{E}$ is the expected value operator, $\Iota$ is the information content of $X$, and $\Iota(X)$ is itself a random variable. The entropy can explicitly be written as follows.
   	
@@ -504,6 +509,10 @@ The log-sum-exp trick helps prevent underflow/overflow errors, and is in essence
 # Whether in the `torch.nn.Conv2d` class or the `torch.nn.Linear` class, the argument `bias` defaults to True, indicating whether the layer learns an additive bias.
 
 # Since both processed datasets contain only one binary class label, the argument `out_features` for the last layer of the model, i.e., the fully connected (FC) layer, needs to be changed from 1000 to 1, which refers to the Boolean result of the binary class label.
+
+
+
+
 
 
 
