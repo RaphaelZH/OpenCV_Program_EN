@@ -458,9 +458,11 @@ Initial Understanding of the ResNet-18 Architecture
   
   	- In information theory, information entropy, or simply entropy, is a mathematical function that intuitively corresponds to the quantity of information contained in or supplied by an information source. The information source here can be a text written in a specific language, an electrical signal, or any type of a computer file in a sequence of bytes. The concept of information entropy was introduced by Claude Shannon in his monumental 1948 paper “A Mathematical Theory of Communication,” hence it is also known as Shannon entropy.
   	
+  	- In information theory, the Shannon information content is a fundamental quantity derived from the probability of a particular event occurring in a random variable, i.e., the Shannon information content $h(a_{i})$ is a natural measure of the information content of the event $x = a_{i}$, and hence the name of this quantity can be shortened to the information content, the self-information. The Shannon information content is measured in bits and is defined as follows.
   	
-  
-  
+  		$$h(x) = \log_{2}\frac{1}{P(x)}$$
+  		
+  	- The Shannon information content is closely related to the Shannon entropy, which is the average amount of self-information that an observer would expect to obtain when measuring a random variable, while the latter is the expected value of the self-information of a random variable, quantifying the degree of surprise that the random variable "on average" is.
   
   
   
