@@ -458,11 +458,22 @@ Initial Understanding of the ResNet-18 Architecture
   
   	- The concept of information entropy was introduced by Claude Shannon in his monumental 1948 paper “A Mathematical Theory of Communication,” hence it is also known as Shannon entropy. In information theory, the information entropy (or simply entropy) is a mathematical function that intuitively gives a measure of the uncertainty of the random variable; the larger the entropy, the less a priori information one has on the value of the random variable. In information theoretic terms, the information entropy of a system is the amount of "missing" information needed to determine a microstate, given the macrostate. 
   	
-  	- In information theory, the information content is a basic quantity derived from the probability of a particular event occurring from a random variable, also known as Shannon information content. In other words, the information content $h(a_{i})$ is a natural measure of the information content of the event $x = a_{i}$, and hence the name of this quantity can be shortened to the self-information. The information content is measured in bits and is defined as follows.
+  	- In information theory, the information content is a basic quantity derived from the probability of a particular event occurring from a random variable, also known as Shannon information content. In other words, for an ensemble $X$ that can be represented as a triple $(x, \mathcal{A}_{X}, \mathcal{P}_{X})$, the information content $h(a_{i})$ is a natural measure of the information content of the event $x = a_{i}$, and hence the name of this quantity can be shortened to the self-information. The information content is measured in bits, and the information content of an outcome $x$ is defined as follows.
   	
-  		$$h(x) = \log_{2}\frac{1}{P(x)}$$
+  		$$h(x) = \log_{b} \frac{1}{P(x)},$$
   		
-  	- The Shannon information content is closely related to the Shannon entropy, which is the average amount of self-information that an observer would expect to obtain when measuring a random variable, while the latter is the expected value of the self-information of a random variable, quantifying the degree of surprise that the random variable "on average" is, and hence one could also say that the entropy is the expected value of surprise.
+  		where the outcome $x$ is the value of a random variable, which takes on one of a set of possible values, $\mathcal{A}_{X} = \{a_{1}, a_{2}, \cdots , a_{i}, \cdots , a_{I}\}$, having probabilities $\mathcal{P}_{X} = \{p_{1}, p_{2}, \cdots , p_{i}, \cdots , p_{I}\}$, with $P(x = a_{i}) = p_{i}$, $p_{i} \geq 0$ and $\displaystyle{\sum_{a_{i} \in \mathcal{A}_{X}}} P(x = a_{i}) = 1$. Note that, the name $\mathcal{A}$ is mnemonic for "alphabet," and $P(x = a_{i})$ may be written as $P(a_{i})$ or $P(x)$ for abbreviations.
+  		
+  		
+  		
+  		
+  		
+  	- The information content is closely related to the entropy, which is the average amount of self-information that an observer would expect to obtain when measuring a random variable, while the latter is the expected value of the self-information of a random variable, quantifying the degree of surprise that the random variable "on average" is, and hence one could also say that the entropy is the measure of surprise of a specific event/random variable. The information entropy of an ensemble $X$ can be defined as the average information content of an outcome, which can also be referred to as the uncertainty of $X$, and like the information content, the entropy is also measured in bits, as follows.
+  	
+  		$$H(X) \equiv \displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \log_{b} \frac{1}{P(x)},$$
+  		
+  		with the convention for $P(x) = 0$ that $0 \times \log \frac{1}{0} \equiv 0$, since $\lim_{\theta \rightarrow 0^+} \theta \log \frac{1}{\theta} = 0$.
+
   
   
   
