@@ -460,38 +460,37 @@ Initial Understanding of the ResNet-18 Architecture
   	
   	- In information theory, the information content is a basic quantity derived from the probability of a particular event occurring from a random variable, also known as Shannon information content. In other words, for an ensemble $X$ that can be represented as a triple $(x, \mathcal{A}_{X}, \mathcal{P}_{X})$, the information content $h(a_{i})$ is a natural measure of the information content of the event $x = a_{i}$, and hence the name of this quantity can be shortened to the self-information. The information content of an outcome $x$ is defined as follows.
   	
-  		$$h(x) = \log_{b} \frac{1}{P(x)},$$
+  		$$h(x) = \log_{b} \frac{1}{P(x)} = - \log_{b} P(x),$$
   		
   		where the outcome $x$ is the value of a random variable, which takes on one of a set of possible values, $\mathcal{A}_{X} = \{a_{1}, a_{2}, \cdots , a_{i}, \cdots , a_{I}\}$, having probabilities $\mathcal{P}_{X} = \{p_{1}, p_{2}, \cdots , p_{i}, \cdots , p_{I}\}$, with $P(x = a_{i}) = p_{i}$, $p_{i} \geq 0$ and $\displaystyle{\sum_{a_{i} \in \mathcal{A}_{X}}} P(x = a_{i}) = 1$. Note that, the name $\mathcal{A}$ is mnemonic for "alphabet", and $P(x = a_{i})$ may be written as $P(a_{i})$ or $P(x)$ for abbreviations. In addition, $b$ denotes the base of the logarithm, which is not critical in this definition, since it only affects the value by a multiplicative constant, and the common value of $b$ is $2$, which means measured in bits.
   		
   	- The information content is closely related to the entropy, which is the average amount of self-information that an observer would expect to obtain when measuring a random variable, while the latter is the expected value of the self-information of a random variable, quantifying the degree of surprise that the random variable "on average" is, and hence one could also say that the entropy is the measure of surprise of a specific event/random variable. The information entropy of an ensemble $X$ can be defined as the average information content of an outcome, which can also be referred to as the uncertainty of $X$, as follows.
   	  	
-  		$$H(X) \equiv \displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \log_{b} \frac{1}{P(x)} = \mathbb{E} \left[\log_{b} \frac{1}{P(x)}\right] = \mathbb{E} [h(x)],$$
+  		$$H(X) \equiv \displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \log_{b} \frac{1}{P(x)} = - \displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \log_{b} P(x) = \mathbb{E} [- \log_{b} P(x)] = \mathbb{E} [h(x)],$$
   		
   		with the convention for $P(x) = 0$ that $0 \times \log \frac{1}{0} \equiv 0$, since $\lim_{\theta \rightarrow 0^+} \theta \log \frac{1}{\theta} = 0$.
-
-  
-  
-  
-  
-  
-
-  
-  
-  
-  
-  
-  
-  
-  
-  	- It quantifies the information contained in a message, usually in bits or bits per symbol, and is the minimum length of information required to convey a message. 
-  	
-  	
-  	- Given a discrete random variable $X$, which takes values in the alphabet $\mathcal{X}$ and is distributed according to $p\colon \mathcal{X} \to [0, 1]$, such that $p(x) \coloneqq \mathbb{P}[X = x]$. The entropy of this discrete random variable $X$ is defined as $H(X) = \mathbb{E}[\Iota(X)] = \mathbb{E}[-\log p(X)]$, here $\mathbb{E}$ is the expected value operator, $\Iota$ is the information content of $X$, and $\Iota(X)$ is itself a random variable. The entropy can explicitly be written as follows.
-  	
-  		$$H(X) \coloneqq - \displaystyle{\sum_{x \in \mathcal{X}}} p(x) \log_{b} p(x),$$
   		
-  		where $\sum$ denotes the sum over the variable's possible values, $b$ is the base of the logarithm used, which is chosen variably for different applications.		
+  	- The cross-entropy is a fundamental concept in information theory builds upon the idea of the information entropy and measures the difference between two probability distributions, $P$ and $Q$, for a given random variable or set of events. Cross entropy can be applied to both binary and multi-class classification problems and is defined as follows.
+  	
+  		$$H(p, q) = \displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \log_{b} \frac{1}{Q(x)} = - \displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \log_{b} Q(x),$$
+  		
+  		where $P(x)$ is the probability of event $x = a_{i}$ in true probability distribution $\mathcal{P}_{X}$, and $Q(x)$ is the probability of event $x = a_{i}$ in predicted probability distribution $\mathcal{Q}_{X}$.
+
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  	
 		
 		
 		  	
