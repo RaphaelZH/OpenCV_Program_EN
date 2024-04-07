@@ -490,17 +490,20 @@ Initial Understanding of the ResNet-18 Architecture
 
 - Using this recombined class at the input layer is numerically more stable than using a plain sigmoid function (the `torch.nn.Sigmoid` class) followed by the loss function based on the binary cross-entropy criterion (the `torch.nn.BCELoss` class), since combining these operations into a single layer facilitates the use of the log-sum-exp trick to improve numerical stability.
 
-  - Taking the above binary cross-entropy loss function formula as an example, the logistic sigmoid function is brought into the above formula and simplified by quotient rule $\log \frac{n}{m} = \log n - \log m$ to obtain the following variants.
+  - Taking the above binary cross-entropy loss function formula as an example, the logistic sigmoid function is brought into the above formula and simplified by logarithm quotient rule $\log \frac{m}{n} = \log m - \log n$ to obtain the following variants.
 	
 	$$L_{BCE} = -\frac{1}{N} \sum_{i}^{N} \left[y_{i} \cdot \log_{b} \frac{1}{1 + e^{-x_{i}}} + (1 - y_{i}) \cdot \log_{b} (1 - \frac{1}{1 + e^{-x_{i}}})\right] = -\frac{1}{N} \sum_{i}^{N} [-y_{i} \cdot \log_{b} (1 + e^{-x_{i}}) + (1 - y_{i}) \cdot (\log_{b} e^{-x_{i}} - \log_{b} (1 + e^{-x_{i}}))]$$
 
-  - Further simplification of the above variants leads to the final simplified formula.
+  - Further simplification of the above variant gives an even more simplified one, as shown below.
   
   	$$L_{BCE} = -\frac{1}{N} \sum_{i}^{N} [-y_{i} \cdot \log_{b} (1 + e^{-x_{i}}) - y_{i} \cdot \log_{b} e^{-x_{i}} + y_{i} \cdot \log_{b} (1 + e^{-x_{i}}) + \log_{b} e^{-x_{i}} - \log_{b} (1 + e^{-x_{i}})] = -\frac{1}{N} \sum_{i}^{N} [-y_{i} \cdot \log_{b} e^{-x_{i}} + \log_{b} e^{-x_{i}} - \log_{b} (1 + e^{-x_{i}})]$$
+
+  - To further simplify the formula, the default base of the logarithm is taken to be Euler's number $e$ at this point to facilitate the $log_{b} b = 1$ conversion when the logarithm is the same as the base. Finally, a final simplified version of the formula is obtained by the logarithmic power rule $\log m^{k} = k \log m$, as follows.
   
-
-
-
+  	$$L_{BCE} = -\frac{1}{N} \sum_{i}^{N} [x_{i} \cdot y_{i} \log_{e} e - x_{i} \cdot \log_{e} e - \log_{b} (1 + e^{-x_{i}})] = \frac{1}{N} \sum_{i}^{N} [\log_{b} (1 + e^{-x_{i}}) + x_{i} (1 - y_{i})]$$
+  
+  
+  
 
 
 
