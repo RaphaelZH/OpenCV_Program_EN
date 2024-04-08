@@ -464,17 +464,17 @@ Initial Understanding of the ResNet-18 Architecture
   		
   		where the outcome $x$ is the value of a random variable, which takes on one of a set of possible values, $\mathcal{A}_{X} = \{a_{1}, a_{2}, \cdots , a_{i}, \cdots , a_{I}\}$, having probabilities $\mathcal{P}_{X} = \{p_{1}, p_{2}, \cdots , p_{i}, \cdots , p_{I}\}$, with $P(x = a_{i}) = p_{i}$, $p_{i} \geq 0$ and $\displaystyle{\sum_{a_{i} \in \mathcal{A}_{X}}} P(x = a_{i}) = 1$. Note that, the name $\mathcal{A}$ is mnemonic for "alphabet," and $P(x = a_{i})$ may be written as $P(a_{i})$ or $P(x)$ for abbreviations. In addition, $b$ denotes the base of the logarithm, which is not critical in this definition, since it only affects the value by a multiplicative constant, and the common value of $b$ is $2$, which means measured in bits.
   		
-  	- The information content is closely related to the entropy, which is the average amount of self-information that an observer would expect to obtain when measuring a random variable, while the latter is the expected value of the self-information of a random variable, quantifying the degree of surprise that the random variable "on average" is, and hence one could also say that the entropy is the measure of surprise of a specific event/random variable. The information entropy of an ensemble $X$ can be defined as the average information content of an outcome, which can also be referred to as the uncertainty of $X$, as follows.
+  	- The information content is closely related to the entropy, which is the average amount of self-information that an observer would expect to obtain when measuring a random variable, while the latter is the expected value of the self-information of a random variable, quantifying the degree of surprise that the random variable "on average" is, and hence one could also say that the entropy is the measure of surprise of a specific event/random variable. The information entropy of an ensemble $X$ can be defined as the average information content of the following outcome, which can also be referred to as the uncertainty of $X$.
   	  	
   		$$H(X) \equiv \displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}\frac{1}{P(x)} = -\displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}P(x) = \mathbb{E} [-\log_{b}P(x)] = \mathbb{E} [h(x)],$$
   		
   		with the convention for $P(x) = 0$ that $0 \times \log \frac{1}{0} \equiv 0$, since $\lim_{\theta \rightarrow 0^+} \theta \log \frac{1}{\theta} = 0$.
   		
-  	- The cross-entropy is a fundamental concept in information theory builds upon the idea of the information entropy and measures the dissimilarity between two probability distributions, $P$ and $Q$, for a given random variable or set of events, defined as follows.
+  	- The cross-entropy is a fundamental concept in information theory builds upon the idea of the information entropy and calculates the number of bits required to represent or transmit an average event from one distribution compared to another distribution. In simple terms, if there exists a target or underlying probability distribution (the true probability distribution) $P$ and an approximation of the target distribution (the predicted probability distribution) $Q$, then the cross-entropy of $Q$ from $P$ is the number of additional bits to represent an event using $Q$ instead of $P$. The cross-entropy between two probability distributions, such as Q from P, can be defined formally defined as follows.
   	
   		$$H(P, Q) = \displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}\frac{1}{Q(x)} = -\displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}Q(x),$$
   		
-  		where $P(x)$ is the probability of event $x = a_{i}$ in true probability distribution $\mathcal{P}_{X}$, and $Q(x)$ is the probability of event $x = a_{i}$ in predicted probability distribution $\mathcal{Q}_{X}$.
+  		where $P(x)$ is the probability of event $x = a_{i}$ in the true probability distribution $\mathcal{P}_{X}$, and $Q(x)$ is the probability of event $x = a_{i}$ in the predicted probability distribution $\mathcal{Q}_{X}$.
   	
   	- The cross-entropy can be used to define a loss function in machine learning and optimization that is called the cross-entropy loss, also known as the log loss (or logarithmic loss or logistic loss) which can be applied to both binary and multi-class classification problems. The cross-entropy loss measures the performance of a classification model whose output is a probability value between $0$ and $1$ and which increases as the predicted probability diverges from the actual label, as defined below (as the average loss over all samples).
   	
@@ -500,7 +500,7 @@ Initial Understanding of the ResNet-18 Architecture
 
   - To further simplify the formula, the default base of the logarithm is taken to be Euler's number $e$ at this point to facilitate the $log_{b} b = 1$ conversion when the logarithm is the same as the base. Finally, a final simplified version of the formula is obtained by the logarithmic power rule $\log m^{k} = k \log m$, as follows.
   
-  	$$L_{BCE} = -\frac{1}{N} \sum_{i}^{N} [x_{i} \cdot y_{i} \log_{e} e - x_{i} \cdot \log_{e} e - \log_{b} (1 + e^{-x_{i}})] = \frac{1}{N} \sum_{i}^{N} [\log_{b} (1 + e^{-x_{i}}) + x_{i} (1 - y_{i})]$$
+  	$$L_{BCE} = -\frac{1}{N} \sum_{i}^{N} [x_{i} \cdot y_{i} \log_{e} e - x_{i} \cdot \log_{e} e - \log_{e} (1 + e^{-x_{i}})] = \frac{1}{N} \sum_{i}^{N} [\log_{e} (1 + e^{-x_{i}}) + x_{i} (1 - y_{i})]$$
   
   
   
