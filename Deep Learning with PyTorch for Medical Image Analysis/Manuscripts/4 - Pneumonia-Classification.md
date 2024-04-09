@@ -476,13 +476,13 @@ Initial Understanding of the ResNet-18 Architecture
   		
   		where $P(x)$ is the probability of event $x = a_{i}$ in the true probability distribution $\mathcal{P}_{X}$, and $Q(x)$ is the probability of event $x = a_{i}$ in the predicted probability distribution $\mathcal{Q}_{X}$.
   	
-  	- The cross-entropy can be used to define a loss function in machine learning and optimization that is called the cross-entropy loss, also known as the log loss (or logarithmic loss or logistic loss) which can be applied to both binary and multi-class classification problems. The cross-entropy loss measures the performance of a classification model whose output is a probability value between $0$ and $1$ and which increases as the predicted probability diverges from the actual label, as defined below (as the average loss over all samples).
+  	- The cross-entropy can be used to define a loss function in machine learning and optimization that is called the cross-entropy (CE) loss, also known as the log loss (or logarithmic loss or logistic loss) which can be applied to both binary and multi-class classification problems. The cross-entropy loss measures the performance of a classification model whose output is a probability value between $0$ and $1$ and which increases as the predicted probability diverges from the actual label, as defined below (as the average loss over all samples).
   	
   		$$L_{CE} = -\frac{1}{N} \sum_{i}^{N} \sum_{j}^{C} y_{ij} \cdot \log_{b}\^{y}_{ij},$$
   		
   		where $N$ is the number of samples, $C$ is the number of classes, $y_{ij}$ is the true output for the $i$-th sample and $j$-th class, and $\^{y}_{ij}$ is the predicted output of the current model for the $i$-th sample and $j$-th class.
   		
-  	- More specifically, the binary cross-entropy loss function, can be used to classify two possible classes from a binary regression model. And unlike in the multinomial logistic regression, in the binary (or binomial) logistic regression, the predicted probability distribution is not modeled using the softmax function, but is usually modeled using the logistic sigmoid function. Therefore, the definition of the binary cross-entropy loss function can be rewritten by the above cross-entropy loss function as follows.
+  	- More specifically, the binary cross-entropy (BCE) loss function, can be used to classify two possible classes from a binary regression model. And unlike in the multinomial logistic regression, in the binary (or binomial) logistic regression, the predicted probability distribution is not modeled using the softmax function, but is usually modeled using the logistic sigmoid function. Therefore, the definition of the binary cross-entropy loss function can be rewritten by the above cross-entropy loss function as follows.
   		
   		$$L_{BCE} = -\frac{1}{N} \sum_{i}^{N} [y_{i} \cdot \log_{b}\^{y}_{i} + (1 - y_{i}) \cdot \log_{b}(1 - \^{y}_{i})],$$
   		
@@ -490,13 +490,34 @@ Initial Understanding of the ResNet-18 Architecture
 
 - Using this recombined class at the input layer is numerically more stable than using a plain sigmoid function (the `torch.nn.Sigmoid` class) followed by the loss function based on the binary cross-entropy criterion (the `torch.nn.BCELoss` class), since combining these operations into a single layer facilitates the use of the log-sum-exp trick to improve numerical stability.
 
-  - Taking the above binary cross-entropy loss function formula as an example, the logistic sigmoid function is brought into the above formula and simplified by logarithm quotient rule $\log \frac{m}{n} = \log m - \log n$ to obtain the following variants.
-	
-	$$L_{BCE} = -\frac{1}{N} \sum_{i}^{N} \left[y_{i} \cdot \log_{b} \frac{1}{1 + e^{-x_{i}}} + (1 - y_{i}) \cdot \log_{b} (1 - \frac{1}{1 + e^{-x_{i}}})\right] = -\frac{1}{N} \sum_{i}^{N} [-y_{i} \cdot \log_{b} (1 + e^{-x_{i}}) + (1 - y_{i}) \cdot (\log_{b} e^{-x_{i}} - \log_{b} (1 + e^{-x_{i}}))]$$
+  - When implementing the binary cross-entropy loss, if the logistic sigmoid function $\sigma(x_{i})$ is computed first, and then inserting $\^{y}_{i} = \sigma(x_{i})$ into the definition of the binary cross-entropy loss, at this point it will be found in practice that there is a problem: at the beginning of the training, a positive example may be confidently classified as a negative example at the beginning of training ($x_{i} \ll 0$, which means $y_{i} \approx 0$). However, if $y_{i}$ is small enough, it may be less than the smallest floating-point value, i.e., have a value of $0$. Then, if one takes the logarithm of $0$ in calculating the binary cross-entropy loss, one gets $-\infty$, i.e., arithmetic underflow.
+  
+  - To tackle this potential numerical stability issue, the TensorFlow and PyTorch libraries usually combine the logistic sigmoid function and the binary cross-entropy loss into one. As shown below, the logistic sigmoid function is introduced into the binary cross-entropy loss formula and simplified by the quotient rule for logarithms $\log \frac{m}{n} = \log m - \log n$ and the power rule for logarithms $\log m^{k} = k \log m$ to obtain the simplified formula. However, the numerical stability problem is not completely controlled since if $x_{i} \ll 0$, $e^{-x_{i}}$ explodes, i.e., arithmetic overflow.
+  
+    \begin{align}
+    L_{BCE} &= -\frac{1}{N} \sum_{i}^{N} \left[y_{i} \cdot \log_{b} \frac{1}{1 + e^{-x_{i}}} + (1 - y_{i}) \cdot \log_{b} (1 - \frac{1}{1 + e^{-x_{i}}})\right] \notag \\
+    &= -\frac{1}{N} \sum_{i}^{N} [-y_{i} \cdot \log_{b} (1 + e^{-x_{i}}) + (1 - y_{i}) \cdot (\log_{b} e^{-x_{i}} - \log_{b} (1 + e^{-x_{i}}))] \notag \\
+    &= -\frac{1}{N} \sum_{i}^{N} [-y_{i} \cdot \log_{b} (1 + e^{-x_{i}}) - y_{i} \cdot \log_{b} e^{-x_{i}} + y_{i} \cdot \log_{b} (1 + e^{-x_{i}}) + \log_{b} e^{-x_{i}} - \log_{b} (1 + e^{-x_{i}})] \notag \\
+    &= -\frac{1}{N} \sum_{i}^{N} [-y_{i} \cdot \log_{b} e^{-x_{i}} + \log_{b} e^{-x_{i}} - \log_{b} (1 + e^{-x_{i}})] \notag \\
+    &= -\frac{1}{N} \sum_{i}^{N} [x_{i} \cdot y_{i} \log_{b} e - x_{i} \cdot \log_{b} e - \log_{b} (1 + e^{-x_{i}})] \notag
+    \end{align}
+    
+    
+    
+    
+    
+    
 
   - Further simplification of the above variant gives an even more simplified one, as shown below.
   
   	$$L_{BCE} = -\frac{1}{N} \sum_{i}^{N} [-y_{i} \cdot \log_{b} (1 + e^{-x_{i}}) - y_{i} \cdot \log_{b} e^{-x_{i}} + y_{i} \cdot \log_{b} (1 + e^{-x_{i}}) + \log_{b} e^{-x_{i}} - \log_{b} (1 + e^{-x_{i}})] = -\frac{1}{N} \sum_{i}^{N} [-y_{i} \cdot \log_{b} e^{-x_{i}} + \log_{b} e^{-x_{i}} - \log_{b} (1 + e^{-x_{i}})]$$
+  	
+  	
+  	
+  	
+  	
+  	
+  	
 
   - To further simplify the formula, the default base of the logarithm is taken to be Euler's number $e$ at this point to facilitate the $log_{b} b = 1$ conversion when the logarithm is the same as the base. Finally, a final simplified version of the formula is obtained by the logarithmic power rule $\log m^{k} = k \log m$, as follows.
   
