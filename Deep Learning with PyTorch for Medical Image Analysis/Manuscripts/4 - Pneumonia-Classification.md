@@ -502,25 +502,11 @@ Initial Understanding of the ResNet-18 Architecture
     &= -\frac{1}{N} \sum_{i = 1}^{N} [x_{i} \cdot y_{i} \log_{b} e - x_{i} \cdot \log_{b} e - \log_{b} (1 + e^{-x_{i}})] \notag
     \end{align}
     
-  - To tackle this potential problem, the log-sum-exp (LSE) trick is used to shift the center of the exponential sum, which is described as follows. Using this formula, it is possible to force the greatest value to be zero even if other values would underflow. So $a$ can be $max(x_{i})$ in practice.
+  - To tackle this potential problem, the log-sum-exp (LSE) trick is used to shift the center of the exponential sum, which is described as follows. Using this formula, it is possible to force the greatest value to be zero even if other values would underflow. So $\alpha$ can be $\underset{i}{max}(x_{i})$ in practice.
   
-  	$$log_{e} \sum_{i = 1}^{N} e^{x_{i}} = a + log_{e} \sum_{i = 1}^{N} e^{x_{i}} - a = a + log_{e} \sum_{i = 1}^{N} e^{x_{i}} - log_{e} e^{a} = a + log_{e} \sum_{i = 1}^{N} \frac{e^{x_{i}}}{e^{a}} = a + log_{e} \sum_{i = 1}^{N} e^{x_{i} - a}$$
+  	$$log_{e} \sum_{i = 1}^{N} e^{x_{i}} = \alpha + log_{e} \sum_{i = 1}^{N} e^{x_{i}} - \alpha = \alpha + log_{e} \sum_{i = 1}^{N} e^{x_{i}} - log_{e} e^{\alpha} = \alpha + log_{e} \sum_{i = 1}^{N} \frac{e^{x_{i}}}{e^{\alpha}} = \alpha + log_{e} \sum_{i = 1}^{N} e^{x_{i} - \alpha}$$
   
-  
-  
-  
-  Further simplification of the above variant gives an even more simplified one, as shown below.
-  
-  	$$L_{BCE} = -\frac{1}{N} \sum_{i = 1}^{N} [-y_{i} \cdot \log_{b} (1 + e^{-x_{i}}) - y_{i} \cdot \log_{b} e^{-x_{i}} + y_{i} \cdot \log_{b} (1 + e^{-x_{i}}) + \log_{b} e^{-x_{i}} - \log_{b} (1 + e^{-x_{i}})] = -\frac{1}{N} \sum_{i = 1}^{N} [-y_{i} \cdot \log_{b} e^{-x_{i}} + \log_{b} e^{-x_{i}} - \log_{b} (1 + e^{-x_{i}})]$$
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-
-  - To further simplify the formula, the default base of the logarithm is taken to be Euler's number $e$ at this point to facilitate the $log_{b} b = 1$ conversion when the logarithm is the same as the base. Finally, a final simplified version of the formula is obtained by the logarithmic power rule $\log m^{k} = k \log m$, as follows.
+  - As mentioned above, in order to make effective use of the log-sum-exp trick to further simplify the formula, the default base of the logarithm is taken to be Euler's number $e$, in order to facilitate the conversion of $log_{b} b = 1$ when the logarithm is the same as the base. Finally, the simplified formula using the log-sum-exp trick is as follows.
   
   	$$L_{BCE} = -\frac{1}{N} \sum_{i = 1}^{N} [x_{i} \cdot y_{i} \log_{e} e - x_{i} \cdot \log_{e} e - \log_{e} (1 + e^{-x_{i}})] = \frac{1}{N} \sum_{i = 1}^{N} [\log_{e} (1 + e^{-x_{i}}) + x_{i} (1 - y_{i})]$$
   
