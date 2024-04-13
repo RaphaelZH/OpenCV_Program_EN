@@ -462,7 +462,7 @@ Initial Understanding of the ResNet-18 Architecture
   	
   		$$h(x) = \log_{b}\frac{1}{P(x)} = -\log_{b}P(x),$$
   		
-  		where the outcome $x$ is the value of a random variable, which takes on one of a set of possible values, $\mathcal{A}_{X} = \{a_{1}, a_{2}, \cdots , a_{i}, \cdots , a_{I}\}$, having probabilities $\mathcal{P}_{X} = \{p_{1}, p_{2}, \cdots , p_{i}, \cdots , p_{I}\}$, with $P(x = a_{i}) = p_{i}$, $p_{i} \geq 0$ and $\displaystyle{\sum_{a_{i} \in \mathcal{A}_{X}}} P(x = a_{i}) = 1$. Note that, the name $\mathcal{A}$ is mnemonic for "alphabet," and $P(x = a_{i})$ may be written as $P(a_{i})$ or $P(x)$ for abbreviations. In addition, $b$ denotes the base of the logarithm, which is not critical in this definition, since it only affects the value by a multiplicative constant, and the common value of $b$ is $2$, which means measured in bits.
+  		where the outcome $x$ is the value of a random variable, which takes on one of a set of possible values, $\mathcal{A}_{X} = \{a_{1}, a_{2}, \cdots , a_{i}, \cdots , a_{I}\}$, having probabilities $\mathcal{P}_{X} = \{p_{1}, p_{2}, \cdots , p_{i}, \cdots , p_{I}\}$, with $P(x = a_{i}) = p_{i}$, $p_{i} \geq 0$ and $\displaystyle{\sum_{a_{i} \in \mathcal{A}_{X}}} P(x = a_{i}) = 1$. Note that, the name $\mathcal{A}$ is mnemonic for "alphabet," and $P(x = a_{i})$ may be written as $P(a_{i})$ or $P(x)$ for abbreviations. In addition, $b$ denotes the base of the logarithm, unless it is used to simplify the formula if necessary, which is currently not critical in this series of definitions, since it only affects the value by a multiplicative constant, and the common value of $b$ is $2$, which means measured in bits.
   		
   	- The information content is closely related to the entropy, which is the average amount of self-information that an observer would expect to obtain when measuring a random variable, while the latter is the expected value of the self-information of a random variable, quantifying the degree of surprise that the random variable "on average" is, and hence one could also say that the entropy is the measure of surprise of a specific event/random variable. The information entropy of an ensemble $X$ can be defined as the average information content of the following outcome, which can also be referred to as the uncertainty of $X$.
   	  	
@@ -502,13 +502,21 @@ Initial Understanding of the ResNet-18 Architecture
     &= -\frac{1}{N} \sum_{i = 1}^{N} [x_{i} \cdot y_{i} \log_{b} e - x_{i} \cdot \log_{b} e - \log_{b} (1 + e^{-x_{i}})] \notag
     \end{align}
     
-  - To tackle this potential problem, the log-sum-exp (LSE) trick is used to shift the center of the exponential sum, which is described as follows. Using this formula, it is possible to force the greatest value to be zero even if other values would underflow. So $\alpha$ can be $\underset{i}{max}(x_{i})$ in practice.
+  - To tackle this potential problem, the log-sum-exp (LSE) trick is used to shift the center of the exponential sum, which is described as follows. Taking the following equation as an example, using the log-sum-exp trick forces the maximum value to be zero, even if other values would underflow. So $\alpha$ can be $\underset{i}{max}(x_{i})$ in practice.
   
-  	$$log_{e} \sum_{i = 1}^{N} e^{x_{i}} = \alpha + log_{e} \sum_{i = 1}^{N} e^{x_{i}} - \alpha = \alpha + log_{e} \sum_{i = 1}^{N} e^{x_{i}} - log_{e} e^{\alpha} = \alpha + log_{e} \sum_{i = 1}^{N} \frac{e^{x_{i}}}{e^{\alpha}} = \alpha + log_{e} \sum_{i = 1}^{N} e^{x_{i} - \alpha}$$
+  	$$\log_{e} \sum_{i = 1}^{N} e^{x_{i}} = \alpha + \log_{e} \sum_{i = 1}^{N} e^{x_{i}} - \alpha = \alpha + \log_{e} \sum_{i = 1}^{N} e^{x_{i}} - \log_{e} e^{\alpha} = \alpha + \log_{e} \sum_{i = 1}^{N} \frac{e^{x_{i}}}{e^{\alpha}} = \alpha + \log_{e} \sum_{i = 1}^{N} e^{x_{i} - \alpha}$$
   
-  - As mentioned above, in order to make effective use of the log-sum-exp trick to further simplify the formula, the default base of the logarithm is taken to be Euler's number $e$, in order to facilitate the conversion of $log_{b} b = 1$ when the logarithm is the same as the base. Finally, the simplified formula using the log-sum-exp trick is as follows.
+  - As mentioned above, in order to make effective use of the log-sum-exp trick to further simplify the formula, the default base of the logarithm is taken to be Euler's number $e$, in order to facilitate the conversion of $\log_{b} b = 1$ when the logarithm is the same as the base. Finally, the simplified formula using the log-sum-exp trick is as follows.
   
-  	$$L_{BCE} = -\frac{1}{N} \sum_{i = 1}^{N} [x_{i} \cdot y_{i} \log_{e} e - x_{i} \cdot \log_{e} e - \log_{e} (1 + e^{-x_{i}})] = \frac{1}{N} \sum_{i = 1}^{N} [\log_{e} (1 + e^{-x_{i}}) + x_{i} (1 - y_{i})]$$
+    \begin{align}
+    L_{BCE} &= -\frac{1}{N} \sum_{i = 1}^{N} [x_{i} \cdot y_{i} \log_{e} e - x_{i} \cdot \log_{e} e - \log_{e} (1 + e^{-x_{i}})] \notag \\
+    &= \frac{1}{N} \sum_{i = 1}^{N} [\log_{e} (1 + e^{-x_{i}}) + x_{i} (1 - y_{i})] \notag \\
+    &= \frac{1}{N} \sum_{i = 1}^{N} [\log_{e} (1 + e^{-x_{i}}) + x_{i} (1 - y_{i}) + \log_{e} e^{\alpha} - \alpha] \notag \\
+    &= \frac{1}{N} \sum_{i = 1}^{N} [\log_{e} (1 + e^{-x_{i}}) \cdot e^{\alpha} + x_{i} (1 - y_{i}) - \alpha] \notag \\
+    &= \frac{1}{N} \sum_{i = 1}^{N} [\log_{e} (e^{\alpha} + e^{\alpha - x_{i}}) + x_{i} (1 - y_{i}) - \alpha] \notag
+    \end{align}
+
+  - As 
   
   
   
