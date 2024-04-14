@@ -458,11 +458,11 @@ Initial Understanding of the ResNet-18 Architecture
   
   	- The concept of information entropy was introduced by Claude Shannon in his monumental 1948 paper "A Mathematical Theory of Communication," hence it is also known as Shannon entropy. In information theory, the information entropy (or simply entropy) is a mathematical function that intuitively gives a measure of the uncertainty of the random variable; the larger the entropy, the less a priori information one has on the value of the random variable. In information theoretic terms, the information entropy of a system is the amount of "missing" information needed to determine a microstate, given the macrostate. 
   	
-  	- In information theory, the information content is a basic quantity derived from the probability of a particular event occurring from a random variable, also known as Shannon information content. In other words, for an ensemble $X$ that can be represented as a triple $(x, \mathcal{A}_{X}, \mathcal{P}_{X})$, the information content $h(a_{i})$ is a natural measure of the information content of the event $x = a_{i}$, and hence the name of this quantity can be shortened to the self-information. The information content of an outcome $x$ is defined as follows.
+  	- In information theory, the information content is a basic quantity derived from the probability of a particular event occurring from a random variable, also known as Shannon information content. In other words, for an ensemble $X$ that can be represented as a triple $(x,\ \mathcal{A}_{X},\ \mathcal{P}_{X})$, the information content $h(a_{i})$ is a natural measure of the information content of the event $x = a_{i}$, and hence the name of this quantity can be shortened to the self-information. The information content of an outcome $x$ is defined as follows.
   	
   		$$h(x) = \log_{b}\frac{1}{P(x)} = -\log_{b}P(x),$$
   		
-  		where the outcome $x$ is the value of a random variable, which takes on one of a set of possible values, $\mathcal{A}_{X} = \{a_{1}, a_{2}, \cdots , a_{i}, \cdots , a_{I}\}$, having probabilities $\mathcal{P}_{X} = \{p_{1}, p_{2}, \cdots , p_{i}, \cdots , p_{I}\}$, with $P(x = a_{i}) = p_{i}$, $p_{i} \geq 0$ and $\displaystyle{\sum_{a_{i} \in \mathcal{A}_{X}}} P(x = a_{i}) = 1$. Note that, the name $\mathcal{A}$ is mnemonic for "alphabet," and $P(x = a_{i})$ may be written as $P(a_{i})$ or $P(x)$ for abbreviations. In addition, $b$ denotes the base of the logarithm, unless it is used to simplify the formula if necessary, which is currently not critical in this series of definitions, since it only affects the value by a multiplicative constant, and the common value of $b$ is $2$, which means measured in bits.
+  		where the outcome $x$ is the value of a random variable, which takes on one of a set of possible values, $\mathcal{A}_{X} = \{a_{1},\ a_{2},\ \cdots ,\ a_{i},\ \cdots ,\ a_{I}\}$, having probabilities $\mathcal{P}_{X} = \{p_{1},\ p_{2},\ \cdots ,\ p_{i},\ \cdots ,\ p_{I}\}$, with $P(x = a_{i}) = p_{i}$, $p_{i} \geq 0$ and $\displaystyle{\sum_{a_{i} \in \mathcal{A}_{X}}} P(x = a_{i}) = 1$. Note that, the name $\mathcal{A}$ is mnemonic for "alphabet," and $P(x = a_{i})$ may be written as $P(a_{i})$ or $P(x)$ for abbreviations. In addition, $b$ denotes the base of the logarithm, unless it is used to simplify the formula if necessary, which is currently not critical in this series of definitions, since it only affects the value by a multiplicative constant, and the common value of $b$ is $2$, which means measured in bits.
   		
   	- The information content is closely related to the entropy, which is the average amount of self-information that an observer would expect to obtain when measuring a random variable, while the latter is the expected value of the self-information of a random variable, quantifying the degree of surprise that the random variable "on average" is, and hence one could also say that the entropy is the measure of surprise of a specific event/random variable. The information entropy of an ensemble $X$ can be defined as the average information content of the following outcome, which can also be referred to as the uncertainty of $X$.
   	  	
@@ -472,7 +472,7 @@ Initial Understanding of the ResNet-18 Architecture
   		
   	- The cross-entropy is a fundamental concept in information theory builds upon the idea of the information entropy and calculates the number of bits required to represent or transmit an average event from one distribution compared to another distribution. In simple terms, if there exists a target or underlying probability distribution (the true probability distribution) $P$ and an approximation of the target distribution (the predicted probability distribution) $Q$, then the cross-entropy of $Q$ from $P$ is the number of additional bits to represent an event using $Q$ instead of $P$. The cross-entropy between two probability distributions, such as Q from P, can be defined formally defined as follows.
   	
-  		$$H(P, Q) = \displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}\frac{1}{Q(x)} = -\displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}Q(x),$$
+  		$$H(P,\ Q) = \displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}\frac{1}{Q(x)} = -\displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}Q(x),$$
   		
   		where $P(x)$ is the probability of event $x = a_{i}$ in the true probability distribution $\mathcal{P}_{X}$, and $Q(x)$ is the probability of event $x = a_{i}$ in the predicted probability distribution $\mathcal{Q}_{X}$.
   	
@@ -502,7 +502,7 @@ Initial Understanding of the ResNet-18 Architecture
     &= -\frac{1}{N} \sum_{i = 1}^{N} [x_{i} \cdot y_{i} \log_{b} e - x_{i} \cdot \log_{b} e - \log_{b} (1 + e^{-x_{i}})] \notag
     \end{align}
     
-  - To tackle this potential problem, the log-sum-exp (LSE) trick is used to shift the center of the exponential sum, which is described as follows. Taking the following equation as an example, using the log-sum-exp trick forces the maximum value to be zero, even if other values would underflow. So $\alpha$ can be $\underset{i}{max}(x_{i})$ in practice.
+  - To solve this potential problem, the log-sum-exp (LSE) trick is used to shift the center of the exponential sum, which is described as follows. Taking the following equation as an example, using the log-sum-exp trick forces the greatest value to be zero, even if other values would underflow. A typical manner of setting the value is to set an arbitrary $\alpha$ to its maximum $\alpha = \underset{i}{\max}\ x_{i}$ so as to get a reasonable result.
   
   	$$\log_{e} \sum_{i = 1}^{N} e^{x_{i}} = \alpha + \log_{e} \sum_{i = 1}^{N} e^{x_{i}} - \alpha = \alpha + \log_{e} \sum_{i = 1}^{N} e^{x_{i}} - \log_{e} e^{\alpha} = \alpha + \log_{e} \sum_{i = 1}^{N} \frac{e^{x_{i}}}{e^{\alpha}} = \alpha + \log_{e} \sum_{i = 1}^{N} e^{x_{i} - \alpha}$$
   
@@ -516,7 +516,9 @@ Initial Understanding of the ResNet-18 Architecture
     &= \frac{1}{N} \sum_{i = 1}^{N} [\log_{e} (e^{\alpha} + e^{\alpha - x_{i}}) + x_{i} (1 - y_{i}) - \alpha] \notag
     \end{align}
 
-  - As 
+  - It should be noted that in this case, PyTorch uses the negative of the rectified linear unit (-ReLU) as $\alpha$, which is basically a clever way of avoiding taking positive exponents and thus avoiding overflow. The equation for $\alpha$ is shown below.
+  
+  	$$\alpha = \max (-x_{i},\ 0) = \begin{cases}0 &if\ x_{i} \geq 0,\\-x_{i} &otherwise.\end{cases}$$
   
   
   
