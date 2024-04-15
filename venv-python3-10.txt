@@ -1,5 +1,6 @@
 autopep8
 beautifultable
+biopython
 black
 bokeh
 dicom2nifti
