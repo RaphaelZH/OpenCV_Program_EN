@@ -45,11 +45,11 @@ The framework of CNN is trained to perform classification on medical image datas
 - The `TensorBoardLogger` class from the `lightning.pytorch.loggers` module: logs to local or remote file system in TensorBoard format, for more information on TensorBoard, click [here](https://www.tensorflow.org/tensorboard).
 
 > **Tips**
-> 
+>
 > - TensorBoard can be started either from the command line or directly from the notebook by experiencing the magic commands provided by the IPython kernel. The two commands are roughly the same, except that in the notebook, the IPython kernel uses `%` as a syntax element for magic commands, i.e., the line magic starting with `%tensorboard`. On the command line, run the same command without `%`.
-> 
+>
 > - Before using the line magic `%tensorboard`, the TensorBoard notebook extension needs to be loaded using the magic command `%load_ext tensorboard`.
-> 
+>
 > - To start TensorBoard, the previously used root log directory must be specified. The argument `logdir` is used to point to the directory where the root directory structure is located, and then TensorBoard will recursively traverse this directory and find the event files to display. The command line to start TensorBoard is: `tensorboard --logdir=path_to_logs`. Of course, the magic command to start TensorBoard is: `%tensorboard --logdir=path_to_logs`.
 
 ***TorchMetrics***
@@ -125,9 +125,9 @@ The framework of CNN is trained to perform classification on medical image datas
 - The medical image dataset used in this lecture was downloaded from the aforementioned Kaggle Competition, which was originally sourced from the [National Institutes of Health (NIH) Clinical Center](https://clinicalcenter.nih.gov/)'s publicly available [chest X-ray image dataset](https://nihcc.app.box.com/v/ChestXray-NIHCC). The related [NIH](https://www.nih.gov/) press release is available at the following [link](https://www.nih.gov/news-events/news-releases/nih-clinical-center-provides-one-largest-publicly-available-chest-x-ray-datasets-scientific-community).
 
 > **Bibliographies**
-> 
+>
 > - [RSNA Pneumonia Detection Challenge](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/)
-> 
+>
 > - [X. Wang, Y. Peng, L. Lu, Z. Lu, M. Bagheri and R. M. Summers, "ChestX-Ray8: Hospital-Scale Chest X-Ray Database and Benchmarks on Weakly-Supervised Classification and Localization of Common Thorax Diseases," 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Honolulu, HI, USA, 2017, pp. 3462-3471, doi: 10.1109/CVPR.2017.369.](https://arxiv.org/abs/1705.02315)
 
 ***
@@ -205,11 +205,11 @@ Statistical Computing on the Processed Training Dataset
 - The `torchvision.transforms` module in the torchvision library supports common computer vision transformations i.e., transforming or augmenting data for training or inference on different tasks (image classification, detection, segmentation, video classification).
 
 > **Tips**
-> 
+>
 > - In order to make reliable predictions, deep learning models usually require a large amount of training data, which is not always available, and thus require augmentation of existing data to build better generalized models.
-> 
+>
 > - Data augmentation is a technique to increase the amount of data used to train a model.
-> 
+>
 > - The most commonly used image data augmentation techniques include *positional augmentation* (e.g., scaling, cropping, flipping, padding, rotation, translation, affine transformation) and *color augmentation* (e.g., brightness, contrast, saturation, hue).
 
 - The `torchvision.transforms.Compose` class: composes several transforms together.
@@ -301,9 +301,9 @@ Visual Comparison of Labeled Image Grids for Two Processed Dataset Samples
 - The argument `num_workers`: indicates how many child processes will be used to load the data, the default value is 0.
 
 > **Tips**
-> 
+>
 > - When the argument `num_workers` is set to 0 (i.e., the default value), it means that the data will be loaded in the main process.
-> 
+>
 > - When the argument `num_workers` is set to greater than 0, PyTorch will use multiple processes to load the data, but the Jupyter Notebook (IPython kernel) does not support Python multiprocessing.
 
 ***
@@ -348,10 +348,10 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
 
     - In this *residual learning* framework, the shortcut connections simply perform *identity mapping*, then add their outputs to the outputs of the stacked layers, and adopt a second nonlinearity after the addition, as shown below.
 
-    	![Shortcut Connections](../Images/Shortcut_Connections.png)
+     ![Shortcut Connections](../Images/Shortcut_Connections.png)
 
     - Since identity shortcut connections add no extra parameters or computational complexity, it is possible to make fair comparisons between plain and residual networks with the same parameters, depth, width, and computational cost (except for negligible element-wise additions). This not only applicable to fully-connected layers, but also to convolutional layers.
-    
+
     - The entire network can still be trained end-to-end using SGD and backpropagation, and can be easily implemented using common libraries without modifying the solvers.
 
 **Plain Network and *Residual Network***
@@ -369,17 +369,17 @@ Visual Comparison of Labeled Image Grids for the First Batch of Data Extracted f
   - When the dimensions of the output feature maps increase compared to the dimensions of the counterpart input feature maps, the following two options can be considered, both of which perform a stride of 2 when the shortcuts go through feature maps of two sizes:
 
     1. Zero-padding shortcuts: shortcuts with this option still perform identity mapping, with extra zero entries padded for increasing dimensions, and this option introduces no extra parameter;
-    
+
     2. Projection shortcuts: shortcuts with this option match dimensions by a $1 \times 1$ convolution.
 
 - The detailed network architecture of the plain and *residual networks* is shown below. For ease of representation, the 18/34/50/101/152-layer *residual network* (ResNet) could be abbreviated as ResNet-18/34/50/101/152, respectively.
 
-	![Network Architecture](../Images/Network_Architecture.png)
+ ![Network Architecture](../Images/Network_Architecture.png)
 
 - It is worth noting that compared to the model of VGG networks (with the VGG-16/19 model as a reference), the model of 18/34/50/101/152-layer plain and *residual networks* and  has fewer filters and lower complexity.
 
 > **Bibliographies**
-> 
+>
 > - [K. He, X. Zhang, S. Ren and J. Sun, "Deep Residual Learning for Image Recognition," 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Las Vegas, NV, USA, 2016, pp. 770-778, doi: 10.1109/CVPR.2016.90.](https://arxiv.org/abs/1512.03385)
 
 ***
@@ -416,82 +416,82 @@ Initial Understanding of the ResNet-18 Architecture
 
   - The `torch.nn.Sigmoid` class: applies the element-wise logistic sigmoid function.
   
-  	- The sigmoid function is any mathematical function whose graph has a characteristic S-shaped curve or sigmoid curve. There are a number of common sigmoid functions, such as the logistic function, the hyperbolic tangent, and the arctangent.
-  	
-  	- In some fields, notably artificial neural networks, the sigmoid function is often used to refer specifically to the logistic sigmoid function, which is a special form of the logistic function and a common example of the sigmoid function, usually denoted by $\sigma(x)$.
-  	
-  	- The logistic sigmoid function converts any real number in the domain $(-\infty, \infty)$ to a number between the codomain $(0, 1)$, and it is often useful in predicting probabilities and solving binary classification problems. More precisely, the logistic sigmoid function asymptotes at $\displaystyle{\lim_{x \to \infty} \sigma(x) = 1}$ and $\displaystyle{\lim_{x \to -\infty} \sigma(x) = 0}$, and crosses zero at $\sigma(x) = 0.5$. The formula is deduced as follows.
-  	
-  		$$\sigma(x) = \frac{1}{1 + e^{-x}} = \frac{e^{x}}{1 + e^{x}} = 1 - \frac{1}{1 + e^{x}} = 1 - \sigma(-x)$$
-  	
-  	- The derivative of the logistic sigmoid function is symmetric with respect to the y-axis and has a maximum at $\frac{d}{dx} \sigma(0) = 0.25$, with a codomain of $(0, 0.25]$. The derivative formula is deduced as follows.
-  	
-  		$$\frac{d}{dx} \sigma(x) = \frac{d}{dx} \left( \frac{1}{1 + e^{-x}} \right) = -\frac{1}{(1 + e^{-x})^2} \cdot \frac{d}{dx} (1 + e^{-x}) = -\frac{1}{(1 + e^{-x})^2} \cdot e^{-x} \cdot \frac{d}{dx} (-x) = \frac{e^{-x}}{(1 + e^{-x})^2} = \frac{1}{1 + e^{-x}} \cdot \left( 1 - \frac{1}{1 + e^{-x}} \right) = \sigma(x)(1 - \sigma(x))$$
-  	
-  	- There are two common problems with the logistic sigmoid function:
-  	
-  		1. The most common problem with the logistic sigmoid function is the vanishing gradient problem, which is commonly seen in multilayer neural networks that use logistic sigmoid functions. Since the derivatives of logistic sigmoid functions are very small, the derivatives become smaller and smaller when they are multiplied together during backpropagation, i.e., the smaller the gradients, the less effective the backpropagation will be.
-  		
-  		2. In addition, the logistic sigmoid function an activation function not zero-centered, which usually makes training a neural network more difficult and unstable. Therefore, for a neural network, a zero-centered activation function is preferred as it ensures that the average activation value is around zero, which helps in smoother and faster convergence during the training process.
-  	
-  	> **Tips**
-	> 
-  	> - The hyperbolic tangent (tanh) function is very similar to the logistic sigmoid function, although it has its own drawbacks. As an improved version of the logistic sigmoid function, it is commonly used as the activation function in the hidden layers of a recurrent neural network (RNN) which helps capture complex temporal dependencies and can handle both positive and negative values in sequential data, while the latter is often used in the output layer of a binary classification neural network. The function and derivative graphs of these two functions are shown below.
-  	> 
-  	> 	![Logistic Sigmoid and Hyperbolic Tangent](../Images/Logistic_Sigmoid_and_Hyperbolic_Tangent.png)
-  	> 
-  	> - As shown above, the hyperbolic tangent function is a rescaling and stretching of the logistic sigmoid function with an output range of $(-1, 1)$, which can be thought of as a rescaled version of the latter. More precisely, the hyperbolic tangent function asymptotes at $\displaystyle{\lim_{x \to \infty} \tanh(x) = 1}$ and $\displaystyle{\lim_{x \to -\infty} \tanh(x) = -1}$, and crosses zero at $\tanh(x) = 0$. The formula is deduced as follows.
-  	> 
-  	> 	$$\tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} = \frac{e^{2x} - 1}{e^{2x} + 1} = 2 \cdot \frac{e^{2x}}{1 + e^{2x}} - 1 = 2 \cdot \sigma(2x) − 1$$
-  	> 
-  	> The output of the hyperbolic tangent function is centered at the origin, which maps strongly positive (negative) inputs to positive (negative) outputs, respectively, with a codomain of $(-1, 1)$, and maps near-zero inputs to near-zero outputs, making the outputs near-zero in mean, which helps in centering the data. This allows for better weight initialization and faster convergence during training, which is an advantage over logistic sigmoid functions.
-  	> 
-  	> - The derivative of the hyperbolic tangent function is also symmetric with respect to the y-axis, which has a maximum at $\frac{d}{dx} \tanh(0) = 1$, with a codomain of $(0, 1]$. The derivative formula is deduced as follows.
-  	> 
-  	> 	$$\frac{d}{dx} \tanh(x) = \frac{(e^{x} + e^{-x}) \cdot \frac{d}{dx} (e^{x} - e^{-x}) - (e^{x} - e^{-x}) \cdot \frac{d}{dx} (e^{x} + e^{-x})}{(e^{x} + e^{-x})^2} = \frac{(e^{x} + e^{-x})^2 - (e^{x} - e^{-x})^2}{(e^{x} + e^{-x})^2} = 1 - \left( \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} \right) ^2 = 1 - \tanh^2(x)$$
-  	> 
-  	> - The gradient of the hyperbolic tangent function is steeper than that of the logistic sigmoid function, especially near the origin. The steeper gradient enables the network to obtain higher gradient values during backpropagation, thereby mitigating the vanishing gradient problem to some extent (which may still occur in deep networks), and fastening the learning and convergence of the network. This is another advantage over the latter.
-  	> 
-  	> - However, activation functions with saturated regions, such as the logistic sigmoid function and the hyperbolic tangent function, always fail to completely avoid the vanishing gradient problem during backpropagation.
-  	
-  - The `torch.nn.BCELoss` class: creates a criterion that measures the binary cross-entropy between the target and the input probabilities.
+    - The sigmoid function is any mathematical function whose graph has a characteristic S-shaped curve or sigmoid curve. There are a number of common sigmoid functions, such as the logistic function, the hyperbolic tangent, and the arctangent.
+
+    - In some fields, notably artificial neural networks, the sigmoid function is often used to refer specifically to the logistic sigmoid function, which is a special form of the logistic function and a common example of the sigmoid function, usually denoted by $\sigma(x)$.
+
+    - The logistic sigmoid function converts any real number in the domain $(-\infty, \infty)$ to a number between the codomain $(0, 1)$, and it is often useful in predicting probabilities and solving binary classification problems. More precisely, the logistic sigmoid function asymptotes at $\displaystyle{\lim_{x \to \infty} \sigma(x) = 1}$ and $\displaystyle{\lim_{x \to -\infty} \sigma(x) = 0}$, and crosses zero at $\sigma(x) = 0.5$. The formula is deduced as follows.
+
+    $$\sigma(x) = \frac{1}{1 + e^{-x}} = \frac{e^{x}}{1 + e^{x}} = 1 - \frac{1}{1 + e^{x}} = 1 - \sigma(-x)$$
+
+    - The derivative of the logistic sigmoid function is symmetric with respect to the y-axis and has a maximum at $\frac{d}{dx} \sigma(0) = 0.25$, with a codomain of $(0, 0.25]$. The derivative formula is deduced as follows.
+
+    $$\frac{d}{dx} \sigma(x) = \frac{d}{dx} \left( \frac{1}{1 + e^{-x}} \right) = -\frac{1}{(1 + e^{-x})^2} \cdot \frac{d}{dx} (1 + e^{-x}) = -\frac{1}{(1 + e^{-x})^2} \cdot e^{-x} \cdot \frac{d}{dx} (-x) = \frac{e^{-x}}{(1 + e^{-x})^2} = \frac{1}{1 + e^{-x}} \cdot \left( 1 - \frac{1}{1 + e^{-x}} \right) = \sigma(x)(1 - \sigma(x))$$
+
+    - There are two common problems with the logistic sigmoid function:
+
+    1. The most common problem with the logistic sigmoid function is the vanishing gradient problem, which is commonly seen in multilayer neural networks that use logistic sigmoid functions. Since the derivatives of logistic sigmoid functions are very small, the derivatives become smaller and smaller when they are multiplied together during backpropagation, i.e., the smaller the gradients, the less effective the backpropagation will be.
+
+    2. In addition, the logistic sigmoid function an activation function not zero-centered, which usually makes training a neural network more difficult and unstable. Therefore, for a neural network, a zero-centered activation function is preferred as it ensures that the average activation value is around zero, which helps in smoother and faster convergence during the training process.
+
+   > **Tips**
+ >
+   > - The hyperbolic tangent (tanh) function is very similar to the logistic sigmoid function, although it has its own drawbacks. As an improved version of the logistic sigmoid function, it is commonly used as the activation function in the hidden layers of a recurrent neural network (RNN) which helps capture complex temporal dependencies and can handle both positive and negative values in sequential data, while the latter is often used in the output layer of a binary classification neural network. The function and derivative graphs of these two functions are shown below.
+   >
+   > ![Logistic Sigmoid and Hyperbolic Tangent](../Images/Logistic_Sigmoid_and_Hyperbolic_Tangent.png)
+   >
+   > - As shown above, the hyperbolic tangent function is a rescaling and stretching of the logistic sigmoid function with an output range of $(-1, 1)$, which can be thought of as a rescaled version of the latter. More precisely, the hyperbolic tangent function asymptotes at $\displaystyle{\lim_{x \to \infty} \tanh(x) = 1}$ and $\displaystyle{\lim_{x \to -\infty} \tanh(x) = -1}$, and crosses zero at $\tanh(x) = 0$. The formula is deduced as follows.
+   >
+   > $$\tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} = \frac{e^{2x} - 1}{e^{2x} + 1} = 2 \cdot \frac{e^{2x}}{1 + e^{2x}} - 1 = 2 \cdot \sigma(2x) − 1$$
+   >
+   > The output of the hyperbolic tangent function is centered at the origin, which maps strongly positive (negative) inputs to positive (negative) outputs, respectively, with a codomain of $(-1, 1)$, and maps near-zero inputs to near-zero outputs, making the outputs near-zero in mean, which helps in centering the data. This allows for better weight initialization and faster convergence during training, which is an advantage over logistic sigmoid functions.
+   >
+   > - The derivative of the hyperbolic tangent function is also symmetric with respect to the y-axis, which has a maximum at $\frac{d}{dx} \tanh(0) = 1$, with a codomain of $(0, 1]$. The derivative formula is deduced as follows.
+   >
+   > $$\frac{d}{dx} \tanh(x) = \frac{(e^{x} + e^{-x}) \cdot \frac{d}{dx} (e^{x} - e^{-x}) - (e^{x} - e^{-x}) \cdot \frac{d}{dx} (e^{x} + e^{-x})}{(e^{x} + e^{-x})^2} = \frac{(e^{x} + e^{-x})^2 - (e^{x} - e^{-x})^2}{(e^{x} + e^{-x})^2} = 1 - \left( \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}} \right) ^2 = 1 - \tanh^2(x)$$
+   >
+   > - The gradient of the hyperbolic tangent function is steeper than that of the logistic sigmoid function, especially near the origin. The steeper gradient enables the network to obtain higher gradient values during backpropagation, thereby mitigating the vanishing gradient problem to some extent (which may still occur in deep networks), and fastening the learning and convergence of the network. This is another advantage over the latter.
+   >
+   > - However, activation functions with saturated regions, such as the logistic sigmoid function and the hyperbolic tangent function, always fail to completely avoid the vanishing gradient problem during backpropagation.
+
+- The `torch.nn.BCELoss` class: creates a criterion that measures the binary cross-entropy between the target and the input probabilities.
   
-  	- The concept of information entropy was introduced by Claude Shannon in his monumental 1948 paper "A Mathematical Theory of Communication," hence it is also known as Shannon entropy. In information theory, the information entropy (or simply entropy) is a mathematical function that intuitively gives a measure of the uncertainty of the random variable; the larger the entropy, the less a priori information one has on the value of the random variable. In information theoretic terms, the information entropy of a system is the amount of "missing" information needed to determine a microstate, given the macrostate. 
-  	
-  	- In information theory, the information content is a basic quantity derived from the probability of a particular event occurring from a random variable, also known as Shannon information content. In other words, for an ensemble $X$ that can be represented as a triple $(x, \mathcal{A}_{X}, \mathcal{P}_{X})$, the information content $h(a_{i})$ is a natural measure of the information content of the event $x = a_{i}$, and hence the name of this quantity can be shortened to the self-information. The information content of an outcome $x$ is defined as follows.
-  	
-  		$$h(x) = \log_{b}\frac{1}{P(x)} = -\log_{b}P(x),$$
-  		
-  		where the outcome $x$ is the value of a random variable, which takes on one of a set of possible values, $\mathcal{A}_{X} = \{a_{1}, a_{2}, \cdots , a_{i}, \cdots , a_{I}\}$, having probabilities $\mathcal{P}_{X} = \{p_{1}, p_{2}, \cdots , p_{i}, \cdots , p_{I}\}$, with $P(x = a_{i}) = p_{i} \geq 0$ and $\displaystyle{\sum_{a_{i} \in \mathcal{A}_{X}}} P(x = a_{i}) = 1$. Note that, the name $\mathcal{A}$ is mnemonic for "alphabet," and $P(x = a_{i})$ may be written as $P(a_{i})$ or $P(x)$ for abbreviations. In addition, $b$ denotes the base of the logarithm, unless it is used to simplify the formula if necessary, which is currently not critical in this series of definitions, since it only affects the value by a multiplicative constant, and the common value of $b$ is $2$, which means measured in bits.
-  		
-  	- The information content is closely related to the entropy, which is the average amount of self-information that an observer would expect to obtain when measuring a random variable, while the latter is the expected value of the self-information of a random variable, quantifying the degree of surprise that the random variable "on average" is, and hence one could also say that the entropy is the measure of surprise of a specific event/random variable. The information entropy of an ensemble $X$ can be defined as the average information content of the following outcome, which can also be referred to as the uncertainty of $X$.
-  	  	
-  		$$H(X) \equiv \displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}\frac{1}{P(x)} = -\displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}P(x) = \mathbb{E} [-\log_{b}P(x)] = \mathbb{E} [h(x)],$$
-  		
-  		with the convention for $P(x) = 0$ that $0 \times \log \frac{1}{0} \equiv 0$, since $\lim_{\theta \rightarrow 0^+} \theta \log \frac{1}{\theta} = 0$.
-  		
-  	- The cross-entropy is a fundamental concept in information theory builds upon the idea of the information entropy and calculates the number of bits required to represent or transmit an average event from one distribution compared to another distribution. In simple terms, if there exists a target or underlying probability distribution (the true probability distribution) $P$ and an approximation of the target distribution (the predicted probability distribution) $Q$, then the cross-entropy of $Q$ from $P$ is the number of additional bits to represent an event using $Q$ instead of $P$. The cross-entropy between two probability distributions, such as Q from P, can be defined formally defined as follows.
-  	
-  		$$H(P, Q) = \displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}\frac{1}{Q(x)} = -\displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}Q(x),$$
-  		
-  		where $P(x)$ is the probability of event $x = a_{i}$ in the true probability distribution $\mathcal{P}_{X}$, and $Q(x)$ is the probability of event $x = a_{i}$ in the predicted probability distribution $\mathcal{Q}_{X}$.
-  	
-  	- The cross-entropy can be used to define a loss function in machine learning and optimization that is called the cross-entropy (CE) loss, also known as the log loss (or logarithmic loss or logistic loss) which can be applied to both binary and multi-class classification problems. The cross-entropy loss measures the performance of a classification model whose output is a probability value between $0$ and $1$ and which increases as the predicted probability diverges from the actual label, as defined below (as the average loss over all samples).
-  	
-  		$$L_{CE} = -\frac{1}{N} \sum_{i = 1}^{N} \sum_{j = 1}^{C} y_{ij} \cdot \log_{b}\hat{y}_{ij},$$
-  		
-  		where $N$ is the number of samples, $C$ is the number of classes, $y_{ij}$ is the true output for the $i$-th sample and $j$-th class, and $\hat{y}_{ij}$ is the predicted output of the current model for the $i$-th sample and $j$-th class.
-  		
-  	- More specifically, the binary cross-entropy (BCE) loss function, can be used to classify two possible classes from a binary regression model. And unlike in the multinomial logistic regression, in the binary (or binomial) logistic regression, the predicted probability distribution is not modeled using the softmax function, but is usually modeled using the logistic sigmoid function. Therefore, the definition of the binary cross-entropy loss function can be rewritten by the above cross-entropy loss function as follows.
-  		
-  		$$L_{BCE} = -\frac{1}{N} \sum_{i = 1}^{N} [y_{i} \cdot \log_{b}\hat{y}_{i} + (1 - y_{i}) \cdot \log_{b}(1 - \hat{y}_{i})],$$
-  		
-  		where $N$ is still the number of samples, $y_{i}$ is the true output for the $i$-th sample, and $\hat{y}_{i}$ is the predicted output of the current model for the $i$-th sample, which comes from a probability distribution modeled as the logistic sigmoid function.
+  - The concept of information entropy was introduced by Claude Shannon in his monumental 1948 paper "A Mathematical Theory of Communication," hence it is also known as Shannon entropy. In information theory, the information entropy (or simply entropy) is a mathematical function that intuitively gives a measure of the uncertainty of the random variable; the larger the entropy, the less a priori information one has on the value of the random variable. In information theoretic terms, the information entropy of a system is the amount of "missing" information needed to determine a microstate, given the macrostate.
+
+  - In information theory, the information content is a basic quantity derived from the probability of a particular event occurring from a random variable, also known as Shannon information content. In other words, for an ensemble $X$ that can be represented as a triple $(x, \mathcal{A}_{X}, \mathcal{P}_{X})$, the information content $h(a_{i})$ is a natural measure of the information content of the event $x = a_{i}$, and hence the name of this quantity can be shortened to the self-information. The information content of an outcome $x$ is defined as follows.
+
+    $$h(x) = \log_{b}\frac{1}{P(x)} = -\log_{b}P(x),$$
+
+    where the outcome $x$ is the value of a random variable, which takes on one of a set of possible values, $\mathcal{A}_{X} = \{a_{1}, a_{2}, \cdots , a_{i}, \cdots , a_{I}\}$, having probabilities $\mathcal{P}_{X} = \{p_{1}, p_{2}, \cdots , p_{i}, \cdots , p_{I}\}$, with $P(x = a_{i}) = p_{i} \geq 0$ and $\displaystyle{\sum_{a_{i} \in \mathcal{A}_{X}}} P(x = a_{i}) = 1$. Note that, the name $\mathcal{A}$ is mnemonic for "alphabet," and $P(x = a_{i})$ may be written as $P(a_{i})$ or $P(x)$ for abbreviations. In addition, $b$ denotes the base of the logarithm, unless it is used to simplify the formula if necessary, which is currently not critical in this series of definitions, since it only affects the value by a multiplicative constant, and the common value of $b$ is $2$, which means measured in bits.
+
+  - The information content is closely related to the entropy, which is the average amount of self-information that an observer would expect to obtain when measuring a random variable, while the latter is the expected value of the self-information of a random variable, quantifying the degree of surprise that the random variable "on average" is, and hence one could also say that the entropy is the measure of surprise of a specific event/random variable. The information entropy of an ensemble $X$ can be defined as the average information content of the following outcome, which can also be referred to as the uncertainty of $X$.
+
+    $$H(X) \equiv \displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}\frac{1}{P(x)} = -\displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}P(x) = \mathbb{E} [-\log_{b}P(x)] = \mathbb{E} [h(x)],$$
+
+    with the convention for $P(x) = 0$ that $0 \times \log \frac{1}{0} \equiv 0$, since $\lim_{\theta \rightarrow 0^+} \theta \log \frac{1}{\theta} = 0$.
+
+  - The cross-entropy is a fundamental concept in information theory builds upon the idea of the information entropy and calculates the number of bits required to represent or transmit an average event from one distribution compared to another distribution. In simple terms, if there exists a target or underlying probability distribution (the true probability distribution) $P$ and an approximation of the target distribution (the predicted probability distribution) $Q$, then the cross-entropy of $Q$ from $P$ is the number of additional bits to represent an event using $Q$ instead of $P$. The cross-entropy between two probability distributions, such as Q from P, can be defined formally defined as follows.
+
+    $$H(P, Q) = \displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}\frac{1}{Q(x)} = -\displaystyle{\sum_{x \in \mathcal{A}_{X}}} P(x) \cdot \log_{b}Q(x),$$
+
+    where $P(x)$ is the probability of event $x = a_{i}$ in the true probability distribution $\mathcal{P}_{X}$, and $Q(x)$ is the probability of event $x = a_{i}$ in the predicted probability distribution $\mathcal{Q}_{X}$.
+
+  - The cross-entropy can be used to define a loss function in machine learning and optimization that is called the cross-entropy (CE) loss, also known as the log loss (or logarithmic loss or logistic loss) which can be applied to both binary and multi-class classification problems. The cross-entropy loss measures the performance of a classification model whose output is a probability value between $0$ and $1$ and which increases as the predicted probability diverges from the actual label, as defined below (as the average loss over all samples).
+
+    $$L_{CE} = -\frac{1}{N} \sum_{i = 1}^{N} \sum_{j = 1}^{C} y_{ij} \cdot \log_{b}\hat{y}_{ij},$$
+
+    where $N$ is the number of samples, $C$ is the number of classes, $y_{ij}$ is the true output for the $i$-th sample and $j$-th class, and $\hat{y}_{ij}$ is the predicted output of the current model for the $i$-th sample and $j$-th class.
+
+  - More specifically, the binary cross-entropy (BCE) loss function, can be used to classify two possible classes from a binary regression model. And unlike in the multinomial logistic regression, in the binary (or binomial) logistic regression, the predicted probability distribution is not modeled using the softmax function, but is usually modeled using the logistic sigmoid function. Therefore, the definition of the binary cross-entropy loss function can be rewritten by the above cross-entropy loss function as follows.
+
+    $$L_{BCE} = -\frac{1}{N} \sum_{i = 1}^{N} [y_{i} \cdot \log_{b}\hat{y}_{i} + (1 - y_{i}) \cdot \log_{b}(1 - \hat{y}_{i})],$$
+
+    where $N$ is still the number of samples, $y_{i}$ is the true output for the $i$-th sample, and $\hat{y}_{i}$ is the predicted output of the current model for the $i$-th sample, which comes from a probability distribution modeled as the logistic sigmoid function.
 
 - Using this recombined class at the input layer is numerically more stable than using a plain sigmoid function (the `torch.nn.Sigmoid` class) followed by the loss function based on the binary cross-entropy criterion (the `torch.nn.BCELoss` class), since combining these operations into a single layer facilitates the use of the log-sum-exp trick to improve numerical stability.
 
   - When implementing the binary cross-entropy loss, if the logistic sigmoid function $\sigma(x_{i})$ is computed first, and then inserting $\hat{y}_{i} = \sigma(x_{i})$ into the definition of the binary cross-entropy loss, at this point it will be found in practice that there is a problem: at the beginning of the training, a positive example may be confidently classified as a negative example at the beginning of training ($x_{i} \ll 0$, which means $y_{i} \approx 0$). However, if $y_{i}$ is small enough, it may be less than the smallest floating-point value, i.e., have a value of $0$. Then, if taking the logarithm of $0$ in the calculation of the binary cross-entropy loss, it gives $-\infty$, i.e., arithmetic underflow.
-    
+
   - To tackle this potential numerical stability issue, the TensorFlow and PyTorch libraries usually combine the logistic sigmoid function and the binary cross-entropy loss into one. As shown below, the logistic sigmoid function is introduced into the binary cross-entropy loss formula and simplified by the quotient rule for logarithms $\log \frac{m}{n} = \log m - \log n$ and the power rule for logarithms $\log m^{k} = k \log m$ to obtain the simplified formula. However, the numerical stability problem is not completely controlled since if $x_{i}$ is a large negative number, $e^{-x_{i}}$ blow up, i.e., arithmetic overflow.
   
     \begin{align}
@@ -501,16 +501,16 @@ Initial Understanding of the ResNet-18 Architecture
     &= -\frac{1}{N} \sum_{i = 1}^{N} [-y_{i} \cdot \log_{b} e^{-x_{i}} + \log_{b} e^{-x_{i}} - \log_{b} (1 + e^{-x_{i}})] \notag \\
     &= -\frac{1}{N} \sum_{i = 1}^{N} [x_{i} \cdot y_{i} \log_{b} e - x_{i} \cdot \log_{b} e - \log_{b} (1 + e^{-x_{i}})] \notag
     \end{align}
-    
+
   - To solve this potential problem, the log-sum-exp (LSE) trick is used to shift the center of the exponential sum, which is described as follows. Taking the following equation as an example, using the log-sum-exp trick forces the greatest value to be zero, even if other values would underflow. A typical manner of setting the value is to set an arbitrary $\alpha$ to its maximum $\alpha = \max\limits_{i} x_{i}$ so as to get a reasonable result.
   
-  	$$\log_{e} \sum_{i = 1}^{N} e^{x_{i}} = \alpha + \log_{e} \sum_{i = 1}^{N} e^{x_{i}} - \alpha = \alpha + \log_{e} \sum_{i = 1}^{N} e^{x_{i}} - \log_{e} e^{\alpha} = \alpha + \log_{e} \sum_{i = 1}^{N} \frac{e^{x_{i}}}{e^{\alpha}} = \alpha + \log_{e} \sum_{i = 1}^{N} e^{x_{i} - \alpha}$$
+   $$\log_{e} \sum_{i = 1}^{N} e^{x_{i}} = \alpha + \log_{e} \sum_{i = 1}^{N} e^{x_{i}} - \alpha = \alpha + \log_{e} \sum_{i = 1}^{N} e^{x_{i}} - \log_{e} e^{\alpha} = \alpha + \log_{e} \sum_{i = 1}^{N} \frac{e^{x_{i}}}{e^{\alpha}} = \alpha + \log_{e} \sum_{i = 1}^{N} e^{x_{i} - \alpha}$$
   
   - It should be noted that before using the log-sum-exp trick, the base of the default logarithm should be set to Euler's number $e$, so that it is convenient to convert $\log_{b} b = 1$ when the argument and base of the logarithm are the same, and also to unify with the base of the logarithm in the log-sum-exp trick, which makes it easy to integrate them better.
   
-  	$$L_{BCE} = -\frac{1}{N} \sum_{i = 1}^{N} [x_{i} \cdot y_{i} \log_{e} e - x_{i} \cdot \log_{e} e - \log_{e} (1 + e^{-x_{i}})] = \frac{1}{N} \sum_{i = 1}^{N} [\log_{e} (1 + e^{-x_{i}}) + x_{i} (1 - y_{i})]$$
+   $$L_{BCE} = -\frac{1}{N} \sum_{i = 1}^{N} [x_{i} \cdot y_{i} \log_{e} e - x_{i} \cdot \log_{e} e - \log_{e} (1 + e^{-x_{i}})] = \frac{1}{N} \sum_{i = 1}^{N} [\log_{e} (1 + e^{-x_{i}}) + x_{i} (1 - y_{i})]$$
   
-  - After unifying the base of the logarithm, the formula can be further simplified using the log-sum-exp trick, as shown below. Notice that in this case, PyTorch uses the negative of the rectified linear unit (-ReLU) as $\alpha$, i.e., $\alpha = \max (-x_{i}, 0) = \begin{cases}0 &if\ x_{i} \geq 0,\\-x_{i} &otherwise.\end{cases}$, which is basically a clever way of avoiding positive exponents and thus avoiding overflow.
+  - After unifying the base of the logarithm, the formula can be further simplified using the log-sum-exp trick, as shown below. In addition to this, a very interesting discovery was noted that PyTorch uses the negative of the rectified linear unit (-ReLU) as $\alpha$, i.e., $\alpha = \max (-x_{i}, 0) = \begin{cases}0 &if\ x_{i} \geq 0,\\-x_{i} &otherwise.\end{cases}$, which is basically a clever way of avoiding positive exponents and thus avoiding overflow.
 
     \begin{align}
     L_{BCE} &= \frac{1}{N} \sum_{i = 1}^{N} [\log_{e} (1 + e^{-x_{i}}) + x_{i} (1 - y_{i}) + \log_{e} e^{-\alpha} + \alpha] \notag \\
@@ -518,36 +518,16 @@ Initial Understanding of the ResNet-18 Architecture
     &= \frac{1}{N} \sum_{i = 1}^{N} [\log_{e} (e^{-\alpha} + e^{-x_{i} - \alpha}) + x_{i} (1 - y_{i}) + \alpha] \notag
     \end{align}
 
-  
-  
-  
-  
-  
-
-
-
 > **Tips**
 
 > The log-sum-exp trick helps prevent underflow/overflow errors, and is in essence just taking advantage of mathematical properties to reduce underflow/overflow by using the log-sum-exp function which computes a smoothed maximum, i.e., a smoothed approximation of the maximum value function, and is mainly used in machine learning algorithms.
 
-
-
 ***
 
-# Based on empirical studies and experience in training a model on these processed datasets, it has been found that using pre-training weights leads to early saturation of the model's learning capacity, at which point the model stops learning about the general problem and begins to learn about the data, thus showing a decrease in the training loss and an increase in the validation loss, i.e., overfitting.
+# Based on empirical studies and experience in training a model on these processed datasets, it has been found that using pre-training weights leads to early saturation of the model's learning capacity, at which point the model stops learning about the general problem and begins to learn about the data, thus showing a decrease in the training loss and an increase in the validation loss, i.e., overfitting
 
-# Since the images in these datasets are not default RGB color images, but grayscale images, the model's first convolutional layer needs to be changed from the original 3 input channels to 1 input channel.
+# Since the images in these datasets are not default RGB color images, but grayscale images, the model's first convolutional layer needs to be changed from the original 3 input channels to 1 input channel
 
-# Whether in the `torch.nn.Conv2d` class or the `torch.nn.Linear` class, the argument `bias` defaults to True, indicating whether the layer learns an additive bias.
+# Whether in the `torch.nn.Conv2d` class or the `torch.nn.Linear` class, the argument `bias` defaults to True, indicating whether the layer learns an additive bias
 
-# Since both processed datasets contain only one binary class label, the argument `out_features` for the last layer of the model, i.e., the fully connected (FC) layer, needs to be changed from 1000 to 1, which refers to the Boolean result of the binary class label.
-
-
-
-
-
-
-
-
-
-
+# Since both processed datasets contain only one binary class label, the argument `out_features` for the last layer of the model, i.e., the fully connected (FC) layer, needs to be changed from 1000 to 1, which refers to the Boolean result of the binary class label
