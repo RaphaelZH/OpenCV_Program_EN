@@ -161,6 +161,7 @@ alteration = False
 courses_list = [
     "Deep Learning with PyTorch for Medical Image Analysis",
     "Modern Computer Vision PyTorch, TensorFlow 2 Keras & OpenCV 4",
+    ""
 ]
 
 csv_object = Path("modification_record.csv")
