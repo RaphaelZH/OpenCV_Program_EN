@@ -42,7 +42,7 @@ def dataframe_creation():
     for course in courses_list:
         path_object = Path(course.join(dir_notebook))
         for subpath_object in path_object.iterdir():
-            subpath = subpath_object.expanduser()
+            subpath = str(subpath_object)
             file_list = notebook_selector(subpath_object)
             for file_name in file_list:
                 info_dict = info_collector(course, subpath, file_name, info_dict)
@@ -85,10 +85,12 @@ def file_checker(func):
         if csv_object.is_file():
             df = pd.read_csv(csv_object)
             info_dict = df.to_dict("list")
+            total_subpath_counter = 0
             for course in courses_list:
                 path_object = Path(course.join(dir_notebook))
                 for subpath_object in path_object.iterdir():
-                    subpath = subpath_object.expanduser()
+                    total_subpath_counter += 1
+                    subpath = str(subpath_object)
                     file_list = notebook_selector(subpath_object)
                     for file_name in file_list:
                         if (
@@ -105,7 +107,7 @@ def file_checker(func):
                             df = pd.DataFrame.from_dict(data=info_dict)
                             index = df.shape[0] - 1
                             output_filename_dict[index] = func(
-                                subpath + "/" + file_name
+                                f"{subpath}/" + file_name
                             )
                         else:
                             df.loc[
@@ -133,7 +135,7 @@ def file_checker(func):
                                         + row["File name"].split(".")[0]
                                     ):
                                         output_filename_dict[index] = func(
-                                            subpath + "/" + file_name
+                                            f"{subpath}/" + file_name
                                         )
         else:
             df = dataframe_creation()
