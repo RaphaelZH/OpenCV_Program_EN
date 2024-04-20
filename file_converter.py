@@ -155,9 +155,18 @@ def compression_record(func):
                 compressed_file_object = Path(value)
                 scale = 1
                 while compressed_file_object.stat().st_size > 15 * (10**6):
-                    compress(value, value, img_width=800 - 80 * scale, img_format="png")
+                    compress(value, value, img_width=800 - 40 * scale, img_format="png")
                     scale += 1
-                df.loc[key, "Compressed size"] = compressed_file_object.stat().st_size
+                df.loc[key, "Compressed Size"] = compressed_file_object.stat().st_size
+                print(
+                    datetime.fromtimestamp(
+                        compressed_file_object.stat().st_mtime, tz=pytz.timezone("cet")
+                    )
+                )
+                df.loc[key, "Date of Compression"] = datetime.fromtimestamp(
+                    compressed_file_object.stat().st_mtime, tz=pytz.timezone("cet")
+                )
+
         df.to_csv(csv_object, index=False)
 
     return wrapper
