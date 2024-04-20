@@ -6,6 +6,8 @@ import pandas as pd
 from pathlib import Path
 import pytz
 
+from pprint import pprint
+
 
 def notebook_selector(path_object):
     return [
@@ -67,30 +69,20 @@ def alteration_monitor(path_object, cell_time, cell_size):
             return cell_time.values[0], cell_size.values[0]
 
 
-def notebook_normalize(input_filename):
-    with open(input_filename, "r") as file:
-        nb_corrupted = nbformat.reader.read(file)
-    nb_fixed = nbformat.validator.normalize(nb_corrupted)
-    nbformat.validator.validate(nb_fixed[1])
-
-    with open(input_filename, "w") as file:
-        nbformat.write(nb_fixed[1], file)
-
-
 def file_checker(func):
     @wraps(func)
     def wrapper():
         global alteration, courses_list, csv_object, dir_notebook
-        output_filename_dict = {}
+        compression_recorder_dict = {}
         if csv_object.is_file():
             df = pd.read_csv(csv_object)
             info_dict = df.to_dict("list")
-            total_subpath_counter = 0
+            subpath_recorder = []
             for course in courses_list:
                 path_object = Path(course.join(dir_notebook))
                 for subpath_object in path_object.iterdir():
-                    total_subpath_counter += 1
                     subpath = str(subpath_object)
+                    subpath_recorder.append(subpath)
                     file_list = notebook_selector(subpath_object)
                     for file_name in file_list:
                         if (
@@ -106,7 +98,7 @@ def file_checker(func):
                             info_dict["Compressed size"].append("")
                             df = pd.DataFrame.from_dict(data=info_dict)
                             index = df.shape[0] - 1
-                            output_filename_dict[index] = func(
+                            compression_recorder_dict[index] = func(
                                 f"{subpath}/" + file_name
                             )
                         else:
@@ -134,7 +126,7 @@ def file_checker(func):
                                         == row["File path"].join(dir_notebook)
                                         + row["File name"].split(".")[0]
                                     ):
-                                        output_filename_dict[index] = func(
+                                        compression_recorder_dict[index] = func(
                                             f"{subpath}/" + file_name
                                         )
         else:
@@ -143,8 +135,10 @@ def file_checker(func):
                 subpath = (
                     row["File path"].join(dir_notebook) + row["File name"].split(".")[0]
                 )
-                output_filename_dict[index] = func(subpath + "/" + row["File name"])
-        return df, output_filename_dict
+                compression_recorder_dict[index] = func(
+                    subpath + "/" + row["File name"]
+                )
+        return df, compression_recorder_dict
 
     return wrapper
 
@@ -153,17 +147,17 @@ def compression_record(func):
     @wraps(func)
     def wrapper():
         global csv_object
-        df, output_filename_dict = func()
+        df, compression_recorder_dict = func()
         df["Compressed file"] = ""
-        if output_filename_dict != {}:
-            for key, value in output_filename_dict.items():
-                df.loc[key, "Compressed file"] = value.split("/Notebooks/")[-1]
-                file_object = Path(value)
+        if compression_recorder_dict != {}:
+            for key, value in compression_recorder_dict.items():
+                df.loc[key, "Compressed file"] = value.split("/")[-1]
+                compressed_file_object = Path(value)
                 scale = 1
-                while file_object.stat().st_size > 15 * (10**6):
+                while compressed_file_object.stat().st_size > 15 * (10**6):
                     compress(value, value, img_width=800 - 80 * scale, img_format="png")
                     scale += 1
-                df.loc[key, "Compressed size"] = file_object.stat().st_size
+                df.loc[key, "Compressed size"] = compressed_file_object.stat().st_size
         df.to_csv(csv_object, index=False)
 
     return wrapper
@@ -171,11 +165,10 @@ def compression_record(func):
 
 @compression_record
 @file_checker
-def file_generator(input_filename):
-    notebook_normalize(input_filename)
-    output_filename = " (Compressed).ipynb".join(input_filename.split(".ipynb"))
-    compress(input_filename, output_filename, img_width=800, img_format="png")
-    return output_filename
+def file_generator(original_filename):
+    compressed_filename = " (Compressed).ipynb".join(original_filename.split(".ipynb"))
+    compress(original_filename, compressed_filename, img_width=800, img_format="png")
+    return compressed_filename
 
 
 alteration = False
