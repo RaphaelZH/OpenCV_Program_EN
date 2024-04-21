@@ -6,13 +6,34 @@ import pandas as pd
 from pathlib import Path
 import pytz
 
-from pprint import pprint
+
+def hidden_file_cleaner(path_object):
+    if Path(str(path_object).rstrip("/") + "/.DS_Store").exists():
+        path_object = Path(str(path_object).rstrip("/") + "/.DS_Store")
+        path_object.unlink()
+
+
+def date_format(stat_time):
+    return datetime.fromtimestamp(stat_time, tz=pytz.timezone("cet"))
+
+
+def alteration_monitor(path_object, cell_time, cell_size):
+    global alteration
+    for file_object in sorted(path_object.iterdir()):
+        if file_object.stat().st_size != cell_size.item():
+            cell_time = date_format(file_object.stat().st_mtime)
+            cell_size = file_object.stat().st_size
+            alteration = True
+            return cell_time, cell_size
+        else:
+            alteration = False
+            return cell_time.values[0], cell_size.values[0]
 
 
 def notebook_selector(path_object):
     return [
         file_object.name
-        for file_object in path_object.iterdir()
+        for file_object in sorted(path_object.iterdir())
         if (
             file_object.name.split(".")[-1] == "ipynb"
             and file_object.name.find("(Compressed)") == -1
@@ -27,9 +48,7 @@ def info_collector(course, subpath, file_name, info_dict):
     path_object = Path(course.join(dir_notebook))
     file_object = Path(f"{subpath}/" + file_name)
     info_dict["File size"].append(file_object.stat().st_size)
-    info_dict["Modification date"].append(
-        datetime.fromtimestamp(file_object.stat().st_mtime, tz=pytz.timezone("cet"))
-    )
+    info_dict["Modification date"].append(date_format(file_object.stat().st_mtime))
     return info_dict
 
 
@@ -43,30 +62,14 @@ def dataframe_creation():
     }
     for course in courses_list:
         path_object = Path(course.join(dir_notebook))
-        for subpath_object in path_object.iterdir():
+        hidden_file_cleaner(path_object)
+        for subpath_object in sorted(path_object.iterdir()):
+            hidden_file_cleaner(subpath_object)
             subpath = str(subpath_object)
             file_list = notebook_selector(subpath_object)
             for file_name in file_list:
                 info_dict = info_collector(course, subpath, file_name, info_dict)
     return pd.DataFrame.from_dict(data=info_dict)
-
-
-def date_format(time):
-    return datetime.fromtimestamp(time, tz=pytz.timezone("cet"))
-
-
-def alteration_monitor(path_object, cell_time, cell_size):
-    global alteration
-    for file_object in path_object.iterdir():
-        print(file_object)
-        if file_object.stat().st_size != cell_size.item():
-            cell_time = date_format(file_object.stat().st_mtime)
-            cell_size = file_object.stat().st_size
-            alteration = True
-            return cell_time, cell_size
-        else:
-            alteration = False
-            return cell_time.values[0], cell_size.values[0]
 
 
 def file_checker(func):
@@ -80,7 +83,9 @@ def file_checker(func):
             subpath_recorder = []
             for course in courses_list:
                 path_object = Path(course.join(dir_notebook))
-                for subpath_object in path_object.iterdir():
+                hidden_file_cleaner(path_object)
+                for subpath_object in sorted(path_object.iterdir()):
+                    hidden_file_cleaner(subpath_object)
                     subpath = str(subpath_object)
                     subpath_recorder.append(subpath)
                     file_list = notebook_selector(subpath_object)
@@ -94,8 +99,9 @@ def file_checker(func):
                             info_dict = info_collector(
                                 course, subpath, file_name, info_dict
                             )
-                            info_dict["Compressed file"].append("")
-                            info_dict["Compressed size"].append("")
+                            info_dict["Compressed File"].append("")
+                            info_dict["Compressed Size"].append("")
+                            info_dict["Compressed Date"].append("")
                             df = pd.DataFrame.from_dict(data=info_dict)
                             index = df.shape[0] - 1
                             compression_recorder_dict[index] = func(
@@ -148,24 +154,19 @@ def compression_record(func):
     def wrapper():
         global csv_object
         df, compression_recorder_dict = func()
-        df["Compressed file"] = ""
+        df["Compressed File"] = ""
         if compression_recorder_dict != {}:
             for key, value in compression_recorder_dict.items():
-                df.loc[key, "Compressed file"] = value.split("/")[-1]
+                df.loc[key, "Compressed File"] = value.split("/")[-1]
                 compressed_file_object = Path(value)
                 scale = 1
                 while compressed_file_object.stat().st_size > 15 * (10**6):
                     compress(value, value, img_width=800 - 40 * scale, img_format="png")
                     scale += 1
                 df.loc[key, "Compressed Size"] = compressed_file_object.stat().st_size
-                print(
-                    datetime.fromtimestamp(
-                        compressed_file_object.stat().st_mtime, tz=pytz.timezone("cet")
-                    )
-                )
-                df.loc[key, "Date of Compression"] = datetime.fromtimestamp(
-                    compressed_file_object.stat().st_mtime, tz=pytz.timezone("cet")
-                )
+                df.loc[key, "Compressed Date"] = pd.Timestamp(
+                    date_format(compressed_file_object.stat().st_mtime)
+                ).tz_convert(tz="CET")
 
         df.to_csv(csv_object, index=False)
 
@@ -174,10 +175,12 @@ def compression_record(func):
 
 @compression_record
 @file_checker
-def file_generator(original_filename):
-    compressed_filename = " (Compressed).ipynb".join(original_filename.split(".ipynb"))
-    compress(original_filename, compressed_filename, img_width=800, img_format="png")
-    return compressed_filename
+def file_generator(original_file_name):
+    compressed_file_name = " (Compressed).ipynb".join(
+        original_file_name.split(".ipynb")
+    )
+    compress(original_file_name, compressed_file_name, img_width=800, img_format="png")
+    return compressed_file_name
 
 
 alteration = False
