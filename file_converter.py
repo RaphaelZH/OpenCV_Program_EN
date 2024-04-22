@@ -21,13 +21,13 @@ def alteration_monitor(path_object, cell_time, cell_size):
     global alteration
     for file_object in sorted(path_object.iterdir()):
         if file_object.stat().st_size != cell_size.item():
-            cell_time = date_format(file_object.stat().st_mtime)
+            cell_time = str(date_format(file_object.stat().st_mtime))
             cell_size = file_object.stat().st_size
             alteration = True
             return cell_time, cell_size
         else:
             alteration = False
-            return cell_time.values[0], cell_size.values[0]
+            return cell_time.item(), cell_size.item()
 
 
 def notebook_selector(path_object):
@@ -48,7 +48,7 @@ def info_collector(course, subpath, file_name, info_dict):
     path_object = Path(course.join(dir_notebook))
     file_object = Path(f"{subpath}/" + file_name)
     info_dict["File size"].append(file_object.stat().st_size)
-    info_dict["Modification date"].append(date_format(file_object.stat().st_mtime))
+    info_dict["Modification date"].append(str(date_format(file_object.stat().st_mtime)))
     return info_dict
 
 
@@ -99,15 +99,30 @@ def file_checker(func):
                             info_dict = info_collector(
                                 course, subpath, file_name, info_dict
                             )
-                            info_dict["Compressed File"].append("")
-                            info_dict["Compressed Size"].append("")
-                            info_dict["Compressed Date"].append("")
                             df = pd.DataFrame.from_dict(data=info_dict)
                             index = df.shape[0] - 1
                             compression_recorder_dict[index] = func(
                                 f"{subpath}/" + file_name
                             )
                         else:
+                            print(
+                                type(
+                                    df.loc[
+                                        (df["File path"] == course)
+                                        & (df["File name"] == file_name),
+                                        "Modification date",
+                                    ].item()
+                                )
+                            )
+                            print(
+                                type(
+                                    df.loc[
+                                        (df["File path"] == course)
+                                        & (df["File name"] == file_name),
+                                        "Compressed Date",
+                                    ].item()
+                                )
+                            )
                             df.loc[
                                 (df["File path"] == course)
                                 & (df["File name"] == file_name),
@@ -155,6 +170,9 @@ def compression_record(func):
         global csv_object
         df, compression_recorder_dict = func()
         df["Compressed File"] = ""
+        df["Compressed Date"] = ""
+        df["Compressed File"].astype(str)
+        df["Compressed Date"].astype(str)
         if compression_recorder_dict != {}:
             for key, value in compression_recorder_dict.items():
                 df.loc[key, "Compressed File"] = value.split("/")[-1]
@@ -164,9 +182,9 @@ def compression_record(func):
                     compress(value, value, img_width=800 - 40 * scale, img_format="png")
                     scale += 1
                 df.loc[key, "Compressed Size"] = compressed_file_object.stat().st_size
-                df.loc[key, "Compressed Date"] = pd.Timestamp(
+                df.loc[key, "Compressed Date"] = str(
                     date_format(compressed_file_object.stat().st_mtime)
-                ).tz_convert(tz="CET")
+                )
 
         df.to_csv(csv_object, index=False)
 
