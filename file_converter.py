@@ -105,24 +105,6 @@ def file_checker(func):
                                 f"{subpath}/" + file_name
                             )
                         else:
-                            print(
-                                type(
-                                    df.loc[
-                                        (df["File path"] == course)
-                                        & (df["File name"] == file_name),
-                                        "Modification date",
-                                    ].item()
-                                )
-                            )
-                            print(
-                                type(
-                                    df.loc[
-                                        (df["File path"] == course)
-                                        & (df["File name"] == file_name),
-                                        "Compressed Date",
-                                    ].item()
-                                )
-                            )
                             df.loc[
                                 (df["File path"] == course)
                                 & (df["File name"] == file_name),
