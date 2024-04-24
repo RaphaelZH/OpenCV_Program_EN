@@ -81,9 +81,18 @@ def file_checker(func):
             df = pd.read_csv(csv_object)
             info_dict = df.to_dict("list")
             subpath_recorder = []
+            combined_list = []
             for course in courses_list:
                 path_object = Path(course.join(dir_notebook))
                 hidden_file_cleaner(path_object)
+                for subpath_object in sorted(path_object.iterdir()):
+                    combined_list.append((course, subpath_object.name + ".ipynb"))
+            for index, row in df.iterrows():
+                if (row["File path"], row["File name"]) not in combined_list:
+                    df.drop(axis=0, index=index, inplace=True)
+            df.reset_index()
+            for course in courses_list:
+                path_object = Path(course.join(dir_notebook))
                 for subpath_object in sorted(path_object.iterdir()):
                     hidden_file_cleaner(subpath_object)
                     subpath = str(subpath_object)
