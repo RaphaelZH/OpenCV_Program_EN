@@ -77,6 +77,8 @@ def file_checker(func):
     def wrapper():
         global alteration, courses_list, csv_object, dir_notebook
         compression_recorder_dict = {}
+        # Check whether there exists a record of all Jupyter Notebook files in the current 
+        # directory.
         if csv_object.is_file():
             df = pd.read_csv(csv_object)
             info_dict = df.to_dict("list")
@@ -141,6 +143,10 @@ def file_checker(func):
                                         compression_recorder_dict[index] = func(
                                             f"{subpath}/" + file_name
                                         )
+        # Condition n°1, if there does not exist a record of all Jupyter Notebook files in the 
+        # current directory, create the record immediately and generate the corresponding 
+        # pre-compressed copy at the same time, and then compress all pre-compressed copies 
+        # that exceed the size limit.
         else:
             df = dataframe_creation()
             for index, row in df.iterrows():

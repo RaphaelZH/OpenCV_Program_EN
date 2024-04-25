@@ -1,14 +1,14 @@
 File path,File name,File size,Modification date,Compressed File,Compressed Date,Compressed Size
-Deep Learning with PyTorch for Medical Image Analysis,2 - CNN - Convolutional Neural Networks.ipynb,2967692,2024-04-24 00:20:14.460309+02:00,,,2967692.0
-Deep Learning with PyTorch for Medical Image Analysis,3 - Data Formats in Medical Imaging.ipynb,14689805,2024-04-24 00:20:43.243220+02:00,,,14689805.0
-Deep Learning with PyTorch for Medical Image Analysis,4 - Pneumonia-Classification.ipynb,13780136,2024-04-24 00:20:57.491222+02:00,,,13780136.0
-"Modern Computer Vision PyTorch, TensorFlow 2 Keras & OpenCV 4",1 - OpenCV - Image Operations.ipynb,14557192,2024-04-24 00:20:59.908739+02:00,,,14557192.0
-PyTorch for Deep Learning and Computer Vision,1 - Intro to Tensors - PyTorch.ipynb,352660,2024-04-24 00:20:28.144838+02:00,,,352660.0
-PyTorch for Deep Learning and Computer Vision,2 - Linear Regression - PyTorch.ipynb,376437,2024-04-24 00:20:28.340922+02:00,,,376437.0
-PyTorch for Deep Learning and Computer Vision,3 - Perceptrons - PyTorch.ipynb,584856,2024-04-24 00:20:28.593994+02:00,,,584856.0
-PyTorch for Deep Learning and Computer Vision,4 - Deep Neural Networks - PyTorch.ipynb,711652,2024-04-24 00:20:28.840297+02:00,,,711652.0
-PyTorch for Deep Learning and Computer Vision,5 - Image Recognition - PyTorch.ipynb,1149551,2024-04-24 00:20:29.294089+02:00,,,1149551.0
-PyTorch for Deep Learning and Computer Vision,6 - Convolutional Neural Networks - PyTorch.ipynb,1060599,2024-04-24 00:20:29.686907+02:00,,,1060599.0
-PyTorch for Deep Learning and Computer Vision,7 - CIFAR-10 Classification - PyTorch.ipynb,5389682,2024-04-24 00:20:31.102829+02:00,,,5389682.0
-PyTorch for Deep Learning and Computer Vision,8 - Transfer Learning - PyTorch.ipynb,6533923,2024-04-24 00:20:32.737700+02:00,,,6533923.0
-PyTorch for Deep Learning and Computer Vision,9 - Style Transfer - PyTorch.ipynb,4582399,2024-04-24 00:20:33.826394+02:00,,,4582399.0
+Deep Learning with PyTorch for Medical Image Analysis,2 - CNN - Convolutional Neural Networks.ipynb,3725876,2024-04-20 00:36:23.830769+02:00,2 - CNN - Convolutional Neural Networks (Compressed).ipynb,2024-04-25 23:14:52.059764+02:00,2967692.0
+Deep Learning with PyTorch for Medical Image Analysis,3 - Data Formats in Medical Imaging.ipynb,28225677,2024-04-20 00:36:24.926584+02:00,3 - Data Formats in Medical Imaging (Compressed).ipynb,2024-04-25 23:15:20.936084+02:00,14689805.0
+Deep Learning with PyTorch for Medical Image Analysis,4 - Pneumonia-Classification.ipynb,53639929,2024-04-25 22:50:00.726820+02:00,4 - Pneumonia-Classification (Compressed).ipynb,2024-04-25 23:15:34.766581+02:00,13780773.0
+"Modern Computer Vision PyTorch, TensorFlow 2 Keras & OpenCV 4",1 - OpenCV - Image Operations.ipynb,32394672,2024-04-20 00:36:35.643309+02:00,1 - OpenCV - Image Operations (Compressed).ipynb,2024-04-25 23:15:37.072390+02:00,14557192.0
+PyTorch for Deep Learning and Computer Vision,1 - Intro to Tensors - PyTorch.ipynb,466268,2024-04-20 00:36:38.869304+02:00,1 - Intro to Tensors - PyTorch (Compressed).ipynb,2024-04-25 23:15:05.869385+02:00,352660.0
+PyTorch for Deep Learning and Computer Vision,2 - Linear Regression - PyTorch.ipynb,476109,2024-04-20 00:36:40.941299+02:00,2 - Linear Regression - PyTorch (Compressed).ipynb,2024-04-25 23:15:06.064474+02:00,376437.0
+PyTorch for Deep Learning and Computer Vision,3 - Perceptrons - PyTorch.ipynb,679106,2024-04-20 00:36:39.435223+02:00,3 - Perceptrons - PyTorch (Compressed).ipynb,2024-04-25 23:15:06.314818+02:00,584856.0
+PyTorch for Deep Learning and Computer Vision,4 - Deep Neural Networks - PyTorch.ipynb,713732,2024-04-20 00:36:44.744103+02:00,4 - Deep Neural Networks - PyTorch (Compressed).ipynb,2024-04-25 23:15:06.551531+02:00,711652.0
+PyTorch for Deep Learning and Computer Vision,5 - Image Recognition - PyTorch.ipynb,1322295,2024-04-20 00:36:44.297680+02:00,5 - Image Recognition - PyTorch (Compressed).ipynb,2024-04-25 23:15:07.004058+02:00,1149551.0
+PyTorch for Deep Learning and Computer Vision,6 - Convolutional Neural Networks - PyTorch.ipynb,1251223,2024-04-20 00:36:39.029407+02:00,6 - Convolutional Neural Networks - PyTorch (Compressed).ipynb,2024-04-25 23:15:07.396560+02:00,1060599.0
+PyTorch for Deep Learning and Computer Vision,7 - CIFAR-10 Classification - PyTorch.ipynb,5432774,2024-04-20 00:36:41.179914+02:00,7 - CIFAR-10 Classification - PyTorch (Compressed).ipynb,2024-04-25 23:15:08.833018+02:00,5389682.0
+PyTorch for Deep Learning and Computer Vision,8 - Transfer Learning - PyTorch.ipynb,16658711,2024-04-20 00:36:42.682259+02:00,8 - Transfer Learning - PyTorch (Compressed).ipynb,2024-04-25 23:15:10.508334+02:00,6533923.0
+PyTorch for Deep Learning and Computer Vision,9 - Style Transfer - PyTorch.ipynb,17139003,2024-04-20 00:36:39.802128+02:00,9 - Style Transfer - PyTorch (Compressed).ipynb,2024-04-25 23:15:11.613026+02:00,4582399.0
