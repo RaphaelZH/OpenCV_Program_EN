@@ -77,12 +77,12 @@ def file_checker(func):
     def wrapper():
         global alteration, courses_list, csv_object, dir_notebook
         compression_recorder_dict = {}
-        # Condition #1: Check whether there exists a record for all Jupyter Notebook files in 
+        # Condition 1: Check whether there exists a record for all Jupyter Notebook files in 
         # the current directory.
         if csv_object.is_file():
-            # Condition #2: Reads the records for all Jupyter Notebook files in the current 
-            # directory. Check whether there are certain entries in this record for which the 
-            # corresponding Jupyter Notebook file cannot be found.
+            # Condition No. 2: If the condition No. 1 is true, read this record and check 
+            # whether there are certain entries in this record for which the corresponding 
+            # Jupyter Notebook file cannot be found.
             df = pd.read_csv(csv_object)
             info_dict = df.to_dict("list")
             subpath_recorder = []
@@ -92,10 +92,9 @@ def file_checker(func):
                 hidden_file_cleaner(path_object)
                 for subpath_object in sorted(path_object.iterdir()):
                     combined_list.append((course, subpath_object.name + ".ipynb"))
+            # Statement No. 2: If the condition No. 2 is true, delete those entries and reset 
+            # the index.
             for index, row in df.iterrows():
-                # Statement #2: If there exist certain entries in this record for which the 
-                # corresponding Jupyter Notebook file cannot be found, delete those entries 
-                # and reset the index.
                 if (row["File path"], row["File name"]) not in combined_list:
                     df.drop(axis=0, index=index, inplace=True)
             df.reset_index()
@@ -149,10 +148,9 @@ def file_checker(func):
                                         compression_recorder_dict[index] = func(
                                             f"{subpath}/" + file_name
                                         )
-        # Statement #1: If there does not exist a record for all Jupyter Notebook files in the 
-        # current directory, create the record immediately，while generating the corresponding 
-        # pre-compressed copy for each file and compressing all pre-compressed copies that 
-        # exceed the preset size limit.
+        # Statement 1: If condition 1 is false, create the record immediately，while generating 
+        # the corresponding pre-compressed copy for each file as well as compressing any copies 
+        # that exceed the preset size limit.
         else:
             df = dataframe_creation()
             for index, row in df.iterrows():
