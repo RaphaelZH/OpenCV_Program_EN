@@ -22,7 +22,7 @@ def alteration_monitor(path_object, cell_time, cell_size):
     for file_object in sorted(path_object.iterdir()):
         if file_object.stat().st_size != cell_size.item():
             cell_time = str(date_format(file_object.stat().st_mtime))
-            cell_size = file_object.stat().st_size
+            cell_size = f"{file_object.stat().st_size:,}"
             alteration = True
             return cell_time, cell_size
         else:
@@ -43,22 +43,22 @@ def notebook_selector(path_object):
 
 def info_collector(course, subpath, file_name, info_dict):
     global dir_notebook
-    info_dict["File path"].append(course)
-    info_dict["File name"].append(file_name)
+    info_dict["File Path"].append(course)
+    info_dict["File Name"].append(file_name)
     path_object = Path(course.join(dir_notebook))
     file_object = Path(f"{subpath}/" + file_name)
-    info_dict["File size"].append(file_object.stat().st_size)
-    info_dict["Modification date"].append(str(date_format(file_object.stat().st_mtime)))
+    info_dict["File Size"].append(f"{file_object.stat().st_size:,}")
+    info_dict["Modification Date"].append(str(date_format(file_object.stat().st_mtime)))
     return info_dict
 
 
 def dataframe_creation():
     global courses_list, dir_notebook
     info_dict = {
-        "File path": [],
-        "File name": [],
-        "File size": [],
-        "Modification date": [],
+        "File Path": [],
+        "File Name": [],
+        "File Size": [],
+        "Modification Date": [],
     }
     for course in courses_list:
         path_object = Path(course.join(dir_notebook))
@@ -77,12 +77,12 @@ def file_checker(func):
     def wrapper():
         global alteration, courses_list, csv_object, dir_notebook
         compression_recorder_dict = {}
-        # Condition 1: Check whether there exists a record for all Jupyter Notebook files in 
+        # Condition 1: Check whether there exists a record for all Jupyter Notebook files in
         # the current directory.
         if csv_object.is_file():
-            # Condition No. 2: If the condition No. 1 is true, read this record and check 
-            # whether there are certain entries in this record for which the corresponding 
-            # Jupyter Notebook file cannot be found.
+            # Condition 2: If Condition 1 is True, read this record and check whether there are
+            # certain entries in this record for which the corresponding Jupyter Notebook file
+            # cannot be found.
             df = pd.read_csv(csv_object)
             info_dict = df.to_dict("list")
             subpath_recorder = []
@@ -92,10 +92,9 @@ def file_checker(func):
                 hidden_file_cleaner(path_object)
                 for subpath_object in sorted(path_object.iterdir()):
                     combined_list.append((course, subpath_object.name + ".ipynb"))
-            # Statement No. 2: If the condition No. 2 is true, delete those entries and reset 
-            # the index.
+            # Statement 2: If Condition 2 is True, delete those entries and reset the index.
             for index, row in df.iterrows():
-                if (row["File path"], row["File name"]) not in combined_list:
+                if (row["File Path"], row["File Name"]) not in combined_list:
                     df.drop(axis=0, index=index, inplace=True)
             df.reset_index()
             for course in courses_list:
@@ -105,11 +104,12 @@ def file_checker(func):
                     subpath = str(subpath_object)
                     subpath_recorder.append(subpath)
                     file_list = notebook_selector(subpath_object)
+                    #
                     for file_name in file_list:
                         if (
                             file_name
-                            not in df.loc[df["File path"] == course][
-                                "File name"
+                            not in df.loc[df["File Path"] == course][
+                                "File Name"
                             ].to_list()
                         ):
                             info_dict = info_collector(
@@ -122,43 +122,43 @@ def file_checker(func):
                             )
                         else:
                             df.loc[
-                                (df["File path"] == course)
-                                & (df["File name"] == file_name),
-                                ["Modification date", "File size"],
+                                (df["File Path"] == course)
+                                & (df["File Name"] == file_name),
+                                ["Modification Date", "File Size"],
                             ] = alteration_monitor(
                                 subpath_object,
                                 df.loc[
-                                    (df["File path"] == course)
-                                    & (df["File name"] == file_name),
-                                    "Modification date",
+                                    (df["File Path"] == course)
+                                    & (df["File Name"] == file_name),
+                                    "Modification Date",
                                 ],
                                 df.loc[
-                                    (df["File path"] == course)
-                                    & (df["File name"] == file_name),
-                                    "File size",
+                                    (df["File Path"] == course)
+                                    & (df["File Name"] == file_name),
+                                    "File Size",
                                 ],
                             )
                             if alteration:
                                 for index, row in df.iterrows():
                                     if (
                                         subpath
-                                        == row["File path"].join(dir_notebook)
-                                        + row["File name"].split(".")[0]
+                                        == row["File Path"].join(dir_notebook)
+                                        + row["File Name"].split(".")[0]
                                     ):
                                         compression_recorder_dict[index] = func(
                                             f"{subpath}/" + file_name
                                         )
-        # Statement 1: If condition 1 is false, create the record immediately，while generating 
-        # the corresponding pre-compressed copy for each file as well as compressing any copies 
+        # Statement 1: If Condition 1 is False, create the record immediately, while generating
+        # the corresponding pre-compressed copy for each file as well as compressing any copies
         # that exceed the preset size limit.
         else:
             df = dataframe_creation()
             for index, row in df.iterrows():
                 subpath = (
-                    row["File path"].join(dir_notebook) + row["File name"].split(".")[0]
+                    row["File Path"].join(dir_notebook) + row["File Name"].split(".")[0]
                 )
                 compression_recorder_dict[index] = func(
-                    subpath + "/" + row["File name"]
+                    subpath + "/" + row["File Name"]
                 )
         return df, compression_recorder_dict
 
@@ -170,10 +170,14 @@ def compression_record(func):
     def wrapper():
         global csv_object
         df, compression_recorder_dict = func()
-        df["Compressed File"] = ""
-        df["Compressed Date"] = ""
-        df["Compressed File"].astype(str)
-        df["Compressed Date"].astype(str)
+        if ("Compressed File" or "Compressed Date") not in df.columns:
+            df["Compressed File"], df["Compressed Size"], df["Compressed Date"] = [
+                "",
+                "",
+                "",
+            ]
+            df["Compressed File"].astype(str)
+            df["Compressed Date"].astype(str)
         if compression_recorder_dict != {}:
             for key, value in compression_recorder_dict.items():
                 df.loc[key, "Compressed File"] = value.split("/")[-1]
@@ -182,7 +186,7 @@ def compression_record(func):
                 while compressed_file_object.stat().st_size > 15 * (10**6):
                     compress(value, value, img_width=800 - 40 * scale, img_format="png")
                     scale += 1
-                df.loc[key, "Compressed Size"] = compressed_file_object.stat().st_size
+                df.loc[key, "Compressed Size"] = f"{compressed_file_object.stat().st_size:,}"
                 df.loc[key, "Compressed Date"] = str(
                     date_format(compressed_file_object.stat().st_mtime)
                 )
