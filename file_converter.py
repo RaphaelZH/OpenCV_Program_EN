@@ -92,9 +92,10 @@ def file_checker(func):
                 hidden_file_cleaner(path_object)
                 for subpath_object in sorted(path_object.iterdir()):
                     combined_list.append((course, subpath_object.name + ".ipynb"))
-            # Statement 2: If Condition 2 is True, delete those entries and reset the index.
             for index, row in df.iterrows():
                 if (row["File Path"], row["File Name"]) not in combined_list:
+                    # Statement 2: If Condition 2 is True, delete those entries and reset the 
+                    # index.
                     df.drop(axis=0, index=index, inplace=True)
             df.reset_index()
             for course in courses_list:
@@ -104,8 +105,8 @@ def file_checker(func):
                     subpath = str(subpath_object)
                     subpath_recorder.append(subpath)
                     file_list = notebook_selector(subpath_object)
-                    #
                     for file_name in file_list:
+                        #
                         if (
                             file_name
                             not in df.loc[df["File Path"] == course][
@@ -148,10 +149,11 @@ def file_checker(func):
                                         compression_recorder_dict[index] = func(
                                             f"{subpath}/" + file_name
                                         )
-        # Statement 1: If Condition 1 is False, create the record immediately, while generating
-        # the corresponding pre-compressed copy for each file as well as compressing any copies
-        # that exceed the preset size limit.
         else:
+            # Statement 1: If Condition 1 is False, create a record for all Jupyter Notebook 
+            # files in the current directory immediately, while generating the corresponding 
+            # pre-compressed copy for each file as well as compressing any copies that exceed 
+            # the preset size limit.
             df = dataframe_creation()
             for index, row in df.iterrows():
                 subpath = (
@@ -186,7 +188,9 @@ def compression_record(func):
                 while compressed_file_object.stat().st_size > 15 * (10**6):
                     compress(value, value, img_width=800 - 40 * scale, img_format="png")
                     scale += 1
-                df.loc[key, "Compressed Size"] = f"{compressed_file_object.stat().st_size:,}"
+                df.loc[key, "Compressed Size"] = (
+                    f"{compressed_file_object.stat().st_size:,}"
+                )
                 df.loc[key, "Compressed Date"] = str(
                     date_format(compressed_file_object.stat().st_mtime)
                 )
