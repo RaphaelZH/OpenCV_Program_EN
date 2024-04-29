@@ -16,6 +16,8 @@ D --> |True| E[Statement 2]
 E --> F{Condition 3}
 
 D --> |False| F{Condition 3}
+
+F --> |True| G[Statement 3]
 ```
 
 
@@ -27,8 +29,9 @@ D --> |False| F{Condition 3}
 
 > Statement 2: If Condition 2 is True, delete those entries and reset the index.
 
-> Condition 3: If Condition 2 is False, check all Jupyter Notebook files in the current directory, one by one, to see if there is any file that does not have a corresponding entry in this record.
+> Condition 3: If Condition 2 is False, check all Jupyter Notebook files in the current directory one by one to see if that file does not have a corresponding entry in this record.
 
+> Statement 3: If Condition 3 is True, 
 
 
 

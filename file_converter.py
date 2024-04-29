@@ -49,6 +49,8 @@ def info_collector(course, subpath, file_name, info_dict):
     file_object = Path(f"{subpath}/" + file_name)
     info_dict["File Size"].append(f"{file_object.stat().st_size:,}")
     info_dict["Modification Date"].append(str(date_format(file_object.stat().st_mtime)))
+    for key in ["Compressed File", "Compressed Size", "Compressed Date"]:
+        info_dict[key].append("")
     return info_dict
 
 
@@ -59,6 +61,9 @@ def dataframe_creation():
         "File Name": [],
         "File Size": [],
         "Modification Date": [],
+        "Compressed File": [],
+        "Compressed Size": [],
+        "Compressed Date": [],
     }
     for course in courses_list:
         path_object = Path(course.join(dir_notebook))
@@ -85,28 +90,29 @@ def file_checker(func):
             # cannot be found.
             df = pd.read_csv(csv_object)
             info_dict = df.to_dict("list")
-            subpath_recorder = []
             combined_list = []
             for course in courses_list:
+                hidden_file_cleaner(Path(course))
                 path_object = Path(course.join(dir_notebook))
                 hidden_file_cleaner(path_object)
                 for subpath_object in sorted(path_object.iterdir()):
                     combined_list.append((course, subpath_object.name + ".ipynb"))
             for index, row in df.iterrows():
                 if (row["File Path"], row["File Name"]) not in combined_list:
-                    # Statement 2: If Condition 2 is True, delete those entries and reset the 
+                    # Statement 2: If Condition 2 is True, delete those entries and reset the
                     # index.
                     df.drop(axis=0, index=index, inplace=True)
             df.reset_index()
+            # Condition 3: If Condition 2 is False, check all Jupyter Notebook files in the
+            # current directory one by one to see if that file does not have a corresponding
+            # entry in this record.
             for course in courses_list:
                 path_object = Path(course.join(dir_notebook))
                 for subpath_object in sorted(path_object.iterdir()):
                     hidden_file_cleaner(subpath_object)
                     subpath = str(subpath_object)
-                    subpath_recorder.append(subpath)
                     file_list = notebook_selector(subpath_object)
                     for file_name in file_list:
-                        #
                         if (
                             file_name
                             not in df.loc[df["File Path"] == course][
@@ -121,6 +127,8 @@ def file_checker(func):
                             compression_recorder_dict[index] = func(
                                 f"{subpath}/" + file_name
                             )
+                            df = df.sort_values(by=["File Path", "File Name"])
+                            df.reset_index()
                         else:
                             df.loc[
                                 (df["File Path"] == course)
@@ -150,9 +158,9 @@ def file_checker(func):
                                             f"{subpath}/" + file_name
                                         )
         else:
-            # Statement 1: If Condition 1 is False, create a record for all Jupyter Notebook 
-            # files in the current directory immediately, while generating the corresponding 
-            # pre-compressed copy for each file as well as compressing any copies that exceed 
+            # Statement 1: If Condition 1 is False, create a record for all Jupyter Notebook
+            # files in the current directory immediately, while generating the corresponding
+            # pre-compressed copy for each file as well as compressing any copies that exceed
             # the preset size limit.
             df = dataframe_creation()
             for index, row in df.iterrows():
@@ -172,14 +180,6 @@ def compression_record(func):
     def wrapper():
         global csv_object
         df, compression_recorder_dict = func()
-        if ("Compressed File" or "Compressed Date") not in df.columns:
-            df["Compressed File"], df["Compressed Size"], df["Compressed Date"] = [
-                "",
-                "",
-                "",
-            ]
-            df["Compressed File"].astype(str)
-            df["Compressed Date"].astype(str)
         if compression_recorder_dict != {}:
             for key, value in compression_recorder_dict.items():
                 df.loc[key, "Compressed File"] = value.split("/")[-1]
