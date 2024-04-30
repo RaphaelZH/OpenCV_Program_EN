@@ -120,11 +120,10 @@ def file_checker(func):
                                 course, subpath, file_name, info_dict
                             )
                             df = pd.DataFrame.from_dict(data=info_dict)
-                            new_index = df.shape[0] - 1
-                            alteration_indexes.append(new_index)
-                            print(alteration_indexes)
+                            target_index = df.shape[0] - 1
+                            alteration_indexes.append(target_index)
                         else:
-                            index = df.index[
+                            target_index = df.index[
                                 (df["File Path"] == course)
                                 & (df["File Name"] == file_name)
                             ].tolist()[0]
@@ -133,7 +132,7 @@ def file_checker(func):
                                 & (df["File Name"] == file_name),
                                 ["File Size", "Modification Date"],
                             ] = alteration_monitor(
-                                index,
+                                target_index,
                                 Path(file_path),
                                 df.loc[
                                     (df["File Path"] == course)
@@ -146,9 +145,10 @@ def file_checker(func):
                                     "Modification Date",
                                 ],
                             )
-                            print(alteration_indexes)
-                        #for index, row in df.iterrows():
-                        #    df.loc[index, "Compressed File"] = func(file_path)
+                        if target_index in alteration_indexes:
+                            df.loc[alteration_indexes, "Compressed File"] = func(
+                                file_path
+                            )
         else:
             # Statement 1: If Condition 1 is False, create a record for all Jupyter Notebook
             # files in the current directory immediately, while generating the corresponding
