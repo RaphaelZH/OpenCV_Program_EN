@@ -81,8 +81,8 @@ def file_checker(func):
         # Condition 1: Check whether there exists a record for all Jupyter Notebook files in
         # the current directory.
         if csv_object.is_file():
-            # Condition 2: If Condition 1 is True, read this record and check whether there are
-            # certain entries in this record for which the corresponding Jupyter Notebook file
+            # Condition 2: If Condition 1 is True, read this record and check whether there are 
+            # certain entries in this record for which the corresponding Jupyter Notebook file 
             # cannot be found.
             df = pd.read_csv(csv_object)
             info_dict = df.to_dict("list")
@@ -95,13 +95,13 @@ def file_checker(func):
                     combined_list.append((course, subpath_object.name + ".ipynb"))
             for index, row in df.iterrows():
                 if (row["File Path"], row["File Name"]) not in combined_list:
-                    # Statement 2: If Condition 2 is True, delete those entries and reset the
-                    # index.
+                    # Statement 2: If Condition 2 is True, delete these entries and eventually 
+                    # reset the index.
                     df.drop(axis=0, index=index, inplace=True)
             df.reset_index()
-            # Condition 3: If Condition 2 is False, check all Jupyter Notebook files in the
-            # current directory one by one to see if that file does not have a corresponding
-            # entry in this record.
+            # Condition 3: Regardless of whether Condition 2 is True or False, check whether 
+            # there are any Jupyter Notebook files in the current directory that do not have 
+            # a corresponding entry in this record.
             for course in courses_list:
                 path_object = Path(course.join(dir_notebook))
                 for subpath_object in sorted(path_object.iterdir()):
@@ -110,6 +110,10 @@ def file_checker(func):
                     file_list = notebook_selector(subpath_object)
                     for file_name in file_list:
                         file_path = f"{subpath}/" + file_name
+                        # Statement 3: If condition 3 is True, the information relating to the 
+                        # file will be added to the record as the most recent entry, and its 
+                        # corresponding indexes will be recorded separately in a list of 
+                        # indexes dedicated to recording altered or newly added entries.
                         if (
                             file_name
                             not in df.loc[df["File Path"] == course][
