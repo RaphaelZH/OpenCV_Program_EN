@@ -19,6 +19,10 @@ def date_format(stat_time):
 
 def alteration_monitor(index, file_object, recorded_size, recorded_time):
     global alteration_indexes
+    # Statement 4: If condition 4 is True, update the modification date information and size 
+    # information of the file to the corresponding entry in the record, and likewise record its 
+    # corresponding index in the list of indexes dedicated to recording altered or newly added 
+    # entries.
     if str(date_format(file_object.stat().st_mtime)) != recorded_time.item():
         recorded_size = f"{file_object.stat().st_size:,}"
         recorded_time = str(date_format(file_object.stat().st_mtime))
@@ -81,8 +85,8 @@ def file_checker(func):
         # Condition 1: Check whether there exists a record for all Jupyter Notebook files in
         # the current directory.
         if csv_object.is_file():
-            # Condition 2: If Condition 1 is True, read this record and check whether there are 
-            # certain entries in this record for which the corresponding Jupyter Notebook file 
+            # Condition 2: If Condition 1 is True, read this record and check whether there are
+            # certain entries in this record for which the corresponding Jupyter Notebook file
             # cannot be found.
             df = pd.read_csv(csv_object)
             info_dict = df.to_dict("list")
@@ -95,12 +99,12 @@ def file_checker(func):
                     combined_list.append((course, subpath_object.name + ".ipynb"))
             for index, row in df.iterrows():
                 if (row["File Path"], row["File Name"]) not in combined_list:
-                    # Statement 2: If Condition 2 is True, delete these entries and eventually 
+                    # Statement 2: If Condition 2 is True, delete these entries and eventually
                     # reset the index.
                     df.drop(axis=0, index=index, inplace=True)
             df.reset_index()
-            # Condition 3: Regardless of whether Condition 2 is True or False, check whether 
-            # there are any Jupyter Notebook files in the current directory that do not have 
+            # Condition 3: Regardless of whether Condition 2 is True or False, check whether
+            # there are any Jupyter Notebook files in the current directory that do not have
             # a corresponding entry in this record.
             for course in courses_list:
                 path_object = Path(course.join(dir_notebook))
@@ -110,9 +114,9 @@ def file_checker(func):
                     file_list = notebook_selector(subpath_object)
                     for file_name in file_list:
                         file_path = f"{subpath}/" + file_name
-                        # Statement 3: If condition 3 is True, the information relating to the 
-                        # file will be added to the record as the most recent entry, and its 
-                        # corresponding indexes will be recorded separately in a list of 
+                        # Statement 3: If condition 3 is True, the information relating to the
+                        # file will be added to the record as the most recent entry, and its
+                        # corresponding indexes will be recorded separately in a list of
                         # indexes dedicated to recording altered or newly added entries.
                         if (
                             file_name
@@ -126,6 +130,9 @@ def file_checker(func):
                             df = pd.DataFrame.from_dict(data=info_dict)
                             target_index = df.shape[0] - 1
                             alteration_indexes.append(target_index)
+                        # Condition 4: If condition 3 is False, check whether the actual 
+                        # modification date of the file is the same as the modification date 
+                        # recorded for the corresponding entry in the record.
                         else:
                             target_index = df.index[
                                 (df["File Path"] == course)
@@ -154,10 +161,10 @@ def file_checker(func):
                                 file_path
                             )
         else:
-            # Statement 1: If Condition 1 is False, create a record for all Jupyter Notebook
-            # files in the current directory immediately, while generating the corresponding
-            # pre-compressed copy for each file as well as compressing any copies that exceed
-            # the preset size limit.
+            # Statement 1: If Condition 1 is False, create a record for all Jupyter Notebook 
+            # files in the current directory immediately, while generating the corresponding 
+            # pre-compressed copy for each file as well as compressing any copies that exceed 
+            # the preset size limit, and recording relevant information about the copies.
             df = dataframe_creation()
             for index, row in df.iterrows():
                 subpath = (
@@ -207,6 +214,7 @@ def compression_record(func):
                         date_format(compressed_file_object.stat().st_mtime)
                     )
 
+        # Statement 6: Sorts the updated record and resets its index.
         df = df.sort_values(by=["File Path", "File Name"])
         df.reset_index()
         df.to_csv(csv_object, index=False)
