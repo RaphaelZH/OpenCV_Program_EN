@@ -5,35 +5,39 @@
 ```mermaid
 flowchart TD
 
-A(START) --> B{Condition 1}
+A(Start) --> B{Condition 1}
 
-B --> |False| C[Statement 1]
+B --> |True| C{Condition 2}
 
-B --> |True| D{Condition 2}
+B --> |False| D[Statement 1]
 
-D --> |True| E[Statement 2]
+C --> |True| E[Statement 2]
 
-E --> F{Condition 3}
+C --> |False| F[Loop Entry]
 
-D --> |False| F{Condition 3}
+D --> M(Stop)
 
-F --> |True| G[Statement 3]
+E --> F[Loop Entry]
 
-F --> |False| H{Condition 4}
+F --> G{Condition 3}
 
-H --> |True| I[Statement 4]
+G --> |True| H[Statement 3]
 
-G --> J[Statement 5]
+G --> |False| I{Condition 4}
 
-I --> J[Statement 5]
+I --> |True| J[Statement 4]
 
-C --> K[Statement 6]
+I --> |False| L{Loop Condition}
 
-H --> |False| L(END)
+H --> K[Statement 5]
 
-J --> K[Statement 6]
+J --> K[Statement 5]
 
-K --> L(END)
+K --> L{Loop Condition}
+
+L --> |True| F[Loop Entry]
+
+L --> |False| M(Stop)
 ```
 
 

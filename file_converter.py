@@ -19,9 +19,9 @@ def date_format(stat_time):
 
 def alteration_monitor(index, file_object, recorded_size, recorded_time):
     global alteration_indexes
-    # Statement 4: If condition 4 is True, update the modification date information and size 
-    # information of the file to the corresponding entry in the record, and likewise record its 
-    # corresponding index in the list of indexes dedicated to recording altered or newly added 
+    # Statement 4: If condition 4 is True, update the modification date information and size
+    # information of the file to the corresponding entry in the record, and likewise record its
+    # corresponding index in the list of indexes dedicated to recording altered or newly added
     # entries.
     if str(date_format(file_object.stat().st_mtime)) != recorded_time.item():
         recorded_size = f"{file_object.stat().st_size:,}"
@@ -130,8 +130,8 @@ def file_checker(func):
                             df = pd.DataFrame.from_dict(data=info_dict)
                             target_index = df.shape[0] - 1
                             alteration_indexes.append(target_index)
-                        # Condition 4: If condition 3 is False, check whether the actual 
-                        # modification date of the file is the same as the modification date 
+                        # Condition 4: If condition 3 is False, check whether the actual
+                        # modification date of the file is the same as the modification date
                         # recorded for the corresponding entry in the record.
                         else:
                             target_index = df.index[
@@ -161,9 +161,9 @@ def file_checker(func):
                                 file_path
                             )
         else:
-            # Statement 1: If Condition 1 is False, create a record for all Jupyter Notebook 
-            # files in the current directory immediately, while generating the corresponding 
-            # pre-compressed copy for each file as well as compressing any copies that exceed 
+            # Statement 1: If Condition 1 is False, create a record for all Jupyter Notebook
+            # files in the current directory immediately, while generating the corresponding
+            # pre-compressed copy for each file as well as compressing any copies that exceed
             # the preset size limit, and recording relevant information about the copies.
             df = dataframe_creation()
             for index, row in df.iterrows():
