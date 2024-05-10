@@ -44,7 +44,6 @@ def notebook_selector(path_object):
 
 
 def info_collector(course, subpath, file_name, info_dict):
-    global dir_notebook
     info_dict["File Path"].append(course)
     info_dict["File Name"].append(file_name)
     file_object = Path(f"{subpath}/" + file_name)
@@ -89,7 +88,7 @@ def file_checker(func):
             # certain entries in this record for which the corresponding Jupyter Notebook file
             # cannot be found.
             df = pd.read_csv(csv_object)
-            info_dict = df.to_dict("list")
+            info_dict = df.to_dict(orient="list")
             combined_list = []
             for course in courses_list:
                 hidden_file_cleaner(Path(course))
@@ -130,10 +129,19 @@ def file_checker(func):
                             df = pd.DataFrame.from_dict(data=info_dict)
                             target_index = df.shape[0] - 1
                             alteration_indexes.append(target_index)
+                            print("***")
+                            print(target_index)
+                            print("***")
                         # Condition 4: If condition 3 is False, check whether the actual
                         # modification date of the file is the same as the modification date
                         # recorded for the corresponding entry in the record.
                         else:
+                            print(
+                                df.index[
+                                    (df["File Path"] == course)
+                                    & (df["File Name"] == file_name)
+                                ].tolist()[0]
+                            )
                             target_index = df.index[
                                 (df["File Path"] == course)
                                 & (df["File Name"] == file_name)
@@ -157,7 +165,12 @@ def file_checker(func):
                                 ],
                             )
                         if target_index in alteration_indexes:
-                            df.loc[alteration_indexes, "Compressed File"] = func(
+                            print("---")
+                            print(target_index)
+                            print(alteration_indexes)
+                            print("---")
+                            print(file_path)
+                            df.loc[target_index, "Compressed File"] = func(
                                 file_path
                             )
         else:
@@ -185,9 +198,15 @@ def compression_record(func):
     def wrapper():
         global csv_object
         df, alteration_indexes = func()
+        print(df[["File Name", "Compressed File"]])
+        print(alteration_indexes)
         if not df.empty:
             for index, row in df.iterrows():
                 if index in alteration_indexes:
+                    print("===")
+                    print(index)
+                    print(row)
+                    print("===")
                     compressed_file_path = (
                         row["File Path"].join(dir_notebook)
                         + row["File Name"].split(".ipynb")[0]
