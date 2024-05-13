@@ -66,6 +66,7 @@ def dataframe_creation():
         "Compressed Date": [],
     }
     for course in courses_list:
+        hidden_file_cleaner(Path(course))
         path_object = Path(course.join(dir_notebook))
         hidden_file_cleaner(path_object)
         for subpath_object in sorted(path_object.iterdir()):
