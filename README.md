@@ -4,42 +4,45 @@
 
 ```mermaid
 flowchart TD
+    A(Start)
+    B{Condition 1}
+    C[Statement 1]
+    D(Stop)
 
-A(Start) --> B{Condition 1}
+    X[[cleanup]]
 
-B --> |True| C{Condition 2}
+    subgraph LOOP_1[Loop 1]
+        LOOP_1_A{Loop Condition 1}
+        LOOP_1_B{Condition 2}
+        LOOP_1_C[Statement 2]
 
-B --> |False| D[Statement 1]
+        direction LR
+            LOOP_1_A -- True --> LOOP_1_B -- True --> LOOP_1_C --> LOOP_1_A
+            LOOP_1_B -- False --> LOOP_1_A
+    end
 
-C --> |True| E[Statement 2]
+    subgraph LOOP_2[Loop 2]
+        LOOP_2_A{Loop Condition 2}
+        LOOP_2_B{Condition 3}
+        LOOP_2_C[Statement 3]
+        LOOP_2_D{Condition 4}
+        LOOP_2_E[Statement 4]
+        LOOP_2_F[Statement 5]
 
-C --> |False| F[Loop Entry]
+        direction LR
+            LOOP_2_A -- True --> LOOP_2_B -- True --> LOOP_2_C --> LOOP_2_F --> LOOP_2_A
+            LOOP_2_B -- False--> LOOP_2_D -- True --> LOOP_2_E --> LOOP_2_F
+            LOOP_2_D -- False --> LOOP_2_A
+    end
 
-D --> M(Stop)
+    A ==> B
+    B == True ==> LOOP_1 ==> LOOP_2 ==> D
+    B == False ==> C ==> D
 
-E --> F[Loop Entry]
-
-F --> G{Condition 3}
-
-G --> |True| H[Statement 3]
-
-G --> |False| I{Condition 4}
-
-I --> |True| J[Statement 4]
-
-I --> |False| L{Loop Condition}
-
-H --> K[Statement 5]
-
-J --> K[Statement 5]
-
-K --> L{Loop Condition}
-
-L --> |True| F[Loop Entry]
-
-L --> |False| M(Stop)
+    X ~~~ C
+    X -.-> C
+    X -.-> LOOP_1
 ```
-
 
 > Condition 1: Check whether there exists a record for all Jupyter Notebook files in the current directory.
 >
