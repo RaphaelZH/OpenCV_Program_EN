@@ -3,7 +3,7 @@
 ## Flowchart for Jupyter Notebook File Compression and Status Logging
 
 ```mermaid
-flowchart TD
+flowchart TB
     A(Start)
     B{Condition 1}
     C[Statement 1]
@@ -12,34 +12,43 @@ flowchart TD
     X[[cleanup]]
 
     subgraph LOOP_1[Loop 1]
-        LOOP_1_A{Loop Condition 1}
-        LOOP_1_B{Condition 2}
-        LOOP_1_C[Statement 2]
+        LOOP_1_A[Loop Entry]
+        LOOP_1_B{Loop Condition}
+        LOOP_1_C{Condition 2}
+        LOOP_1_D[Statement 2]
+        LOOP_1_E[Loop Exit]
+
+        LOOP_1_A ~~~ LOOP_1_B ~~~ LOOP_1_C ~~~ LOOP_1_D
+        LOOP_1_C ~~~ LOOP_1_E
 
         direction LR
-            LOOP_1_A -- True --> LOOP_1_B -- True --> LOOP_1_C --> LOOP_1_A
-            LOOP_1_B -- False --> LOOP_1_A
+            LOOP_1_A --> LOOP_1_B -- True --> LOOP_1_C -- True --> LOOP_1_D --> LOOP_1_B
+            LOOP_1_C -- False --> LOOP_1_B -- False --> LOOP_1_E
     end
 
     subgraph LOOP_2[Loop 2]
-        LOOP_2_A{Loop Condition 2}
-        LOOP_2_B{Condition 3}
-        LOOP_2_C[Statement 3]
-        LOOP_2_D{Condition 4}
-        LOOP_2_E[Statement 4]
-        LOOP_2_F[Statement 5]
+        LOOP_2_A[Loop Entry]
+        LOOP_2_B{Loop Condition}
+        LOOP_2_C{Condition 3}
+        LOOP_2_D[Statement 3]
+        LOOP_2_E{Condition 4}
+        LOOP_2_F[Statement 4]
+        LOOP_2_G[Statement 5]
+        LOOP_2_H[Loop Exit]
+
+        LOOP_2_A ~~~ LOOP_2_B ~~~ LOOP_2_C ~~~ LOOP_2_D ~~~ LOOP_2_E ~~~ LOOP_2_F ~~~ LOOP_2_G
+        LOOP_2_F ~~~ LOOP_2_H
 
         direction LR
-            LOOP_2_A -- True --> LOOP_2_B -- True --> LOOP_2_C --> LOOP_2_F --> LOOP_2_A
-            LOOP_2_B -- False--> LOOP_2_D -- True --> LOOP_2_E --> LOOP_2_F
-            LOOP_2_D -- False --> LOOP_2_A
+            LOOP_2_A --> LOOP_2_B -- True --> LOOP_2_C -- True --> LOOP_2_D --> LOOP_2_G --> LOOP_2_B
+            LOOP_2_C -- False--> LOOP_2_E -- True --> LOOP_2_F --> LOOP_2_G
+            LOOP_2_E -- False --> LOOP_2_B -- False --> LOOP_2_H
     end
-
-    A ==> B
-    B == True ==> LOOP_1 ==> LOOP_2 ==> D
+    
+    A ==> B == True ==> LOOP_1 ==> LOOP_2 ==> D
     B == False ==> C ==> D
 
-    X ~~~ C
+    C ~~~ X
     X -.-> C
     X -.-> LOOP_1
 ```
