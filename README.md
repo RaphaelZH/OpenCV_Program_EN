@@ -3,20 +3,39 @@
 ## Flowchart for Jupyter Notebook File Compression and Status Logging
 
 ```mermaid
+%% Pantone / PMS 16-1546 TCX / Living Coral / #ff6f61 Hex Code Couleur
+%% Pantone / PMS 17-1736 TCX / Sun Kissed Coral / #ea6676 Hex Code Couleur
+
+%% Pantone / PMS 14-1224 TCX / Coral Sands / #edaa86 Hex Code Couleur
+%% Pantone / PMS 16-1522 TCX / Rose Dawn / #c2877b Hex Code Couleur
+
+%% Pantone / PMS 15-2217 TPG / Aurora Pink / #e683a9 Hex Color Code
+%% Pantone / PMS 17-1937 TPG / Hot Pink / #e86288 Hex Color Code
+
+%% Pantone / PMS 17-3922 TCX / Blue Ice / #70789b Hex Color Code
+%% Pantone / PMS 13-4202 TPG / Ice Water / #c1d6ea Hex Color Code
+
+%% Pantone / PMS 11-0601 TCX / Bright White / #f4f9ff Hex Color Code
+
 flowchart TB
-    A(Start)
-    B{Condition 1}
-    C[Statement 1]
-    D(Stop)
+    classDef decision_symbol fill: #ff6f61, stroke: #ea6676, stroke-width: 2px, color: #f4f9ff
+    classDef process_symbol fill: #edaa86, stroke: #c2877b, stroke-width: 2px, color: #f4f9ff
+    classDef predefined_process_symbol fill: #e683a9, stroke: #e86288, stroke-width: 2px, color: #f4f9ff
+    classDef someclass_3 fill: #70789b, stroke: #c1d6ea, stroke-width: 3px, color: #f4f9ff, stroke-dasharray: 7 6
+    
+    A(START)
+    B{Condition 1}:::decision_symbol
+    C[Statement 1]:::process_symbol
+    D(STOP)
 
-    X[[cleanup]]
+    X[[Removal]]:::predefined_process_symbol
 
-    subgraph LOOP_1[Loop 1]
-        LOOP_1_A[Loop Entry]
-        LOOP_1_B{Loop Condition}
-        LOOP_1_C{Condition 2}
-        LOOP_1_D[Statement 2]
-        LOOP_1_E[Loop Exit]
+    subgraph LOOP_1[Loop Process 1]
+        LOOP_1_A[LOOP ENTRY]
+        LOOP_1_B{LOOP CONDITION}
+        LOOP_1_C{Condition 2}:::decision_symbol
+        LOOP_1_D[Statement 2]:::process_symbol
+        LOOP_1_E[LOOP EXIT]
 
         LOOP_1_A ~~~ LOOP_1_B ~~~ LOOP_1_C ~~~ LOOP_1_D
         LOOP_1_C ~~~ LOOP_1_E
@@ -26,15 +45,15 @@ flowchart TB
             LOOP_1_C -- False --> LOOP_1_B -- False --> LOOP_1_E
     end
 
-    subgraph LOOP_2[Loop 2]
-        LOOP_2_A[Loop Entry]
-        LOOP_2_B{Loop Condition}
-        LOOP_2_C{Condition 3}
-        LOOP_2_D[Statement 3]
-        LOOP_2_E{Condition 4}
-        LOOP_2_F[Statement 4]
-        LOOP_2_G[Statement 5]
-        LOOP_2_H[Loop Exit]
+    subgraph LOOP_2[Loop Process 2]
+        LOOP_2_A[LOOP ENTRY]
+        LOOP_2_B{LOOP CONDITION}
+        LOOP_2_C{Condition 3}:::decision_symbol
+        LOOP_2_D[Statement 3]:::process_symbol
+        LOOP_2_E{Condition 4}:::decision_symbol
+        LOOP_2_F[Statement 4]:::process_symbol
+        LOOP_2_G[Statement 5]:::process_symbol
+        LOOP_2_H[LOOP EXIT]
 
         LOOP_2_A ~~~ LOOP_2_B ~~~ LOOP_2_C ~~~ LOOP_2_D ~~~ LOOP_2_E ~~~ LOOP_2_F ~~~ LOOP_2_G
         LOOP_2_F ~~~ LOOP_2_H
@@ -44,7 +63,10 @@ flowchart TB
             LOOP_2_C -- False--> LOOP_2_E -- True --> LOOP_2_F --> LOOP_2_G
             LOOP_2_E -- False --> LOOP_2_B -- False --> LOOP_2_H
     end
-    
+
+    LOOP_1:::someclass_3
+    LOOP_2:::someclass_3
+
     A ==> B == True ==> LOOP_1 ==> LOOP_2 ==> D
     B == False ==> C ==> D
 
