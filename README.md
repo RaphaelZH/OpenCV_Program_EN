@@ -19,16 +19,12 @@
 
 flowchart TB
     classDef decision_symbol fill: #ff6f61, stroke: #ea6676, stroke-width: 2px, color: #f4f9ff
-    classDef process_symbol fill: #edaa86, stroke: #c2877b, stroke-width: 2px, color: #f4f9ff
-    classDef predefined_process_symbol fill: #e683a9, stroke: #e86288, stroke-width: 2px, color: #f4f9ff
-    classDef someclass_3 fill: #70789b, stroke: #c1d6ea, stroke-width: 3px, color: #f4f9ff, stroke-dasharray: 7 6
-    
-    A(START)
-    B{Condition 1}:::decision_symbol
-    C[Statement 1]:::process_symbol
-    D(STOP)
 
-    X[[Removal]]:::predefined_process_symbol
+    classDef process_symbol fill: #edaa86, stroke: #c2877b, stroke-width: 2px, color: #f4f9ff
+
+    classDef predefined_process_symbol fill: #e683a9, stroke: #e86288, stroke-width: 2px, color: #f4f9ff
+
+    classDef someclass_3 fill: #70789b, stroke: #c1d6ea, stroke-width: 3px, color: #f4f9ff, stroke-dasharray: 7 6
 
     subgraph LOOP_1[Loop Process 1]
         LOOP_1_A[LOOP ENTRY]
@@ -37,12 +33,12 @@ flowchart TB
         LOOP_1_D[Statement 2]:::process_symbol
         LOOP_1_E[LOOP EXIT]
 
-        LOOP_1_A ~~~ LOOP_1_B ~~~ LOOP_1_C ~~~ LOOP_1_D
-        LOOP_1_C ~~~ LOOP_1_E
-
         direction LR
             LOOP_1_A --> LOOP_1_B -- True --> LOOP_1_C -- True --> LOOP_1_D --> LOOP_1_B
             LOOP_1_C -- False --> LOOP_1_B -- False --> LOOP_1_E
+
+        LOOP_1_A ~~~ LOOP_1_B ~~~ LOOP_1_C ~~~ LOOP_1_D
+        LOOP_1_C ~~~ LOOP_1_E 
     end
 
     subgraph LOOP_2[Loop Process 2]
@@ -55,27 +51,37 @@ flowchart TB
         LOOP_2_G[Statement 5]:::process_symbol
         LOOP_2_H[LOOP EXIT]
 
-        LOOP_2_A ~~~ LOOP_2_B ~~~ LOOP_2_C ~~~ LOOP_2_D ~~~ LOOP_2_E ~~~ LOOP_2_F ~~~ LOOP_2_G
-        LOOP_2_F ~~~ LOOP_2_H
-
         direction LR
             LOOP_2_A --> LOOP_2_B -- True --> LOOP_2_C -- True --> LOOP_2_D --> LOOP_2_G --> LOOP_2_B
             LOOP_2_C -- False--> LOOP_2_E -- True --> LOOP_2_F --> LOOP_2_G
             LOOP_2_E -- False --> LOOP_2_B -- False --> LOOP_2_H
+
+        LOOP_2_A ~~~ LOOP_2_B ~~~ LOOP_2_C ~~~ LOOP_2_D ~~~ LOOP_2_E ~~~ LOOP_2_F ~~~ LOOP_2_G
+        LOOP_2_F ~~~ LOOP_2_H
+
     end
 
     LOOP_1:::someclass_3
     LOOP_2:::someclass_3
 
+    A(START)
+    B{Condition 1}:::decision_symbol
+    C[Statement 1]:::process_symbol
+    D(STOP)
+
+    X[[File Removal]]:::predefined_process_symbol
+
     A ==> B == True ==> LOOP_1 ==> LOOP_2 ==> D
     B == False ==> C ==> D
-
-    C ~~~ X
-    
     X -.-> C
     X -.-> LOOP_1
+
+    C ~~~ X
 ```
 
+
+> File Removal: Removes the hidden ".DS_Store" files, whose name is an abbreviation for *Desktop Services Store*, created by the macOS operating system to stores custom attributes of its containing folder, such as folder view options, icon positions, and other visual information.
+>
 > Condition 1: Check whether there exists a record for all Jupyter Notebook files in the current directory.
 >
 > Statement 1: If Condition 1 is False, create a record for all Jupyter Notebook files in the current directory immediately, while generating the corresponding pre-compressed copy for each file as well as compressing any copies that exceed the preset size limit, and recording relevant information about the copies.
