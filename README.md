@@ -3,28 +3,33 @@
 ## Flowchart for Jupyter Notebook File Compression and Status Logging
 
 ```mermaid
-%% Pantone / PMS 16-1546 TCX / Living Coral / #ff6f61 Hex Code Couleur
-%% Pantone / PMS 17-1736 TCX / Sun Kissed Coral / #ea6676 Hex Code Couleur
+%% Colors used for the decision symbols in this flowchart:
+%% - Pantone / PMS 16-1546 TCX / Living Coral / #ff6f61 Hex Code Couleur
+%% - Pantone / PMS 17-1736 TCX / Sun Kissed Coral / #ea6676 Hex Code Couleur
 
-%% Pantone / PMS 14-1224 TCX / Coral Sands / #edaa86 Hex Code Couleur
-%% Pantone / PMS 16-1522 TCX / Rose Dawn / #c2877b Hex Code Couleur
+%% Colors used for the process symbols in this flowchart:
+%% - Pantone / PMS 14-1224 TCX / Coral Sands / #edaa86 Hex Code Couleur
+%% - Pantone / PMS 16-1522 TCX / Rose Dawn / #c2877b Hex Code Couleur
 
-%% Pantone / PMS 15-2217 TPG / Aurora Pink / #e683a9 Hex Color Code
-%% Pantone / PMS 17-1937 TPG / Hot Pink / #e86288 Hex Color Code
+%% Colors used for the predefined process symbols in this flowchart:
+%% - Pantone / PMS 15-2217 TPG / Aurora Pink / #e683a9 Hex Color Code
+%% - Pantone / PMS 17-1937 TPG / Hot Pink / #e86288 Hex Color Code
 
-%% Pantone / PMS 17-3922 TCX / Blue Ice / #70789b Hex Color Code
-%% Pantone / PMS 13-4202 TPG / Ice Water / #c1d6ea Hex Color Code
+%% Colors used for the background of subgraphs in this flowchart:
+%% - Pantone / PMS 17-3922 TCX / Blue Ice / #70789b Hex Color Code
+%% - Pantone / PMS 13-4202 TPG / Ice Water / #c1d6ea Hex Color Code
 
-%% Pantone / PMS 11-0601 TCX / Bright White / #f4f9ff Hex Color Code
+%% Font color used for colored background and symbols in this flowchart:
+%% - Pantone / PMS 11-0601 TCX / Bright White / #f4f9ff Hex Color Code
 
 flowchart TB
-    classDef decision_symbol fill: #ff6f61, stroke: #ea6676, stroke-width: 2px, color: #f4f9ff
+	classDef decision_symbol fill: #ff6f61, stroke: #ea6676, stroke-width: 2px, color: #f4f9ff
 
-    classDef process_symbol fill: #edaa86, stroke: #c2877b, stroke-width: 2px, color: #f4f9ff
+	classDef process_symbol fill: #edaa86, stroke: #c2877b, stroke-width: 2px, color: #f4f9ff
 
-    classDef predefined_process_symbol fill: #e683a9, stroke: #e86288, stroke-width: 2px, color: #f4f9ff
+	classDef predefined_process_symbol fill: #e683a9, stroke: #e86288, stroke-width: 2px, color: #f4f9ff
 
-    classDef someclass_3 fill: #70789b, stroke: #c1d6ea, stroke-width: 3px, color: #f4f9ff, stroke-dasharray: 7 6
+	classDef someclass_3 fill: #70789b, stroke: #c1d6ea, stroke-width: 3px, color: #f4f9ff, stroke-dasharray: 7 6
 
     subgraph LOOP_1[Loop Process 1]
         LOOP_1_A[LOOP ENTRY]
