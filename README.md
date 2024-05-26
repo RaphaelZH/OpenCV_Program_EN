@@ -80,7 +80,7 @@ flowchart TB
 ```
 
 
-> File Removal: Removes the hidden ".DS_Store" files, whose name is an abbreviation for *Desktop Services Store*, created by the macOS operating system to stores custom attributes of its containing folder, such as folder view options, icon positions, and other visual information.
+> File Removal: Removes the hidden `.DS_Store` files, whose name is an abbreviation for *Desktop Services Store*, created by the macOS operating system to stores custom attributes of its containing folder, such as folder view options, icon positions, and other visual information.
 >
 > Condition 1: Check whether there exists a record for all Jupyter Notebook files in the current directory.
 >
