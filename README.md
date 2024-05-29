@@ -4,11 +4,18 @@
 
 ```mermaid
 %% Colors used for the Terminal symbols in this flowchart:
+%% - Pantone / PMS 17-1937 TCX / Hot Pink / #e55982 Hex Color Code
+%% - Pantone / PMS 15-1624 TCX / Conch Shell / #fc8f9b Hex Color Code
+
+%% Colors used for the Initialization symbols in this flowchart:
+%% - Pantone / PMS 18-2525 TCX / Magenta Haze / #9d446e Hex Color Code
+%% - Pantone / PMS 15-2217 TCX / Aurora Pink / #e881a6 Hex Color Code
+
 %% - Pantone / PMS 15-2217 TPG / Aurora Pink / #e683a9 Hex Color Code
 %% - Pantone / PMS 17-1937 TPG / Hot Pink / #e86288 Hex Color Code
 
 %% Colors used for the Decision symbols in this flowchart:
-%% - Pantone / PMS 16-1546 TCX / Living Coral / #ff6f61 Hex Code Couleur
+%% - Pantone / PMS 16-1546 TCX / Living Coral / #ff6f61 Hex Color Code
 %% - Pantone / PMS 17-1736 TCX / Sun Kissed Coral / #ea6676 Hex Code Couleur
 
 %% Colors used for the Process symbols in this flowchart:
@@ -27,19 +34,21 @@
 %% - Pantone / PMS 11-0601 TCX / Bright White / #f4f9ff Hex Color Code
 
 flowchart TB
-    classDef Terminal_Symbol fill: #e683a9, stroke: #e86288, stroke-width: 2px, color: #f4f9ff
+    classDef Terminal_Symbol fill: #e55982, stroke: #fc8f9b, stroke-width: 2px, color: #f4f9ff
 
-	classDef Decision_Symbol fill: #ff6f61, stroke: #ea6676, stroke-width: 2px, color: #f4f9ff
+    classDef Initialization_Symbols fill: #9d446e, stroke: #e881a6, stroke-width: 2px, color: #f4f9ff
 
-	classDef Process_Symbol fill: #edaa86, stroke: #c2877b, stroke-width: 2px, color: #f4f9ff
+    classDef Decision_Symbol fill: #ff6f61, stroke: #ea6676, stroke-width: 2px, color: #f4f9ff
 
-	classDef Predefined_Process_Symbol fill: #007cb8, stroke: #1a5190, stroke-width: 2px, color: #f4f9ff
+    classDef Process_Symbol fill: #edaa86, stroke: #c2877b, stroke-width: 2px, color: #f4f9ff
 
-	classDef Background_Subgraph fill: #70789b, stroke: #c1d6ea, stroke-width: 3px, color: #f4f9ff, stroke-dasharray: 7 6
+    classDef Predefined_Process_Symbol fill: #007cb8, stroke: #1a5190, stroke-width: 2px, color: #f4f9ff
+
+    classDef Background_Subgraph fill: #70789b, stroke: #c1d6ea, stroke-width: 3px, color: #f4f9ff, stroke-dasharray: 7 6
 
     subgraph LOOP_1[Loop Process 1]
         LOOP_1_A(LOOP ENTRY):::Terminal_Symbol
-        LOOP_1_B{LOOP CONDITION}:::Decision_Symbol
+        LOOP_1_B{{LOOP CONDITION}}:::Initialization_Symbols
         LOOP_1_C{Condition 2}:::Decision_Symbol
         LOOP_1_D[Statement 2]:::Process_Symbol
         LOOP_1_E(LOOP EXIT):::Terminal_Symbol
@@ -49,12 +58,12 @@ flowchart TB
             LOOP_1_C -- False --> LOOP_1_B -- False --> LOOP_1_E
 
         LOOP_1_A ~~~ LOOP_1_B ~~~ LOOP_1_C ~~~ LOOP_1_D
-        LOOP_1_C ~~~ LOOP_1_E 
+        LOOP_1_C ~~~ LOOP_1_E
     end
 
     subgraph LOOP_2[Loop Process 2]
         LOOP_2_A(LOOP ENTRY):::Terminal_Symbol
-        LOOP_2_B{LOOP CONDITION}:::Decision_Symbol
+        LOOP_2_B{{LOOP CONDITION}}:::Initialization_Symbols
         LOOP_2_C{Condition 3}:::Decision_Symbol
         LOOP_2_D[Statement 3]:::Process_Symbol
         LOOP_2_E{Condition 4}:::Decision_Symbol
@@ -90,8 +99,7 @@ flowchart TB
     C ~~~ X
 ```
 
-
-> File Removal: Removes the hidden `.DS_Store` files, whose name is an abbreviation for *Desktop Services Store*, created by the macOS operating system to stores custom attributes of its containing folder, such as folder view options, icon positions, and other visual information.
+> File Removal: Removes the hidden `.DS_Store` files, whose name is an abbreviation for _Desktop Services Store_, created by the macOS operating system to stores custom attributes of its containing folder, such as folder view options, icon positions, and other visual information.
 >
 > Condition 1: Check whether there exists a record for all Jupyter Notebook files in the current directory.
 >
