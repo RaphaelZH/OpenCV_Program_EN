@@ -30,6 +30,13 @@
 %% Font color used for colored background and symbols in this flowchart:
 %% - Pantone / PMS 11-0601 TPG / Bright White / #f5f7f6 Hex Color Code
 
+---
+config:
+    flowchart:
+        subGraphTitleMargin:
+            top: 10
+            bottom: 5
+---
 flowchart TB
     classDef Terminal_Symbol fill: #e86288, stroke: #f88e97, stroke-width: 2px, color: #f5f7f6
 
@@ -41,37 +48,37 @@ flowchart TB
 
     classDef Predefined_Process_Symbol fill: #106972, stroke: #0088a5, stroke-width: 2px, color: #f5f7f6
 
-    classDef Background_Subgraph fill: #747ea0, stroke: #c1d6ea, stroke-width: 3px, color: #f5f7f6, stroke-dasharray: 7 6
+    classDef Background_Subgraph fill: #747ea0, stroke: #c1d6ea, stroke-width: 4px, font-size: 16pt, color: #f5f7f6, stroke-dasharray: 12 4
 
-    subgraph LOOP_1[Loop Process 1]
+    subgraph LOOP_1[The Process of Looping #1]
         LOOP_1_A(LOOP \n ENTRY):::Terminal_Symbol
         LOOP_1_B{{LOOP \n INITIALIZATION}}:::Initialization_Symbols
-        LOOP_1_C{Condition \n 2}:::Decision_Symbol
-        LOOP_1_D[Statement \n 2]:::Process_Symbol
+        LOOP_1_C{Condition \n #2}:::Decision_Symbol
+        LOOP_1_D[Statement \n #2]:::Process_Symbol
         LOOP_1_E(LOOP \n EXIT):::Terminal_Symbol
 
         direction LR
-            LOOP_1_A --> LOOP_1_B -- True --> LOOP_1_C -- True --> LOOP_1_D --> LOOP_1_B
-            LOOP_1_C -- False --> LOOP_1_B -- False --> LOOP_1_E
+            LOOP_1_A --> LOOP_1_B -- loop iteration --> LOOP_1_C -- True --> LOOP_1_D --> LOOP_1_B
+            LOOP_1_C -- False --> LOOP_1_B -- stop iteration --> LOOP_1_E
 
         LOOP_1_A ~~~ LOOP_1_B ~~~ LOOP_1_C ~~~ LOOP_1_D
         LOOP_1_C ~~~ LOOP_1_E
     end
 
-    subgraph LOOP_2[Loop Process 2]
+    subgraph LOOP_2[The Process of Looping #2]
         LOOP_2_A(LOOP \n ENTRY):::Terminal_Symbol
         LOOP_2_B{{LOOP \n INITIALIZATION}}:::Initialization_Symbols
-        LOOP_2_C{Condition \n 3}:::Decision_Symbol
-        LOOP_2_D[Statement \n 3]:::Process_Symbol
-        LOOP_2_E{Condition \n 4}:::Decision_Symbol
-        LOOP_2_F[Statement \n 4]:::Process_Symbol
-        LOOP_2_G[Statement \n 5]:::Process_Symbol
+        LOOP_2_C{Condition \n #3}:::Decision_Symbol
+        LOOP_2_D[Statement \n #3]:::Process_Symbol
+        LOOP_2_E{Condition \n #4}:::Decision_Symbol
+        LOOP_2_F[Statement \n #4]:::Process_Symbol
+        LOOP_2_G[Statement \n #5]:::Process_Symbol
         LOOP_2_H(LOOP \n EXIT):::Terminal_Symbol
 
         direction LR
-            LOOP_2_A --> LOOP_2_B -- True --> LOOP_2_C -- True --> LOOP_2_D --> LOOP_2_G --> LOOP_2_B
+            LOOP_2_A --> LOOP_2_B -- loop iteration --> LOOP_2_C -- True --> LOOP_2_D --> LOOP_2_G --> LOOP_2_B
             LOOP_2_C -- False--> LOOP_2_E -- True --> LOOP_2_F --> LOOP_2_G
-            LOOP_2_E -- False --> LOOP_2_B -- False --> LOOP_2_H
+            LOOP_2_E -- False --> LOOP_2_B -- stop iteration --> LOOP_2_H
 
         LOOP_2_A ~~~ LOOP_2_B ~~~ LOOP_2_C ~~~ LOOP_2_D ~~~ LOOP_2_E ~~~ LOOP_2_F ~~~ LOOP_2_G
         LOOP_2_F ~~~ LOOP_2_H
@@ -82,8 +89,8 @@ flowchart TB
     LOOP_2:::Background_Subgraph
 
     A(START):::Terminal_Symbol
-    B{Condition \n 1}:::Decision_Symbol
-    C[Statement \n 1]:::Process_Symbol
+    B{Condition \n #1}:::Decision_Symbol
+    C[Statement \n #1]:::Process_Symbol
     D(STOP):::Terminal_Symbol
 
     X[[File \n Removal]]:::Predefined_Process_Symbol
