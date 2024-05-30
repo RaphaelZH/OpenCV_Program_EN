@@ -4,54 +4,51 @@
 
 ```mermaid
 %% Colors used for the Terminal symbols in this flowchart:
-%% - Pantone / PMS 17-1937 TCX / Hot Pink / #e55982 Hex Color Code
-%% - Pantone / PMS 15-1624 TCX / Conch Shell / #fc8f9b Hex Color Code
+%% - Pantone / PMS 17-1937 TPG / Hot Pink / #e86288 Hex Color Code
+%% - Pantone / PMS 15-1624 TPG / Conch Shell / #f88e97 Hex Color Code
 
 %% Colors used for the Initialization symbols in this flowchart:
-%% - Pantone / PMS 18-2525 TCX / Magenta Haze / #9d446e Hex Color Code
-%% - Pantone / PMS 15-2217 TCX / Aurora Pink / #e881a6 Hex Color Code
-
+%% - Pantone / PMS 18-2525 TPG / Magenta Haze / #a04e78 Hex Color Code
 %% - Pantone / PMS 15-2217 TPG / Aurora Pink / #e683a9 Hex Color Code
-%% - Pantone / PMS 17-1937 TPG / Hot Pink / #e86288 Hex Color Code
 
 %% Colors used for the Decision symbols in this flowchart:
-%% - Pantone / PMS 16-1546 TCX / Living Coral / #ff6f61 Hex Color Code
-%% - Pantone / PMS 17-1736 TCX / Sun Kissed Coral / #ea6676 Hex Code Couleur
+%% - Pantone / PMS 16-1546 TPG / Living Coral / #fc776a Hex Color Code
+%% - Pantone / PMS 15-1243 TPG / Papaya / #ffa269 Hex Color Code
 
 %% Colors used for the Process symbols in this flowchart:
-%% - Pantone / PMS 14-1224 TCX / Coral Sands / #edaa86 Hex Code Couleur
-%% - Pantone / PMS 16-1522 TCX / Rose Dawn / #c2877b Hex Code Couleur
+%% - Pantone / PMS 16-1350 TPG / Amberglow / #e17f47 Hex Color Code
+%% - Pantone / PMS 15-1058 TPG / Radiant Yellow / #faa12f Hex Color Code
 
 %% Colors used for the Predefined Process symbols in this flowchart:
-%% - Pantone / PMS 17-4245 TCX / Ibiza Blue / #007cb8 Hex Color Code
-%% - Pantone / PMS 19-4053 TCX / Turkish Sea / #1a5190 Hex Color Code
+%% - Pantone / PMS 18-4834 TPG / Deep Lake / #106972 Hex Color Code
+%% - Pantone / PMS 17-4530 TPG / Barrier Reef / #0088a5 Hex Color Code
 
 %% Colors used for the background of subgraphs in this flowchart:
-%% - Pantone / PMS 17-3922 TCX / Blue Ice / #70789b Hex Color Code
+%% - Pantone / PMS 17-3922 TPG / Blue Ice / #747ea0 Hex Color Code
 %% - Pantone / PMS 13-4202 TPG / Ice Water / #c1d6ea Hex Color Code
 
 %% Font color used for colored background and symbols in this flowchart:
-%% - Pantone / PMS 11-0601 TCX / Bright White / #f4f9ff Hex Color Code
+%% - Pantone / PMS 11-0601 TPG / Bright White / #f5f7f6 Hex Color Code
 
 flowchart TB
-    classDef Terminal_Symbol fill: #e55982, stroke: #fc8f9b, stroke-width: 2px, color: #f4f9ff
+    classDef Terminal_Symbol fill: #e86288, stroke: #f88e97, stroke-width: 2px, color: #f5f7f6
 
-    classDef Initialization_Symbols fill: #9d446e, stroke: #e881a6, stroke-width: 2px, color: #f4f9ff
+    classDef Initialization_Symbols fill: #a04e78, stroke: #e683a9, stroke-width: 2px, color: #f5f7f6
 
-    classDef Decision_Symbol fill: #ff6f61, stroke: #ea6676, stroke-width: 2px, color: #f4f9ff
+    classDef Decision_Symbol fill: #fc776a, stroke: #ffa269, stroke-width: 2px, color: #f5f7f6
 
-    classDef Process_Symbol fill: #edaa86, stroke: #c2877b, stroke-width: 2px, color: #f4f9ff
+    classDef Process_Symbol fill: #e17f47, stroke: #faa12f, stroke-width: 2px, color: #f5f7f6
 
-    classDef Predefined_Process_Symbol fill: #007cb8, stroke: #1a5190, stroke-width: 2px, color: #f4f9ff
+    classDef Predefined_Process_Symbol fill: #106972, stroke: #0088a5, stroke-width: 2px, color: #f5f7f6
 
-    classDef Background_Subgraph fill: #70789b, stroke: #c1d6ea, stroke-width: 3px, color: #f4f9ff, stroke-dasharray: 7 6
+    classDef Background_Subgraph fill: #747ea0, stroke: #c1d6ea, stroke-width: 3px, color: #f5f7f6, stroke-dasharray: 7 6
 
     subgraph LOOP_1[Loop Process 1]
-        LOOP_1_A(LOOP ENTRY):::Terminal_Symbol
-        LOOP_1_B{{LOOP CONDITION}}:::Initialization_Symbols
-        LOOP_1_C{Condition 2}:::Decision_Symbol
-        LOOP_1_D[Statement 2]:::Process_Symbol
-        LOOP_1_E(LOOP EXIT):::Terminal_Symbol
+        LOOP_1_A(LOOP \n ENTRY):::Terminal_Symbol
+        LOOP_1_B{{LOOP \n INITIALIZATION}}:::Initialization_Symbols
+        LOOP_1_C{Condition \n 2}:::Decision_Symbol
+        LOOP_1_D[Statement \n 2]:::Process_Symbol
+        LOOP_1_E(LOOP \n EXIT):::Terminal_Symbol
 
         direction LR
             LOOP_1_A --> LOOP_1_B -- True --> LOOP_1_C -- True --> LOOP_1_D --> LOOP_1_B
@@ -62,14 +59,14 @@ flowchart TB
     end
 
     subgraph LOOP_2[Loop Process 2]
-        LOOP_2_A(LOOP ENTRY):::Terminal_Symbol
-        LOOP_2_B{{LOOP CONDITION}}:::Initialization_Symbols
-        LOOP_2_C{Condition 3}:::Decision_Symbol
-        LOOP_2_D[Statement 3]:::Process_Symbol
-        LOOP_2_E{Condition 4}:::Decision_Symbol
-        LOOP_2_F[Statement 4]:::Process_Symbol
-        LOOP_2_G[Statement 5]:::Process_Symbol
-        LOOP_2_H(LOOP EXIT):::Terminal_Symbol
+        LOOP_2_A(LOOP \n ENTRY):::Terminal_Symbol
+        LOOP_2_B{{LOOP \n INITIALIZATION}}:::Initialization_Symbols
+        LOOP_2_C{Condition \n 3}:::Decision_Symbol
+        LOOP_2_D[Statement \n 3]:::Process_Symbol
+        LOOP_2_E{Condition \n 4}:::Decision_Symbol
+        LOOP_2_F[Statement \n 4]:::Process_Symbol
+        LOOP_2_G[Statement \n 5]:::Process_Symbol
+        LOOP_2_H(LOOP \n EXIT):::Terminal_Symbol
 
         direction LR
             LOOP_2_A --> LOOP_2_B -- True --> LOOP_2_C -- True --> LOOP_2_D --> LOOP_2_G --> LOOP_2_B
@@ -85,11 +82,11 @@ flowchart TB
     LOOP_2:::Background_Subgraph
 
     A(START):::Terminal_Symbol
-    B{Condition 1}:::Decision_Symbol
-    C[Statement 1]:::Process_Symbol
+    B{Condition \n 1}:::Decision_Symbol
+    C[Statement \n 1]:::Process_Symbol
     D(STOP):::Terminal_Symbol
 
-    X[[File Removal]]:::Predefined_Process_Symbol
+    X[[File \n Removal]]:::Predefined_Process_Symbol
 
     A ==> B == True ==> LOOP_1 ==> LOOP_2 ==> D
     B == False ==> C ==> D
