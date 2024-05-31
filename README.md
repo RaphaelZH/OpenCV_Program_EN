@@ -3,39 +3,12 @@
 ## Flowchart for Jupyter Notebook File Compression and Status Logging
 
 ```mermaid
-%% Colors used for the Terminal symbols in this flowchart:
-%% - Pantone / PMS 17-1937 TPG / Hot Pink / #e86288 Hex Color Code
-%% - Pantone / PMS 15-1624 TPG / Conch Shell / #f88e97 Hex Color Code
-
-%% Colors used for the Initialization symbols in this flowchart:
-%% - Pantone / PMS 18-2525 TPG / Magenta Haze / #a04e78 Hex Color Code
-%% - Pantone / PMS 15-2217 TPG / Aurora Pink / #e683a9 Hex Color Code
-
-%% Colors used for the Decision symbols in this flowchart:
-%% - Pantone / PMS 16-1546 TPG / Living Coral / #fc776a Hex Color Code
-%% - Pantone / PMS 15-1243 TPG / Papaya / #ffa269 Hex Color Code
-
-%% Colors used for the Process symbols in this flowchart:
-%% - Pantone / PMS 16-1350 TPG / Amberglow / #e17f47 Hex Color Code
-%% - Pantone / PMS 15-1058 TPG / Radiant Yellow / #faa12f Hex Color Code
-
-%% Colors used for the Predefined Process symbols in this flowchart:
-%% - Pantone / PMS 18-4834 TPG / Deep Lake / #106972 Hex Color Code
-%% - Pantone / PMS 17-4530 TPG / Barrier Reef / #0088a5 Hex Color Code
-
-%% Colors used for the background of subgraphs in this flowchart:
-%% - Pantone / PMS 17-3922 TPG / Blue Ice / #747ea0 Hex Color Code
-%% - Pantone / PMS 13-4202 TPG / Ice Water / #c1d6ea Hex Color Code
-
-%% Font color used for colored background and symbols in this flowchart:
-%% - Pantone / PMS 11-0601 TPG / Bright White / #f5f7f6 Hex Color Code
-
 ---
 config:
     flowchart:
         subGraphTitleMargin:
-            top: 10
-            bottom: 5
+            top: 12
+            bottom: 4
 ---
 flowchart TB
     classDef Terminal_Symbol fill: #e86288, stroke: #f88e97, stroke-width: 2px, color: #f5f7f6
@@ -48,7 +21,7 @@ flowchart TB
 
     classDef Predefined_Process_Symbol fill: #106972, stroke: #0088a5, stroke-width: 2px, color: #f5f7f6
 
-    classDef Background_Subgraph fill: #747ea0, stroke: #c1d6ea, stroke-width: 4px, font-size: 16pt, color: #f5f7f6, stroke-dasharray: 12 4
+    classDef Background_Subgraph fill: #747ea0, stroke: #c1d6ea, stroke-width: 4px, font-size: 16pt, color: #f5f7f6, stroke-dasharray: 12 8
 
     subgraph LOOP_1[The Process of Looping #1]
         LOOP_1_A(LOOP \n ENTRY):::Terminal_Symbol
@@ -101,6 +74,33 @@ flowchart TB
     X -.-> LOOP_1
 
     C ~~~ X
+
+%% Colors used for the Terminal symbols in this flowchart:
+%% - Pantone / PMS 17-1937 TPG / Hot Pink / #e86288 Hex Color Code
+%% - Pantone / PMS 15-1624 TPG / Conch Shell / #f88e97 Hex Color Code
+
+%% Colors used for the Initialization symbols in this flowchart:
+%% - Pantone / PMS 18-2525 TPG / Magenta Haze / #a04e78 Hex Color Code
+%% - Pantone / PMS 15-2217 TPG / Aurora Pink / #e683a9 Hex Color Code
+
+%% Colors used for the Decision symbols in this flowchart:
+%% - Pantone / PMS 16-1546 TPG / Living Coral / #fc776a Hex Color Code
+%% - Pantone / PMS 15-1243 TPG / Papaya / #ffa269 Hex Color Code
+
+%% Colors used for the Process symbols in this flowchart:
+%% - Pantone / PMS 16-1350 TPG / Amberglow / #e17f47 Hex Color Code
+%% - Pantone / PMS 15-1058 TPG / Radiant Yellow / #faa12f Hex Color Code
+
+%% Colors used for the Predefined Process symbols in this flowchart:
+%% - Pantone / PMS 18-4834 TPG / Deep Lake / #106972 Hex Color Code
+%% - Pantone / PMS 17-4530 TPG / Barrier Reef / #0088a5 Hex Color Code
+
+%% Colors used for the background of subgraphs in this flowchart:
+%% - Pantone / PMS 17-3922 TPG / Blue Ice / #747ea0 Hex Color Code
+%% - Pantone / PMS 13-4202 TPG / Ice Water / #c1d6ea Hex Color Code
+
+%% Font color used for colored background and symbols in this flowchart:
+%% - Pantone / PMS 11-0601 TPG / Bright White / #f5f7f6 Hex Color Code
 ```
 
 > File Removal: Removes the hidden `.DS_Store` files, whose name is an abbreviation for _Desktop Services Store_, created by the macOS operating system to stores custom attributes of its containing folder, such as folder view options, icon positions, and other visual information.
