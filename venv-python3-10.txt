@@ -22,6 +22,7 @@ pandas
 pip
 plotly
 pydicom
+pyspark
 scikit-learn
 seaborn
 setuptools

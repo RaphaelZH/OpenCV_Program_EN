@@ -105,13 +105,13 @@ flowchart TB
 
 > File Removal: Removes the hidden `.DS_Store` files, whose name is an abbreviation for _Desktop Services Store_, created by the macOS operating system to stores custom attributes of its containing folder, such as folder view options, icon positions, and other visual information.
 >
-> Condition 1: Check whether there exists a record for all Jupyter Notebook files in the current directory.
+> Condition #1: Check whether there exists a record for all Jupyter Notebook files in the current directory.
 >
-> Statement 1: If Condition 1 is False, create a record for all Jupyter Notebook files in the current directory immediately, while generating the corresponding pre-compressed copy for each file as well as compressing any copies that exceed the preset size limit, and recording relevant information about the copies.
+> Statement #1: If Condition 1 is False, create a record for all Jupyter Notebook files in the current directory immediately, while generating the corresponding pre-compressed copy for each file as well as compressing any copies that exceed the preset size limit, and recording relevant information about the copies.
 >
-> Condition 2: If Condition 1 is True, read this record and check whether there are certain entries in this record for which the corresponding Jupyter Notebook file cannot be found.
+> Condition #2: If Condition 1 is True, read this record and check whether there are certain entries in this record for which the corresponding Jupyter Notebook file cannot be found.
 >
-> Statement 2: If Condition 2 is True, delete these entries and eventually reset the index.
+> Statement #2: If Condition 2 is True, delete these entries and eventually reset the index.
 >
 > Condition 3: Regardless of whether Condition 2 is True or False, check whether there are any Jupyter Notebook files in the current directory that do not have a corresponding entry in this record.
 >
